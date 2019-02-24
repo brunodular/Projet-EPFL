@@ -1,0 +1,11 @@
+CXX=g++
+CC=$(CXX)
+CXXFLAGS=-std=c++11 -Wall
+LDLIBS=-lm
+
+all: testVecteur3D_HD
+
+testVecteur3D_HD: Vecteur3D_HD.o testVecteur3D_HD.o
+
+Vecteur3D_HD.o: Vecteur3D_HD.cc Vecteur3D_HD.h
+testVecteur3D_HD.o: testVecteur3D_HD.cc Vecteur3D_HD.h
