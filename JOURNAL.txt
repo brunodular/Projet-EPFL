@@ -1,0 +1,7 @@
+-- SEMAINE 2 : 28/02 --
+
+- Implémentation de la classe Vecteur3D, et surcharge des opérateurs afin d'avoir tous les outils nécessaires pour travailler avec ces vecteurs.
+
+- Nouveau fichier constantes.h contenant les constantes dont nous aurons besoin, ainsi que des fonctions simples faisant appel à ces constantes (comme le test est_zero, avec précision donnée par un epsilon).
+
+- Ecriture du Makefile afin de faciliter l'édition des liens.

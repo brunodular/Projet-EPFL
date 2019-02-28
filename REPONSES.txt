@@ -1,0 +1,4 @@
+Question P1.1
+
+Les vecteurs sont représentés par trois attributs : les trois coordonnées x, y et z. Ce sont des attributs de type double. 
+Les attributs sont en private. Toutes les méthodes et opérateurs sont en public. Cela fait sens car les opérateurs ont tous le potentiel d'être utilisés dans la suite du projet.
