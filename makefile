@@ -1,9 +1,11 @@
-CXX = g++
-CC = $(CXX)
-CXXFLAGS = -std=c++11
+CXX=g++
+CC=$(CXX)
+CXXFLAGS=-std=c++11 -Wall -Wuninitialized
+LDLIBS=-lm
 
-all:: testVecteur
-constantes.o: constantes.cc constantes.h
+all:: testVecteur3D
+
+testVecteur3D: Vecteur3D.o testVecteur3D.o constantes.o
 Vecteur3D.o: Vecteur3D.cc Vecteur3D.h constantes.h
-testVecteur.o: testVecteur.cc Vecteur3D.h
-testVecteur: Vecteur3D.o testVecteur.o constantes.o
+constantes.o: constantes.cc constantes.h
+testVecteur3D.o: testVecteur3D.cc Vecteur3D.h
