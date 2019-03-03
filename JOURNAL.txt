@@ -5,3 +5,11 @@
 - Nouveau fichier constantes.h contenant les constantes dont nous aurons besoin, ainsi que des fonctions simples faisant appel à ces constantes (comme le test est_zero, avec précision donnée par un epsilon).
 
 - Ecriture du Makefile afin de faciliter l'édition des liens.
+
+-- 03/02 --
+
+- Ecriture des tests pour verifier que les operateurs definis dans la classe Vecteur3D sont correctes et fournisent de bons resultats.
+
+- Observation: avec les tests nous nous sommes apercus que cout << v^u << endl; (^ correspondant au produit vectoriel), ne compile pas, mais cout << (v^u) << endl; compile et affiche le bon resultat; Raison: peut-etre une histoire de priorité d'opération.
+
+- Reflexion: Remplacer les constantes par des attributs de classe pour faciliter l'initialisation de ces constantes lors de l'heritage de Vecteur3D. Et ensuite remplacer les fonctions (comme le test est_zero) par de methodes de classes (même si c peu recommandé...).
