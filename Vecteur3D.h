@@ -27,8 +27,7 @@ class Vecteur3D {
 		Vecteur3D const operator-() const;			//oppose
 		Vecteur3D const operator+(Vecteur3D) const;
 		Vecteur3D const operator-(Vecteur3D) const;
-		Vecteur3D const operator*(double) const;	//multiplcation par 
-													//un scalaire
+		Vecteur3D const operator*(double) const;	//multiplcation par un scalaire
 														
 		double operator*(Vecteur3D const&) const;	//produit scalaire
 		Vecteur3D const operator^(Vecteur3D) const;	//produit vectoriel
