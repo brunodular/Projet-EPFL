@@ -1,7 +1,10 @@
-CXX=g++
-CC=$(CXX)
-CXXFLAGS=-std=c++11 -Wall -Wuninitialized
-LDLIBS=-lm
+CXX = g++
+CC = $(CXX)
+CXXFLAGS = -std=c++11 -Wall -Wuninitialized     //pour identifier les variables non initialisees
+CXXFLAGS += -pedantic -Wall     
+CXXFLAGS += -g                //pour debugger
+CXXFLAGS += -pg               //pour profiler
+CXXFLAGS += -02               //pour optimiser la vitesse
 
 all:: testVecteur3D
 
