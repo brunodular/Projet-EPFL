@@ -1,5 +1,5 @@
-#include <iostream> 
 #pragma once
+#include <iostream>
 
 class Vecteur3D {
 	private:
