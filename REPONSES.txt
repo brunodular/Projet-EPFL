@@ -1,7 +1,8 @@
 Question P1.1
 
   Les vecteurs sont représentés par trois attributs : les trois coordonnées x, y et z. Ce sont des attributs de type double.
-  Les attributs sont en private. Toutes les méthodes et opérateurs sont en public. Cela fait sens car les opérateurs ont tous le potentiel d'être utilisés dans la suite du projet.
+  Les attributs sont en private. Toutes les méthodes et opérateurs sont en public. Cela fait sens car les opérateurs ont tous le
+  potentiel d'être utilisés dans la suite du projet.
 
 Question P4.1
 
@@ -20,4 +21,5 @@ Question P4.2
 Question 4.3:
 
   Les opérateurs que nous avons introduits sont les opérateurs: +=, + (addition), -=, - (soustraction), - (opposé),
-  *=, * (produitt scalaire), ^=, ^ (produit vectoriel),
+  * (produitt scalaire), ^=, ^ (produit vectoriel), *=, * (mulitplication par un scalaire) et enfin << (affichage de
+  vecteurs 3d).
