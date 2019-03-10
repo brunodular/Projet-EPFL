@@ -1,9 +1,9 @@
-#pragma once
-#include <iostream>
+#include <iostream> 
 
 class Vecteur3D {
 	private:
 		double x_, y_, z_;
+		Vecteur3D const unitaire() const;			//methode qui permet de trouver le vecteur unitaire utilise dans l'operateur ~
 
 	public:
 		//Constructeurs
@@ -11,9 +11,9 @@ class Vecteur3D {
 
 		//méthodes
 		std::ostream& affiche(std::ostream&) const;
-		Vecteur3D const unitaire() const;			//vecteur unitaire
 		double norme() const;
 		double norme2() const;
+		Vecteur3D rotation(Vecteur3D const&, double) const;
 
 		//opérateurs internes
 		bool operator==(Vecteur3D const&) const;
@@ -28,6 +28,7 @@ class Vecteur3D {
 		Vecteur3D const operator+(Vecteur3D) const;
 		Vecteur3D const operator-(Vecteur3D) const;
 		Vecteur3D const operator*(double) const;	//multiplcation par un scalaire
+		Vecteur3D const operator~() const;			//vecteur unitaire
 														
 		double operator*(Vecteur3D const&) const;	//produit scalaire
 		Vecteur3D const operator^(Vecteur3D) const;	//produit vectoriel

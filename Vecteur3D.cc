@@ -30,6 +30,11 @@ double Vecteur3D::norme2() const {
   return (*this * *this);
 }
 
+
+Vecteur3D Vecteur3D::rotation(Vecteur3D const& v, double t) const {
+	return cos(t)*(*this)+(1-cos(t))*((*this)*(~v))*(~v)+sin(t)*((~v)^(*this));
+}
+
 //=======================================================================
 
 //OPERATEUR INTERNE
@@ -91,6 +96,10 @@ double Vecteur3D::operator*(Vecteur3D const& v) const {
 
 Vecteur3D const Vecteur3D::operator^(Vecteur3D v) const {
   return (v ^= *this);
+}
+
+Vecteur3D const Vecteur3D::operator~() const {
+	return (*this).unitaire();
 }
 
 //=======================================================================

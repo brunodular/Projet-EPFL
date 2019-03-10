@@ -1,5 +1,6 @@
 #include "Vecteur3D.h"
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 int main () {
@@ -77,9 +78,12 @@ int main () {
 	
 	cout << "Norme au carree de v3:" << u.norme2() << endl;
 	
-	cout << "Vecteur unitaire selon l'axe de v1: " << v.unitaire() << endl;	
+	cout << "Vecteur unitaire selon l'axe de v1: " << ~v << endl;	
 	
 	cout << "Produit mixte de v1 par v2 par v3: " << prod_mixte(v, w, u) << endl;
+	
+	cout << "Rotation de v1 selon l'axe de v2 par un angle de pi/6: "
+	<< v.rotation(w, M_PI/6) << endl;
 	
 	return 0;
 }
