@@ -21,5 +21,9 @@ Question P4.2
 Question 4.3:
 
   Les opérateurs que nous avons introduits sont les opérateurs: +=, + (addition), -=, - (soustraction), - (opposé),
-  * (produitt scalaire), ^=, ^ (produit vectoriel), *=, * (mulitplication par un scalaire) et enfin << (affichage de
-  vecteurs 3d).
+  * (produitt scalaire), ^=, ^ (produit vectoriel), *=, * (mulitplication par un scalaire), << (affichage de
+  vecteurs 3d) et enfin ~ (vecteur unitaire).
+  
+Question 5.1:
+  
+  
