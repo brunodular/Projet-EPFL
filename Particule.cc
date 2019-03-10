@@ -25,7 +25,7 @@ void Particule::ajouteForceMagnetique(Vecteur3D const& B, double dt) {
 		force_=force_.rotation((v_^force_), asin(dt*force_.norme()/(2*gamma_*M_*v_.norme())));
 	}
 }
-	
+
 Vecteur3D Particule::quantite_mvt() {
 	return gamma_*M_*v_.norme();
 }
@@ -36,16 +36,16 @@ void Particule::bouger(double dt) {
 	pos_=pos_+dt*v_;
 	force_=Vecteur3D (0.0, 0.0, 0.0);
 }
-		
+
 ostream& Particule::afficher(ostream& sortie) const {
-	sortie<<"Une particule : "<<endl;
-	sortie<< "  position : " << pos_ << endl;
-	sortie<< "  vitesse : " << v_ << endl;
-	sortie<< "  gamma : " << gamma_ << endl;
-	sortie<< "  energie (GeV) : " << E_ << endl;
-	sortie<< "  masse (GeV/c^2) : " << M_;
-	sortie<< "  charge : " << Q_ << endl;
-	sortie<< "  force : " << force_;
+	sortie << "Une particule : "<<endl;
+	sortie << "  position : " << pos_ << endl;
+	sortie << "  vitesse : " << v_ << endl;
+	sortie << "  gamma : " << gamma_ << endl;
+	sortie << "  energie (GeV) : " << E_ << endl;
+	sortie << "  masse (GeV/c^2) : " << M_ << endl;
+	sortie << "  charge : " << Q_ << endl;
+	sortie << "  force : " << force_;
 	return sortie;
 }
 

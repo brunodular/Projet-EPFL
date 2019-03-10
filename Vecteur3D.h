@@ -1,4 +1,6 @@
-#include <iostream> 
+#pragma once
+
+#include <iostream>
 
 class Vecteur3D {
 	private:
@@ -13,7 +15,7 @@ class Vecteur3D {
 		std::ostream& affiche(std::ostream&) const;
 		double norme() const;
 		double norme2() const;
-		Vecteur3D rotation(Vecteur3D const&, double) const;
+		Vecteur3D const rotation(Vecteur3D const&, double) const;
 
 		//opérateurs internes
 		bool operator==(Vecteur3D const&) const;
@@ -29,7 +31,7 @@ class Vecteur3D {
 		Vecteur3D const operator-(Vecteur3D) const;
 		Vecteur3D const operator*(double) const;	//multiplcation par un scalaire
 		Vecteur3D const operator~() const;			//vecteur unitaire
-														
+
 		double operator*(Vecteur3D const&) const;	//produit scalaire
 		Vecteur3D const operator^(Vecteur3D) const;	//produit vectoriel
 
