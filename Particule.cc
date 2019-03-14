@@ -1,60 +1,45 @@
 #include "Particule.h"
-#include <iostream>
 #include <cmath>
+#include <iostream>
 using namespace std;
 
-//=======================================================================
+//Constructeur
+Particule::Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, Vecteur3D F) : pos_(pos), v_((c*sqrt(1-pow(m/E,2)))*(~v_dir)), m_(m), q_(q), F_(F) {}
 
-//METHODES
-
-void Particule::E() {
-	E_=gamma_*M_*pow(c,2);
+//Méthodes
+double Particule::m_kg() const {
+  return e*1e+9*m_/(c*c);
 }
 
-void Particule::v() {
-	v_=(*this).quantite_mvt()*(1/(sqrt(pow(M_, 2)+pow(((*this).quantite_mvt().norme()/c),2))));
+double Particule::E() const {
+  return gamma()*m_kg()*c*c*(1e-9)/e;
 }
 
-void Particule::gamma() {
-	gamma_=1/(sqrt(1-pow((v_.norme()/c),2)));
+double Particule::gamma() const {
+  return 1/sqrt(1-(v_.norme2()/(c*c)));
 }
 
-void Particule::ajouteForceMagnetique(Vecteur3D const& B, double dt) {
-	if (dt!=0) {
-		force_+=Q_*(v_^B);
-		force_=force_.rotation((v_^force_), asin(dt*force_.norme()/(2*gamma_*M_*v_.norme())));
-	}
-}
-
-Vecteur3D Particule::quantite_mvt() {
-	return gamma_*M_*v_.norme();
+void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
+  if (!est_zero(dt)) {
+    F_ += q_*(v_^B);
+    F_ = F_.rotation(v_^F_,asin(dt*F_.norme()/(2*gamma()*m_kg()*v_.norme())));
+  }
 }
 
 void Particule::bouger(double dt) {
-	Vecteur3D a=1/(gamma_*M_)*force_;
-	v_=v_+dt*a;
-	pos_=pos_+dt*v_;
-	force_=Vecteur3D (0.0, 0.0, 0.0);
+  Vecteur3D a = 1/(gamma()*m_kg())*F_;
+  v_ += dt*a;
+  pos_ += dt*v_;
+  F_ = Vecteur3D();
 }
 
-ostream& Particule::afficher(ostream& sortie) const {
-	sortie << "Une particule : "<<endl;
-	sortie << "  position : " << pos_ << endl;
-	sortie << "  vitesse : " << v_ << endl;
-	sortie << "  gamma : " << gamma_ << endl;
-	sortie << "  energie (GeV) : " << E_ << endl;
-	sortie << "  masse (GeV/c^2) : " << M_ << endl;
-	sortie << "  charge : " << Q_ << endl;
-	sortie << "  force : " << force_;
-	return sortie;
+
+ostream& Particule::affiche(ostream& out) const {
+  return (out << "Une particule :" << endl << "  position : " << pos_ << endl << "  vitesse : " << v_ << endl << "  gamma : " << gamma() << endl << "  Energie (en GeV) : " << E() << endl << "  Masse (en GeV/c^2) : " << m_ << endl << "  Charge : " << q_ << endl << "  Force : " << F_ << endl);
 }
 
-//=======================================================================
 
-//OPERATEURS
-
-//Operateur externe
-
-ostream& operator<<(ostream& sortie, Particule const& x) {
-	return x.afficher(sortie);
+//Opérateurs externes
+ostream& operator<<(ostream& out,Particule const& p) {
+  return p.affiche(out);
 }

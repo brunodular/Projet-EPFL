@@ -12,6 +12,6 @@ testVecteur3D: Vecteur3D.o testVecteur3D.o constantes.o
 testParticule: Vecteur3D.o constantes.o Particule.o testParticule.o
 Vecteur3D.o: Vecteur3D.cc Vecteur3D.h constantes.h
 constantes.o: constantes.cc constantes.h
-Particule.o: Particule.cc Particule.h Vecteur3D.h
+Particule.o: Particule.cc Particule.h Vecteur3D.h constantes.h
 testVecteur3D.o: testVecteur3D.cc Vecteur3D.h
 testParticule.o: testParticule.cc Particule.h
