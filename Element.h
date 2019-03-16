@@ -15,9 +15,11 @@ public:
   Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv = nullptr);
 
   //Méthodes
-  bool heurte_bord(Particule const&) const;
+  bool heurte_bord(Particule const& p) const;
 
-  bool passe_au_suivant(Particule const&) const;
+  bool passe_au_suivant(Particule& p) const;
+
+  Vecteur3D B(Particule const&) const; //champ magnétique
 };
 
 class ElementCourbe : public Element {
@@ -36,7 +38,6 @@ public:
 class SectionDroite : public Element {
 public:
   SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv = nullptr);
-
 };
 
 class Dipole : public ElementCourbe {
@@ -44,5 +45,9 @@ private:
   const double Bz_; //intensité du champ magnétique vertical
 
 public:
+  //Constructeur
   Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,double Bz,Element* el_suiv = nullptr);
+
+  //Méthodes
+  Vecteur3D B(Particule const&) const;
 };

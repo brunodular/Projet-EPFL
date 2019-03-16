@@ -23,7 +23,41 @@ Question 4.3:
   Les opérateurs que nous avons introduits sont les opérateurs: +=, + (addition), -=, - (soustraction), - (opposé),
   * (produitt scalaire), ^=, ^ (produit vectoriel), *=, * (mulitplication par un scalaire), << (affichage de
   vecteurs 3d) et enfin ~ (vecteur unitaire).
-  
+
 Question 5.1:
-  
-  
+
+  Nous avons implémenté gamma et l'énergie en tant que méthodes. Ces quantités sont très dépendantes de la vitesse des particules, qui change très fréquemment. Ainsi, les implémenter sous la forme d'attributs nécessiterait de les actualiser dès que la vitesse est modifiée. Cela serait moins optimisé et plus compliqué. C'est pourquoi nous avons choisi de le faire en tant que méthodes.
+
+Question 6.1
+
+  Pour représenter les éléments, nous définissons une classe Element, qui contient les attributs pos_e_ (position d'entrée), pos_s_ (position de sortie) et le rayon de la chambre à vide (r_section_).
+  Pour représenter les éléments courbes, nous définissons une sous-classe ElementCourbe de la classe Element, qui possède en plus les attributs courbure_ (courbure de l'élément) et centre_ (centre de courbure).
+  Les différents types d'éléments seront des sous-classes d'Element ou de ElementCourbe, selon leurs caractéristiques.
+
+Question 6.2
+
+  Le champ magnétique étant dépendant de la position, il n'est pas possible de l'implémenter sous la forme d'attribut. Nous avons donc choisi de l'implémenter en tant que méthode, qui prend en paramètre une particule qui se trouve dans l'élément en question, et renvoie le champ magnétique qui s'applique sur cette particule sous la forme d'un Vecteur3D.
+
+Question 6.3
+
+  Oui, nous avons représenté le centre de courbure. C'est un attribut de la classe ElementCourbe, de type Vecteur3D constant (car il n'est jamais modifié), qui est initialisé par le constructeur.
+
+Question 6.4
+
+  Pour faire en sorte que chaque particule soit dans un et un seul élément, nous avons décidé d'ajouter l'attribut element_courant_ à la classe Particule, qui pointe sur un Element. Lorsque la méthode Element::passe_au_suivant renvoie TRUE, elle modifie également l'element_courant_ de la particule, qui devient alors l'el_suiv_ de l'ancien élément courant. Evidemment, cela modifie les classes Element et Particule.
+
+Question 7.1
+
+Question 8.1
+
+  On a un phénomène de 'masquage' de la méthode heurte_bord dans la sous-classe ElementCourbe qui est héritée de la classe Element. La méthode a donc le même nom dans Element et ElementCourbe, mais y est définie différemment.
+
+Question 8.2
+
+  Cela n'implique rien sur la classe Element, la méthode heurte_bord de la classe Element peut toujours être utilisée pour des instances de cette classe sans souci.
+
+Question 9.1
+
+Question 9.2
+
+Question 9.3

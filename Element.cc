@@ -1,4 +1,3 @@
-#include "Element.h"
 #include <cmath>
 
 //Class Element
@@ -25,8 +24,17 @@ bool Element::heurte_bord(Particule const& p) const {
   return (X-(X*dir_)*dir_).norme2() > r_section_*r_section_;
 }
 
-bool Element::passe_au_suivant(Particule const&) const {
-  return prod_mixte(e3,p.pos(),pos_s_) > 0;
+bool Element::passe_au_suivant(Particule& p) const {
+  if (prod_mixte(e3,p.pos(),pos_s_) > 0) {
+    p.element_courant(el_suiv_);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Vecteur3D Element::B(Particule const&) const {
+  return Vecteur3D();
 }
 
 
@@ -56,3 +64,8 @@ SectionDroie::SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Ele
 Dipole::Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,double Bz,Element* el_suiv) :
   Element(pos_e, pos_s, r_section, courbure, el_suiv),
   Bz_(Bz) {}
+
+//Méthodes
+Vecteur3D Dipole::B(Particule const&) const {
+  return Vecteur3D(0,0,Bz_);
+}

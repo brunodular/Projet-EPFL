@@ -1,4 +1,4 @@
--- SEMAINE 2 : 28/02 --
+-- 28/02 --
 
 - Implémentation de la classe Vecteur3D, et surcharge des opérateurs afin d'avoir tous les outils nécessaires pour travailler avec ces vecteurs.
 
@@ -10,15 +10,27 @@
 
 - Ecriture des tests pour verifier que les operateurs definis dans la classe Vecteur3D sont correctes et fournisent de bons resultats.
 
-- Observation: avec les tests nous nous sommes apercus que cout << v^u << endl; (^ correspondant au produit vectoriel), ne compile pas, mais cout << (v^u) << endl; compile et affiche le bon resultat; Raison: peut-etre une histoire de priorité d'opération (confirme plus tard par le P4).
+- Observation: avec les tests nous nous sommes apercus que cout << v^u << endl; (^ correspondant au produit vectoriel), ne compile pas, mais cout << (v^u) << endl; compile et affiche le bon resultat; Raison: peut-etre une histoire de priorité d'opération (confirmé plus tard par le P4).
 
 - Reflexion: Remplacer les constantes par des attributs de classe pour faciliter l'initialisation de ces constantes lors de l'heritage de Vecteur3D. Et ensuite remplacer les fonctions (comme le test est_zero) par des methodes de classes (même si c peu recommandé...).
 
 
--- Semaine 3 : 8/03--
+-- 8/03 --
 
 - Rajout de la methode rotation dans la classe Vecteur3D et quelques autres petites modifications dans la classe vecteur3D.
 
-- Ecriture de la classe Particule: Observation: devrait ajoute des exceptions ou des tests pour bien etre sur que la masse donnee est bien strictement positive. 
+- Ecriture de la classe Particule: Observation: devrait ajoute des exceptions ou des tests pour bien etre sur que la masse donnee est bien strictement positive.
 
 - Ecriture du fichier testParticule
+
+-- 14/03 --
+
+- Réécriture de la classe Particule car trop de problèmes.
+
+- Création d'une structure Erreur contenant (pour le moment) un message de type string et un nombre entier int, spécifiant le type d'erreur. Il faut encore modifier les throw déjà écrits afin qu'ils envoient des erreurs de type Erreur.
+
+-- 16/03 --
+
+- Implémentation de la classe Element et de se hiérarchie de sous-classes.
+
+- Ajout de l'attribut element_courant_ dans la classe Particule, qui spécifie dans quel élément la particule se trouve (il est unique), et permet donc de savoir à quelles forces est soumise celle-ci.
