@@ -6,6 +6,11 @@ using namespace std;
 
 //=======================================================================
 
+//getteurs
+double Vecteur3D::x() const {return x_;}
+double Vecteur3D::y() const {return y_;}
+double Vecteur3D::z() const {return z_;}
+
 //METHODES
 
 ostream& Vecteur3D::affiche(ostream& out) const {

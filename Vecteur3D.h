@@ -11,6 +11,11 @@ class Vecteur3D {
 		//Constructeurs
 		Vecteur3D(double x = 0.0, double y = 0.0, double z = 0.0) : x_(x), y_(y), z_(z) {}
 
+    //getteurs
+    double x() const;
+    double y() const;
+    double z() const;
+
 		//méthodes
 		std::ostream& affiche(std::ostream&) const;
 		double norme() const;
@@ -26,10 +31,10 @@ class Vecteur3D {
 		Vecteur3D& operator*=(double);
 		Vecteur3D& operator^=(Vecteur3D const&);
 
-		Vecteur3D const operator-() const;			//oppose
+		Vecteur3D const operator-() const;			//opposé
 		Vecteur3D const operator+(Vecteur3D) const;
 		Vecteur3D const operator-(Vecteur3D) const;
-		Vecteur3D const operator*(double) const;	//multiplcation par un scalaire
+		Vecteur3D const operator*(double) const;	//multiplication par un scalaire
 		Vecteur3D const operator~() const;			//vecteur unitaire
 
 		double operator*(Vecteur3D const&) const;	//produit scalaire
@@ -43,4 +48,6 @@ Vecteur3D const operator*(double, Vecteur3D);
 
 //fonctions
 double prod_mixte(Vecteur3D const&, Vecteur3D const&, Vecteur3D const&);
-												// produit mixte
+
+//Vecteurs de base
+const Vecteur3D e1(1,0,0), e2(0,1,0), e3(0,0,1);

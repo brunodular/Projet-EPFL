@@ -11,6 +11,7 @@ private:
   Vecteur3D pos_;
   Vecteur3D v_; //Vecteur directeur de la vitesse
   Masse m_; //en GeV/c^2
+  Masse m_kg_; //en kg
   double q_;
   Vecteur3D F_;
 
@@ -18,8 +19,10 @@ public:
   //Constructeur
   Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, Vecteur3D F = Vecteur3D());
 
+  //getters
+  Vecteur3D pos() const;
+
   //Méthodes
-  double m_kg() const;
   double E() const;
   double gamma() const;
 

@@ -4,15 +4,16 @@
 using namespace std;
 
 //Constructeur
-Particule::Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, Vecteur3D F) : pos_(pos), v_((c*sqrt(1-pow(m/E,2)))*(~v_dir)), m_(m), q_(q), F_(F) {}
+Particule::Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, Vecteur3D F) : pos_(pos), v_((c*sqrt(1-pow(m/E,2)))*(~v_dir)), m_(m), m_kg_(e*1e+9*m_/(c*c)), q_(q), F_(F) {}
+
+//getters
+
+Vecteur3D Particule::pos() const {return pos_;}
 
 //Méthodes
-double Particule::m_kg() const {
-  return e*1e+9*m_/(c*c);
-}
 
 double Particule::E() const {
-  return gamma()*m_kg()*c*c*(1e-9)/e;
+  return gamma()*m_kg_*c*c*(1e-9)/e;
 }
 
 double Particule::gamma() const {
@@ -22,12 +23,12 @@ double Particule::gamma() const {
 void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
   if (!est_zero(dt)) {
     F_ += q_*(v_^B);
-    F_ = F_.rotation(v_^F_,asin(dt*F_.norme()/(2*gamma()*m_kg()*v_.norme())));
+    F_ = F_.rotation(v_^F_,asin(dt*F_.norme()/(2*gamma()*m_kg_*v_.norme())));
   }
 }
 
 void Particule::bouger(double dt) {
-  Vecteur3D a = 1/(gamma()*m_kg())*F_;
+  Vecteur3D a = 1/(gamma()*m_kg_)*F_;
   v_ += dt*a;
   pos_ += dt*v_;
   F_ = Vecteur3D();
