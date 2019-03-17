@@ -8,6 +8,8 @@ class Element;
 
 typedef const double Masse;
 
+//=======================================================================
+
 class Particule {
 private:
   Vecteur3D pos_;

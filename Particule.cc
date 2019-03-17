@@ -3,8 +3,12 @@
 #include <iostream>
 using namespace std;
 
+//========================================================================
+
 //Constructeur
 Particule::Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, Vecteur3D F) : pos_(pos), v_((c*sqrt(1-pow(m/E,2)))*(~v_dir)), m_(m), m_kg_(e*1e+9*m_/(c*c)), q_(q), F_(F) {}
+
+//=======================================================================
 
 //getters
 
@@ -15,6 +19,8 @@ Element* Particule::element_courant() const {return element_courant_;}
 //setters
 
 void Particule::element_courant(Element* new_element) {element_courant_ = new_element;}
+
+//=======================================================================
 
 //Méthodes
 
@@ -49,6 +55,7 @@ ostream& Particule::affiche(ostream& out) const {
   return (out << "Une particule :" << endl << "  position : " << pos_ << endl << "  vitesse : " << v_ << endl << "  gamma : " << gamma() << endl << "  Energie (en GeV) : " << E() << endl << "  Masse (en GeV/c^2) : " << m_ << endl << "  Charge : " << q_ << endl << "  Force : " << F_ << endl);
 }
 
+//=======================================================================
 
 //Opérateurs externes
 ostream& operator<<(ostream& out,Particule const& p) {
