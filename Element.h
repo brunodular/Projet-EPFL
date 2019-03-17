@@ -1,6 +1,9 @@
 #pragma once
+#include <iostream>
 
 #include "Particule.h"
+
+//=======================================================================
 
 class Element {
 protected:
@@ -14,13 +17,20 @@ public:
   //Constructeur
   Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv = nullptr);
 
+  //Destructeur
+  virtual ~Element() {};
+	
   //Méthodes
-  bool heurte_bord(Particule const& p) const;
+  virtual bool heurte_bord(Particule const& p) const;
 
-  bool passe_au_suivant(Particule& p) const;
+  virtual bool passe_au_suivant(Particule& p) const;
 
-  Vecteur3D B(Particule const&) const; //champ magnétique
+  virtual Vecteur3D B(Particule const&) const; //champ magnétique
+  
+  virtual void affiche(std::ostream&) const;
 };
+
+//=======================================================================
 
 class ElementCourbe : public Element {
 protected:
@@ -29,16 +39,23 @@ protected:
 
 public:
   //Constructeur
-  ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,Element* el_suiv = nullptr);
+  virtual ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,Element* el_suiv = nullptr);
 
   //Méthodes
-  bool heurte_bord(Particule const&) const;
+  virtual bool heurte_bord(Particule const&) const override;
+  
+  virtual void affiche(std::ostream&) const override;
 };
+
+//=======================================================================
 
 class SectionDroite : public Element {
 public:
+  //Constructeur
   SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv = nullptr);
 };
+
+//=======================================================================
 
 class Dipole : public ElementCourbe {
 private:
@@ -49,5 +66,7 @@ public:
   Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,double Bz,Element* el_suiv = nullptr);
 
   //Méthodes
-  Vecteur3D B(Particule const&) const;
+  virtual Vecteur3D B(Particule const&) const override;
+  
+  virtual void affiche(std::ostream&) const override;
 };

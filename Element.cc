@@ -1,4 +1,7 @@
 #include <cmath>
+using namespace std;
+
+//=======================================================================
 
 //Class Element
 
@@ -19,12 +22,12 @@ Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_su
   }
 
 //Méthodes
-bool Element::heurte_bord(Particule const& p) const {
+virtual bool Element::heurte_bord(Particule const& p) const {
   Vecteur3D X(p.pos()-pos_e_);
   return (X-(X*dir_)*dir_).norme2() > r_section_*r_section_;
 }
 
-bool Element::passe_au_suivant(Particule& p) const {
+virtual bool Element::passe_au_suivant(Particule& p) const {
   if (prod_mixte(e3,p.pos(),pos_s_) > 0) {
     p.element_courant(el_suiv_);
     return true;
@@ -33,10 +36,15 @@ bool Element::passe_au_suivant(Particule& p) const {
   }
 }
 
-Vecteur3D Element::B(Particule const&) const {
+virtual Vecteur3D Element::B(Particule const&) const {
   return Vecteur3D();
 }
 
+virtual void Element::affiche(ostream& sortie) const {
+	sortie << "  entree : " << pos_e_ << endl << "  sortie : " << pos_s_ << endl << "  rayon de chambre : " << r_section_ << endl;
+}
+
+//=======================================================================
 
 //Class ElementCourbe
 
@@ -47,15 +55,22 @@ ElementCourbe::ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,do
   centre_(0.5*(pos_e_+pos_s_)+(1/k)*sqrt(1-k*k*0.25*(pos_s_-pos_e_).norme2())*(dir_^e3)) {}
 
 //Méthodes
-bool ElementCourbe::heurte_bord(Particule const& p) const {
+virtual bool ElementCourbe::heurte_bord(Particule const& p) const {
   Vecteur3D X(p.pos()-pos_e_);
   return (X-(1/abs(k))*(~(X-X.z()*e3))).norme2() > r_section_*r_section_;
 }
 
+virtual void ElementCourbe::affiche(ostream& sortie) const {
+	this->Element::affiche(sortie);
+	sortie<<"  rayon de courbure : " << courbure_ << endl;
+}
+
+//=======================================================================
 
 //Class SectionDroite
 SectionDroie::SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv) : Element(pos_e, pos_s, r_section, el_suiv) {}
 
+//=======================================================================
 
 //Class Dipole
 
@@ -66,6 +81,11 @@ Dipole::Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,
   Bz_(Bz) {}
 
 //Méthodes
-Vecteur3D Dipole::B(Particule const&) const {
+virtual Vecteur3D Dipole::B(Particule const&) const {
   return Vecteur3D(0,0,Bz_);
+}
+
+virtual void affiche(ostream& sortie) const {
+	this->ElementCourbe::affiche(sortie);
+	sortie << "  champ magnetique : " << Vecteur3D(0, 0, Bz_) << endl;
 }
