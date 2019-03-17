@@ -1,6 +1,8 @@
 #include <vector>
 #include <iostream>
 #include "Element.h"
+#include "Dessinable.h"
+#include "Support_a_dessin.h"
 
 typedef Particule* p_Particule;
 typedef Element* p_Element;
@@ -8,7 +10,7 @@ typedef Element* p_Element;
 typedef std::vector<p_Particule> Collection_P;		//pour faciliter la comprehension du code et pour que ce soit plus clair
 typedef std::vector<p_Element> Collection_E;
 
-class Accelerateur {
+class Accelerateur : public Dessinable {
 	private:
 		Collection_P particules_;		//Pointeurs pour le polymorphisme et c'est moins risque d'utliser des unique_ptr lors d'oubli
 		Collection_E elements_;
@@ -38,8 +40,11 @@ class Accelerateur {
 		void supprimer_par();
 		void supprimer_el();
 		
-			//Evolution de l'accélérateur
-		void evolue();
+		//EVOLUTION
+		void evolue(double dt);
+		
+		//DESSINER
+		virtual void dessine() override { support->dessine(*this); }
 	
 };
 

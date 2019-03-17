@@ -7,9 +7,8 @@ using namespace std;
 //Class Element
 
 //Constructeurs
-Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv) :
-  r_section_(r_section),
-  el_suiv_(el_suiv) {
+Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv) 
+ : r_section_(r_section),el_suiv_(el_suiv) {
     double prod(prod_mixte(e3,pos_e,pos_s));
     if (prod == 0) { //pour s'assurer que l'élément est dans le bon sens
       Erreur err = {"position d'entrée = position de sortie",2};
@@ -69,7 +68,8 @@ void ElementCourbe::affiche(ostream& sortie) const {
 //=======================================================================
 
 //Class SectionDroite
-SectionDroite::SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv) : Element(pos_e, pos_s, r_section, el_suiv) {}
+SectionDroite::SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv) 
+: Element(pos_e, pos_s, r_section, el_suiv) {}
 
 //=======================================================================
 

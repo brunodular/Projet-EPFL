@@ -16,10 +16,10 @@ Vecteur3D.o: Vecteur3D.cc Vecteur3D.h constantes.h
 constantes.o: constantes.cc constantes.h
 Particule.o: Particule.cc Particule.h Vecteur3D.h constantes.h Element.h
 Element.o: Element.cc Element.h Particule.h
-Accelerateur.o: Accelerateur.cc Accelerateur.h Element.h
+Accelerateur.o: Accelerateur.cc Accelerateur.h Element.h Dessinable.h Support_a_dessin.h
 
 
 testVecteur3D.o: testVecteur3D.cc Vecteur3D.h
 testParticule.o: testParticule.cc Particule.h
 testElement.o: testElement.cc Element.h
-testAccel1.o: testAccel1.cc Accelerateur.h
+testAccel1.o: testAccel1.cc Accelerateur.h 

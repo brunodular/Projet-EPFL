@@ -42,7 +42,7 @@ int main() {
 	
 	cout << acc1 << endl;
 	}
-	catch (Erreur err) {cout << err.message;}
+	catch (Erreur err) {cout << err.message << endl;}
 	
 	return 0;
 }
