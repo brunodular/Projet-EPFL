@@ -29,13 +29,17 @@ double Particule::gamma() const {
 void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
   if (!est_zero(dt)) {
     F_ += q_*(v_^B);
-    F_ = F_.rotation(v_^F_,asin(dt*F_.norme()/(2*gamma()*m_kg_*v_.norme())));
+    cout << F_ << endl;  //ICI
+    cout << "Angle : " << asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))) << endl;
+    F_ = F_.rotation((v_^F_),asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))));
+    cout << F_ << endl; //ICI
+     
   }
 }
 
 void Particule::bouger(double dt) {
-  Vecteur3D a = 1/(gamma()*m_kg_)*F_;
-  v_ += dt*a;
+  Vecteur3D a = (1/(gamma()*m_kg_))*F_;
+  v_ = v_ + dt*a;
   pos_ += dt*v_;
   F_ = Vecteur3D();
 }

@@ -100,7 +100,7 @@ double Vecteur3D::operator*(Vecteur3D const& v) const {
 
 
 Vecteur3D const Vecteur3D::operator^(Vecteur3D v) const {
-  return (v ^= *this);
+  return -(v ^= *this);
 }
 
 Vecteur3D const Vecteur3D::operator~() const {
