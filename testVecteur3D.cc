@@ -64,26 +64,26 @@ int main () {
 	else {cout << "different";}
 	cout << endl;
 
-	cout << "Addition de v1 par v2: " << v+w << endl;
+	cout << "Addition de v1 par v2: " << v+w << endl << endl;
 
-	cout << "Soustraction de v1 par v3:" << v-u << endl;
+	cout << "Soustraction de v1 par v3:" << v-u << endl << endl;
 
-	cout << "Multiplication par 3:" << 3*v << endl;
+	cout << "Multiplication par 3:" << 3*v << endl << endl;
 
-	cout << "Produit scalaire de v1 par v2:" << v*w << endl;
+	cout << "Produit scalaire de v1 par v2:" << v*w << endl << endl;
 
-	cout << "Produit vectoriel de v1 par v3: " << (v^u) << endl;
+	cout << "Produit vectoriel de v1 par v3: " << (v^u) << endl << endl;
 
-	cout << "Norme de v1:" << v.norme() << endl;
+	cout << "Norme de v1:" << v.norme() << endl << endl;
 
-	cout << "Norme au carree de v3:" << u.norme2() << endl;
+	cout << "Norme au carree de v3:" << u.norme2() << endl << endl;
 
-	cout << "Vecteur unitaire selon l'axe de v1: " << ~v << endl;
+	cout << "Vecteur unitaire selon l'axe de v1: " << ~v << endl << endl;
 
-	cout << "Produit mixte de v1 par v2 par v3: " << prod_mixte(v, w, u) << endl;
+	cout << "Produit mixte de v1 par v2 par v3: " << prod_mixte(v, w, u) << endl << endl;
 
 	cout << "Rotation de v1 selon l'axe de v2 par un angle de pi/6: "
-	<< v.rotation(w, M_PI/6) << endl;
+	<< v.rotation(w, M_PI/6) << endl << endl;
 
 	return 0;
 }
