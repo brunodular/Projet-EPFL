@@ -8,6 +8,8 @@ using namespace std;
 Accelerateur::Accelerateur (Collection_P const& p, Collection_E const& e, SupportADessin* support)
   : Dessinable(support), particules_(p), elements_(e) {}
 
+Accelerateur::Accelerateur(SupportADessin* support) : Dessinable(support) {}
+
 //Methodes
 
 ostream& Accelerateur::afficher(ostream& sortie) const {
@@ -24,30 +26,36 @@ ostream& Accelerateur::afficher(ostream& sortie) const {
 		if (elements_.size()==1) {sortie << "l'"+str1+" "+str3;}
 		else {sortie << "les " << elements_.size() << ' '+str1+'s'+' '+str3+'s';}
 		sortie << " : "<< endl;
+
 		for (auto const& el : elements_) {
 			el->dessine();
 		}
+
 	} else {sortie << "L'accélérateur ne contient pas d'éléments." << endl;}
-	
+
 	if (particules_.size()!=0) {
 		sortie << "L'accélérateur contient ";
 		if (particules_.size()==1) {sortie << "la "+str2+" "+str4;}
 		else {sortie << "les " << particules_.size() << ' '+str2+'s'+' '+str4+'s';}
 		sortie << " :" << endl;
+
 		for (auto const& par : particules_) {
 			par->dessine();
 		}
+
 	} else {sortie << "L'accélérateur ne contient pas de particules." << endl;}
-	
+
 	return sortie;
 }
 
 void Accelerateur::ajouter_par(p_Particule const& par) {
-	particules_.push_back(p_Particule (new Particule(*par)));
+	particules_.push_back(par);
 }
 
+//J'ai modifié cette méthode car 'new Element(*el)' créait un pointeur vers un Element, et donc si on donnait un pointeur vers un Dipole par exemple, le Dipole était mis dans un Element et perdait donc ses attributs caractéristiques
+
 void Accelerateur::ajouter_el(p_Element const& el) {
-	elements_.push_back(p_Element (new Element (*el)));
+	elements_.push_back(el);
 }
 
 void Accelerateur::supprimer_par() {

@@ -1,9 +1,7 @@
 #include <cmath>
 
 #include "Particule.h"
-
 #include <iostream>
-
 #include <iomanip>
 
 using namespace std;
