@@ -1,11 +1,12 @@
 #pragma once
 #include <iostream>
-
+#include "Dessinable.h"
+#include "Support_a_dessin.h"
 #include "Particule.h"
 
 //=======================================================================
 
-class Element {
+class Element : public Dessinable {
 protected:
   Vecteur3D pos_e_;   //position d'entrée
   Vecteur3D pos_s_;   //position de sortie
@@ -15,7 +16,7 @@ protected:
 
 public:
   //Constructeur
-  Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv = nullptr);
+  Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support,Element* el_suiv = nullptr);
 
   //Destructeur
   virtual ~Element() {};
@@ -28,6 +29,9 @@ public:
   virtual Vecteur3D B(Particule const&) const; //champ magnétique
   
   virtual void affiche(std::ostream&) const;
+  
+  //DESSINER
+  virtual void dessine() override { support->dessine(*this); }
 };
 
 //=======================================================================
@@ -39,12 +43,15 @@ protected:
 
 public:
   //Constructeur
-  ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,Element* el_suiv = nullptr);
+  ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,SupportADessin* support,Element* el_suiv = nullptr);
 
   //Méthodes
   virtual bool heurte_bord(Particule const&) const override;
   
   virtual void affiche(std::ostream&) const override;
+  
+  //DESSINER
+  virtual void dessine() override { support->dessine(*this); }
 };
 
 //=======================================================================
@@ -52,7 +59,10 @@ public:
 class SectionDroite : public Element {
 public:
   //Constructeur
-  SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv = nullptr);
+  SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section, SupportADessin* support, Element* el_suiv = nullptr);
+  
+  //DESSINER
+  virtual void dessine() override { support->dessine(*this); }
 };
 
 //=======================================================================
@@ -63,10 +73,13 @@ private:
 
 public:
   //Constructeur
-  Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,double Bz,Element* el_suiv = nullptr);
+  Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,double Bz, SupportADessin* support, Element* el_suiv = nullptr);
 
   //Méthodes
   virtual Vecteur3D B(Particule const&) const override;
   
   virtual void affiche(std::ostream&) const override;
+  
+  //DESSINER
+  virtual void dessine() override { support->dessine(*this); }
 };

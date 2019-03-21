@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include "Dessinable.h"
+#include "Support_a_dessin.h"
 #include "constantes.h"
 #include "Vecteur3D.h"
 
@@ -10,7 +12,7 @@ typedef const double Masse;
 
 //=======================================================================
 
-class Particule {
+class Particule : public Dessinable {
 private:
   Vecteur3D pos_;
   Vecteur3D v_; //Vecteur directeur de la vitesse
@@ -22,7 +24,7 @@ private:
 
 public:
   //Constructeur
-  Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, Vecteur3D F = Vecteur3D());
+  Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support, Vecteur3D F = Vecteur3D());
 
   //getters
   Vecteur3D pos() const;
@@ -41,6 +43,9 @@ public:
 
   //Opérateurs
   std::ostream& affiche(std::ostream&) const;
+  
+  //DESSINER
+  virtual void dessine() override { support->dessine(*this); }
 };
 
 //Opérateurs externes

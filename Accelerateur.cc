@@ -5,8 +5,8 @@ using namespace std;
 //=======================================================================
 
 //Constructeur
-Accelerateur::Accelerateur (Collection_P const& p, Collection_E const& e)
-  : particules_(p), elements_(e) {}
+Accelerateur::Accelerateur (Collection_P const& p, Collection_E const& e, SupportADessin* support)
+  : Dessinable(support), particules_(p), elements_(e) {}
 
 //Methodes
 
@@ -25,7 +25,7 @@ ostream& Accelerateur::afficher(ostream& sortie) const {
 		else {sortie << "les " << elements_.size() << ' '+str1+'s'+' '+str3+'s';}
 		sortie << " : "<< endl;
 		for (auto const& el : elements_) {
-			el->affiche(sortie);
+			el->dessine();
 		}
 	} else {sortie << "L'accélérateur ne contient pas d'éléments." << endl;}
 	
@@ -35,7 +35,7 @@ ostream& Accelerateur::afficher(ostream& sortie) const {
 		else {sortie << "les " << particules_.size() << ' '+str2+'s'+' '+str4+'s';}
 		sortie << " :" << endl;
 		for (auto const& par : particules_) {
-			sortie << (*par) << endl;
+			par->dessine();
 		}
 	} else {sortie << "L'accélérateur ne contient pas de particules." << endl;}
 	
