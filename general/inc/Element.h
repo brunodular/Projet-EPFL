@@ -49,9 +49,9 @@ public:
   virtual ~ElementDroit() {};
 
   //Méthodes
-  virtual void affiche(std::ostream&) const;
+  virtual void affiche(std::ostream&) const override;
 
-  virtual bool heurte_bord(Particule const& p) const;
+  virtual bool heurte_bord(Particule const& p) const override;
 
   //DESSINER
   virtual void dessine() override { support->dessine(*this); }
@@ -105,6 +105,24 @@ public:
   virtual Vecteur3D B(Particule const&) const override;
 
   virtual void affiche(std::ostream&) const override;
+
+  //DESSINER
+  virtual void dessine() override { support->dessine(*this); }
+};
+
+//=======================================================================
+
+class Quadrupole : public ElementDroit {
+private:
+  const double b_; //intensité de l'aimant
+
+public:
+  //Constructeurs
+  Quadrupole(ecteur3D pos_e,Vecteur3D pos_s,double r_section,double b,SupportADessin* support,Element* el_suiv = nullptr);
+
+  virtual void affiche(std::ostream& sortie) const override;
+
+  virtual Vecteur3D B(Particule const&) const;
 
   //DESSINER
   virtual void dessine() override { support->dessine(*this); }

@@ -50,13 +50,17 @@ Question 7.1
 
   On a représenté la classe Accélérateur avec deux attributs: une collection de pointeurs (vector de pointeurs) sur des Eléments afin de pouvoir utiliser le polymorphisme, et une collection de pointeurs sur des Particules. Nous avons choisi de mettre des pointeurs sur des Particules afin d'optimiser le programme.
 
-Question 7.2 
+Question 7.2
 
   On qualifie ces deux methodes de delted car il est absrude de copier un acclerateur dans un autre accelerateur ou même d'affecter à un accélérateur les caractéristiques d'un autre accélérateur. En effet, un accélérateur est une entité qui est fixe pour une simulation donnée et ce serait bizarre de pouvori copier cet accélérateur (ce qui engendrerait peut_être une autre simulation).
 
 Question 8.1
 
-  On a un phénomène de 'masquage' de la méthode heurte_bord dans la sous-classe ElementCourbe qui est héritée de la classe Element. La méthode a donc le même nom dans Element et ElementCourbe, mais y est définie différemment.
+  C'est une méthode virtuelle. Dans la classe Element, elle est définie comme méthode virtuelle pure, et puis redéfinié (override) dans les sous-classes ElementDroit et ElementCourbe. Cela permet de pouvoir appeler la méthode heurte_bord() au moyen référence/un pointeur vers un Element, et que l'effet dépende de ce que c'est un ElementCourbe ou ElementDroit. On appelle ce concept le polymorphisme.
+
+Question 8.2
+
+  Comme la classe générale Element possède une méthode virtuelle pure, elle est une classe abstraite. Cela implique qu'on ne peut pas déclarer d'instances de la classe Element.
 
 Question 9.1
 
