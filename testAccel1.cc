@@ -20,29 +20,41 @@ int main() {
 	
 	Accelerateur acc2(Collection_P {p1_}, Collection_E{d_});
 	
+	cout << "Accelerateur 2 : " << endl;
+	
 	cout << acc2 << endl;
 	
+	cout << "Accelerateur 1 : " << endl;
+	
 	cout << acc1 << endl;
+	
+	cout << "Ajout d'un element a l'accelerateur 1 : " << endl;
 	
 	p_Element el_(new ElementCourbe (el));
 	acc1.ajouter_el(el_);
 	
 	cout << acc1 << endl;
 	
+	cout << "Ajout d'une particule a l'accelerateur 1 : " << endl;
+	
 	p_Particule p3_(new Particule (p3));
 	acc1.ajouter_par(p3_);
 	
 	cout << acc1 << endl;
 	
+	cout << "Supprimer tous les elements de l'accelerateur 1 : " << endl;
+	
 	acc1.supprimer_el();
 	
 	cout << acc1 << endl;
+	
+	cout << "Supprimer toutes les particules de l'accelerateur 1 : " << endl;
 	
 	acc1.supprimer_par();
 	
 	cout << acc1 << endl;
 	}
-	catch (Erreur err) {cout << err.message << endl;}
+	catch (Erreur err) {cout << err.message;}
 	
 	return 0;
 }
