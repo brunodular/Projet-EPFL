@@ -12,7 +12,7 @@ typedef const double Masse;
 
 //=======================================================================
 
-class Particule : public Dessinable{
+class Particule : public Dessinable {
 private:
   Vecteur3D pos_;
   Vecteur3D v_; //Vecteur directeur de la vitesse
@@ -24,7 +24,7 @@ private:
 
 public:
   //Constructeur
-  Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, Vecteur3D F = Vecteur3D());
+  Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support, Vecteur3D F = Vecteur3D());
 
   //getters
   Vecteur3D pos() const;

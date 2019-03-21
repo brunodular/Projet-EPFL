@@ -48,12 +48,6 @@ Question 6.4
 
 Question 7.1
 
-  On a représenté la classe Accélérateur avec deux attributs: une collection de pointeurs (vector de pointeurs) sur des Eléments afin de pouvoir utiliser le polymorphisme, et une collection de pointeurs sur des Particules. Nous avons choisi de mettre des pointeurs sur des Particules afin d'optimiser le programme.
-  
-Question 7.2 
-  
-  On qualifie ces deux methodes de delted car il est absrude de copier un acclerateur dans un autre accelerateur ou même d'affecter à un accélérateur les caractéristiques d'un autre accélérateur. En effet, un accélérateur est une entité qui est fixe pour une simulation donnée et ce serait bizarre de pouvori copier cet accélérateur (ce qui engendrerait peut_être une autre simulation).
-
 Question 8.1
 
   On a un phénomène de 'masquage' de la méthode heurte_bord dans la sous-classe ElementCourbe qui est héritée de la classe Element. La méthode a donc le même nom dans Element et ElementCourbe, mais y est définie différemment.
@@ -64,12 +58,6 @@ Question 8.2
 
 Question 9.1
 
-  La méthode dessine() est une méthode virtuelle pure/abstraite.
-
 Question 9.2
 
-  Le bon moyen de le faire en POO est de le faire par polymorphisme, c'est a dire que dans chaque sous-classe de Elément on redéfinit la méthde virtuelle affiche() qui perment d'afficher les attributs de la sous-classe et puis on utilise des pointeurs ou des reférences pour accéder par polymorphisme à ces méthodes spécifiques à chaques sous-classes.
-
 Question 9.3
-
-  Dans les classes contenant des pointeurs il faut faire attention à proposer des méthodes qui permettent de supprimer les pointeurs et leurs zones mémoires, il faut faire attention à ne pas prendre des variables locales dans les méthodes et il faut faire attention à bien allouer la mémoire.

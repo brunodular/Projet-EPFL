@@ -16,7 +16,7 @@ protected:
 
 public:
   //Constructeur
-  Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv = nullptr);
+  Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support,Element* el_suiv = nullptr);
 
   //Destructeur
   virtual ~Element() {};
@@ -43,7 +43,7 @@ protected:
 
 public:
   //Constructeur
-  ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,Element* el_suiv = nullptr);
+  ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,SupportADessin* support,Element* el_suiv = nullptr);
 
   //Méthodes
   virtual bool heurte_bord(Particule const&) const override;
@@ -59,7 +59,7 @@ public:
 class SectionDroite : public Element {
 public:
   //Constructeur
-  SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section, Element* el_suiv = nullptr);
+  SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section, SupportADessin* support, Element* el_suiv = nullptr);
   
   //DESSINER
   virtual void dessine() override { support->dessine(*this); }
@@ -73,7 +73,7 @@ private:
 
 public:
   //Constructeur
-  Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,double Bz, Element* el_suiv = nullptr);
+  Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,double Bz, SupportADessin* support, Element* el_suiv = nullptr);
 
   //Méthodes
   virtual Vecteur3D B(Particule const&) const override;
