@@ -7,8 +7,8 @@ using namespace std;
 //Class Element
 
 //Constructeurs
-Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv) 
- : r_section_(r_section),el_suiv_(el_suiv) {
+Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support,Element* el_suiv) 
+ : Dessinable(support), r_section_(r_section),el_suiv_(el_suiv) {
     double prod(prod_mixte(e3,pos_e,pos_s));
     if (prod == 0) { //pour s'assurer que l'élément est dans le bon sens
       Erreur err = {"position d'entrée = position de sortie",2};
@@ -49,8 +49,8 @@ void Element::affiche(ostream& sortie) const {
 //Class ElementCourbe
 
 //Constructeurs
-ElementCourbe::ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,Element* el_suiv) :
-  Element(pos_e, pos_s, r_section, el_suiv), 
+ElementCourbe::ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,SupportADessin* support,Element* el_suiv) :
+  Element(pos_e, pos_s, r_section, support, el_suiv), 
   courbure_(courbure),
   centre_(0.5*(pos_e_+pos_s_)+(1/courbure_)*sqrt(1-courbure_*courbure_*0.25*(pos_s_-pos_e_).norme2())*(dir_^e3)) {}
 
@@ -61,15 +61,17 @@ bool ElementCourbe::heurte_bord(Particule const& p) const {
 }
 
 void ElementCourbe::affiche(ostream& sortie) const {
-	this->Element::affiche(sortie);
+	sortie << "Element Courbe : " << endl;
+	Element::affiche(sortie);
 	sortie<<"  rayon de courbure : " << courbure_ << endl;
 }
 
 //=======================================================================
 
 //Class SectionDroite
-SectionDroite::SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,Element* el_suiv) 
-: Element(pos_e, pos_s, r_section, el_suiv) {}
+
+SectionDroite::SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support,Element* el_suiv) 
+: Element(pos_e, pos_s, r_section, support, el_suiv) {}
 
 //=======================================================================
 
@@ -77,8 +79,8 @@ SectionDroite::SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,El
 
 //Constructeurs
 
-Dipole::Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,double Bz,Element* el_suiv) :
-  ElementCourbe(pos_e, pos_s, r_section, courbure, el_suiv), Bz_(Bz) {}
+Dipole::Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,double Bz,SupportADessin* support,Element* el_suiv) :
+  ElementCourbe(pos_e, pos_s, r_section, courbure, support, el_suiv), Bz_(Bz) {}
 
 //Méthodes
 Vecteur3D Dipole::B(Particule const&) const {
@@ -86,6 +88,7 @@ Vecteur3D Dipole::B(Particule const&) const {
 }
 
 void Dipole::affiche(ostream& sortie) const {
-	this->ElementCourbe::affiche(sortie);
+	sortie << "Dipole : " << endl;
+	ElementCourbe::affiche(sortie);
 	sortie << "  champ magnetique : " << Vecteur3D(0, 0, Bz_) << endl;
 }

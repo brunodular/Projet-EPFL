@@ -5,7 +5,7 @@ class SupportADessin;
 
 class Dessinable {
  public:
-  Dessinable(SupportADessin* support)
+  Dessinable(SupportADessin* support=nullptr)
     : support(support)
   {}
   virtual ~Dessinable() {}
@@ -16,4 +16,3 @@ class Dessinable {
 };
 
 #endif
-
