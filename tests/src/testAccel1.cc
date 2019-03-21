@@ -1,5 +1,5 @@
-#include "Accelerateur.h"
-#include "Vue_Texte.h"
+#include "../../general/inc/Accelerateur.h"
+#include "../../texte/inc/Vue_Texte.h"
 using namespace std;
 
 

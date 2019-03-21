@@ -1,6 +1,6 @@
 #include <cmath>
 
-#include "Particule.h"
+#include "../../general/inc/Particule.h"
 #include <iostream>
 #include <iomanip>
 

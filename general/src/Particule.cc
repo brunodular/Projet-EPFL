@@ -1,4 +1,4 @@
-#include "Particule.h"
+#include "../inc/Particule.h"
 #include <cmath>
 #include <iostream>
 using namespace std;
@@ -40,7 +40,7 @@ void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
     cout << "Angle : " << asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))) << endl;
     F_ = F_.rotation((v_^F_),asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))));
     cout << F_ << endl; //ICI
-     
+
   }
 }
 

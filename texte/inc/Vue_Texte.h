@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Support_a_dessin.h"
+#include "../../dessin/inc/Support_a_dessin.h"
 
 class Vue_Texte : public SupportADessin {
 	private:

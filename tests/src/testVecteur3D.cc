@@ -1,4 +1,4 @@
-#include "Vecteur3D.h"
+#include "../../general/inc/Vecteur3D.h"
 #include <iostream>
 #include <cmath>
 using namespace std;

@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-#include "Dessinable.h"
-#include "Support_a_dessin.h"
+#include "../../dessin/inc/Dessinable.h"
+#include "../../dessin/inc/Support_a_dessin.h"
 #include "Particule.h"
 
 //=======================================================================

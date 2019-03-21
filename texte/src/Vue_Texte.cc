@@ -1,5 +1,4 @@
-#include "Vue_Texte.h"
-#include "Accelerateur.h"
+#include "../inc/Vue_Texte.h"
 
 //=======================================================================
 void Vue_Texte::dessine(Dipole const& d) {
@@ -11,7 +10,7 @@ void Vue_Texte::dessine(Particule const& p) {
 }
 
 void Vue_Texte::dessine(Accelerateur const& acc) {
-	flot_ << acc;
+	acc.affiche(flot_);
 }
 
 void Vue_Texte::dessine(ElementCourbe const& elc) {

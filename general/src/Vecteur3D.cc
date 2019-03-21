@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Vecteur3D.h"
-#include "constantes.h"			//A remplacer par des "static"??
+#include "../inc/Vecteur3D.h"
+#include "../inc/constantes.h"
 #include <cmath>
 using namespace std;
 

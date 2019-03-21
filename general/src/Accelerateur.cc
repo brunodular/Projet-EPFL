@@ -1,4 +1,4 @@
-#include "Accelerateur.h"
+#include "../inc/Accelerateur.h"
 #include <string>
 using namespace std;
 

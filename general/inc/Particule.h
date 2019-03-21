@@ -1,8 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include "Dessinable.h"
-#include "Support_a_dessin.h"
+#include "../../dessin/inc/Dessinable.h"
+#include "../../dessin/inc/Support_a_dessin.h"
 #include "constantes.h"
 #include "Vecteur3D.h"
 
@@ -43,7 +43,7 @@ public:
 
   //Opérateurs
   std::ostream& affiche(std::ostream&) const;
-  
+
   //DESSINER
   virtual void dessine() override { support->dessine(*this); }
 };
