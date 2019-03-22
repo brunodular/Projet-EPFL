@@ -13,4 +13,4 @@ HEADERS += ../../general/Vecteur3D.h ../../general/constantes.h
 
 LIBS += -L../../general -libgeneral.a/
 
-#PRE_TARGETDEPS = -libgeneral.a
+PRE_TARGETDEPS = -libgeneral.a
