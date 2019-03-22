@@ -1,4 +1,4 @@
-#include "../inc/Particule.h"
+#include "Particule.h"
 #include <cmath>
 #include <iostream>
 using namespace std;

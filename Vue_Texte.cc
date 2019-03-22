@@ -1,4 +1,4 @@
-#include "../inc/Vue_Texte.h"
+#include "Vue_Texte.h"
 
 //=======================================================================
 void Vue_Texte::dessine(Dipole const& d) {
@@ -23,4 +23,12 @@ void Vue_Texte::dessine(SectionDroite const& sd) {
 
 void Vue_Texte::dessine(Element const& el) {
 	el.affiche(flot_);
+}
+
+void Vue_Texte::dessine(ElementDroit const& el) {
+  el.affiche(flot_);
+}
+
+void Vue_Texte::dessine(Quadrupole const& el) {
+  el.affiche(flot_);
 }

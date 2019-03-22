@@ -1,5 +1,7 @@
+#pragma once
 #include <iostream>
-#include "../../dessin/inc/Support_a_dessin.h"
+#include "Support_a_dessin.h"
+#include "Accelerateur.h"
 
 class Vue_Texte : public SupportADessin {
 	private:
@@ -20,5 +22,7 @@ class Vue_Texte : public SupportADessin {
 		virtual void dessine(ElementCourbe const&) override;
 		virtual void dessine(SectionDroite const&) override;
 		virtual void dessine(Element const&) override;
+    virtual void dessine(ElementDroit const&) override;
+    virtual void dessine(Quadrupole const&) override;
 
 };

@@ -1,4 +1,5 @@
-#include "../inc/Accelerateur.h"
+#include "Accelerateur.h"
+#include "Support_a_dessin.h"
 #include <string>
 using namespace std;
 
@@ -12,7 +13,7 @@ Accelerateur::Accelerateur(SupportADessin* support) : Dessinable(support) {}
 
 //Methodes
 
-ostream& Accelerateur::afficher(ostream& sortie) const {
+ostream& Accelerateur::affiche(ostream& sortie) const {
 	if (elements_.empty() and particules_.empty()) {
 		sortie << "L'accélérateur est vide!";
 		return sortie;
@@ -76,6 +77,6 @@ void Accelerateur::supprimer_el() {
 
 //Operateurs Externes
 
-ostream& operator << (ostream& sortie, Accelerateur const& a) {
-	return a.afficher(sortie);
+ostream& operator<<(ostream& sortie, Accelerateur const& a) {
+	return a.affiche(sortie);
 }

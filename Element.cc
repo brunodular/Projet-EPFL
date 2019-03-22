@@ -1,5 +1,5 @@
 #include <cmath>
-#include "../inc/Element.h"
+#include "Element.h"
 using namespace std;
 
 //=======================================================================
@@ -116,7 +116,7 @@ void Dipole::affiche(ostream& sortie) const {
 //Class Quadrupole
 
 //Constructeurs
-Quadrupole::Quadrupole(ecteur3D pos_e,Vecteur3D pos_s,double r_section,double b,SupportADessin* support,Element* el_suiv) : ElementDroit(pos_e,pos_s,r_section,support,el_suiv), b_(b) {}
+Quadrupole::Quadrupole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double b,SupportADessin* support,Element* el_suiv) : ElementDroit(pos_e,pos_s,r_section,support,el_suiv), b_(b) {}
 
 //Méthodes
 void Quadrupole::affiche(std::ostream& sortie) const {
@@ -128,7 +128,7 @@ void Quadrupole::affiche(std::ostream& sortie) const {
 Vecteur3D Quadrupole::B(Particule const& p) const {
   Vecteur3D X(p.pos() - pos_e_);
   Vecteur3D Y(X-(X*dir_)*dir_); //calcul des coordonnées locales
-  return b_*((Y*(e3^dir_))*e3 + (X.z() * (e3^dir_)); //calcul du champ magnétique
+  return b_*((Y*(e3^dir_))*e3 + (X.z() * (e3^dir_))); //calcul du champ magnétique
 }
 
 //=======================================================================

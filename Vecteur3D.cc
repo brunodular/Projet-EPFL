@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../inc/Vecteur3D.h"
-#include "../inc/constantes.h"
+#include "Vecteur3D.h"
+#include "constantes.h"
 #include <cmath>
 using namespace std;
 
