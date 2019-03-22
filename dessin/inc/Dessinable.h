@@ -1,18 +1,13 @@
-#ifndef DESSINABLE_H
-#define DESSINABLE_H
+#pragma once
 
-class SupportADessin;
+#include "Support_a_dessin.h"
 
 class Dessinable {
- public:
-  Dessinable(SupportADessin* support=nullptr)
-    : support(support)
-  {}
+public:
+  Dessinable(SupportADessin* support = nullptr);
   virtual ~Dessinable() {}
   virtual void dessine() = 0;
 
- protected:
-  SupportADessin* support; //on implémente un pointeur a la place d'une reference si jamais on aurait besoin de copier
+protected:
+  SupportADessin* support;
 };
-
-#endif

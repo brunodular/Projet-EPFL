@@ -17,10 +17,18 @@ void Vue_Texte::dessine(ElementCourbe const& elc) {
 	elc.affiche(flot_);
 }
 
+void Vue_Texte::dessine(ElementDroit const& el) {
+  el.affiche(flot_);
+}
+
 void Vue_Texte::dessine(SectionDroite const& sd) {
 	sd.affiche(flot_);
 }
 
 void Vue_Texte::dessine(Element const& el) {
 	el.affiche(flot_);
+}
+
+void Vue_Texte::dessine(Quadrupole const& quad) override {
+  quad.affiche(flot_);
 }

@@ -2,10 +2,10 @@
 
 #include <iostream>
 #include "../../dessin/inc/Dessinable.h"
-#include "../../dessin/inc/Support_a_dessin.h"
 #include "constantes.h"
 #include "Vecteur3D.h"
 
+class SupportADessin;
 class Element;
 
 typedef const double Masse;

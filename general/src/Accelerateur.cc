@@ -10,9 +10,21 @@ Accelerateur::Accelerateur (Collection_P const& p, Collection_E const& e, Suppor
 
 Accelerateur::Accelerateur(SupportADessin* support) : Dessinable(support) {}
 
+//Destructeur
+Accelerateur::~Accelerateur () {
+  for (auto el : elements_) {
+    delete el;
+  }
+  elements_.clear();
+  for (auto par : particules_) {
+    delete par;
+  }
+  particules_.clear();
+}
+
 //Methodes
 
-ostream& Accelerateur::afficher(ostream& sortie) const {
+ostream& Accelerateur::affiche(ostream& sortie) const {
 	if (elements_.empty() and particules_.empty()) {
 		sortie << "L'accélérateur est vide!";
 		return sortie;
@@ -76,6 +88,6 @@ void Accelerateur::supprimer_el() {
 
 //Operateurs Externes
 
-ostream& operator << (ostream& sortie, Accelerateur const& a) {
-	return a.afficher(sortie);
+ostream& operator<<(ostream& sortie, Accelerateur const& a) {
+	return a.affiche(sortie);
 }

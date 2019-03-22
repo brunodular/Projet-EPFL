@@ -1,8 +1,11 @@
+#pragma once
+
 #include <vector>
 #include <iostream>
 #include "Element.h"
+
 #include "../../dessin/inc/Dessinable.h"
-#include "../../dessin/inc/Support_a_dessin.h"
+class SupportADessin;
 
 typedef Particule* p_Particule;	//On a choisit de mettre des pointeurs afin d'optimiser la simulation et puis dans la cas ou l'on voudrait cree dans sous-classes de Particule afin d'utiliser le polymorphisme
 typedef Element* p_Element;		//On a choisit de mettre des pointeurs a la C a la place de unique_ptr car les elements sont pointe par d'autres pointeurs (pointeur sur l'element courant et suivant par les Particules et les Elements respectivement cf. definition de la classe Element et Particule)
@@ -19,27 +22,18 @@ class Accelerateur : public Dessinable {
 		//Constructeurs
 		Accelerateur (Collection_P const&, Collection_E const&, SupportADessin* support ); //pas besoin de mettre les vector par defaut car les vectors sont automatiquement initialise au vector vide
 
-		Accelerateur(SupportADessin* support);
+		Accelerateur(SupportADessin*);
 
 		Accelerateur (Accelerateur const&)=delete;
 		Accelerateur& operator=(Accelerateur)=delete;
 
 		//Destructeur
 
-		~Accelerateur () {
-			for (auto el : elements_) {
-				delete el;
-			}
-			elements_.clear();
-			for (auto par : particules_) {
-				delete par;
-			}
-			particules_.clear();
-		}
+		~Accelerateur ();
 
 		//Methodes
 			//Afficher
-		std::ostream& afficher(std::ostream&) const;
+		std::ostream& affiche(std::ostream&) const;
 
 			//Ajouter
 		void ajouter_par(p_Particule const&);

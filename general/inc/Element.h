@@ -1,8 +1,10 @@
 #pragma once
 #include <iostream>
 #include "../../dessin/inc/Dessinable.h"
-#include "../../dessin/inc/Support_a_dessin.h"
 #include "Particule.h"
+
+class SupportADessin;
+
 
 //=======================================================================
 
@@ -118,7 +120,7 @@ private:
 
 public:
   //Constructeurs
-  Quadrupole(ecteur3D pos_e,Vecteur3D pos_s,double r_section,double b,SupportADessin* support,Element* el_suiv = nullptr);
+  Quadrupole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double b,SupportADessin* support,Element* el_suiv = nullptr);
 
   virtual void affiche(std::ostream& sortie) const override;
 

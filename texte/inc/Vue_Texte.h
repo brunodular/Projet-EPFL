@@ -1,4 +1,5 @@
 #include <iostream>
+#include "../../general/inc/Accelerateur.h"
 #include "../../dessin/inc/Support_a_dessin.h"
 
 class Vue_Texte : public SupportADessin {
@@ -18,7 +19,9 @@ class Vue_Texte : public SupportADessin {
 		virtual void dessine(Particule const&) override;
 		virtual void dessine(Accelerateur const&) override;
 		virtual void dessine(ElementCourbe const&) override;
+    virtual void dessine(ElementDroit const&) override;
 		virtual void dessine(SectionDroite const&) override;
 		virtual void dessine(Element const&) override;
+    virtual void dessine(Quadrupole const&) override;
 
 };
