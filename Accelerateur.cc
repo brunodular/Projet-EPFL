@@ -1,6 +1,7 @@
 #include "Accelerateur.h"
 #include "Support_a_dessin.h"
 #include <string>
+#include <vector>
 using namespace std;
 
 //=======================================================================
@@ -71,6 +72,30 @@ void Accelerateur::supprimer_el() {
 		delete el;
 	}
 	elements_.clear();
+}
+
+void Accelerateur::supprimer_par(size_t i) {
+  delete particules_[i];
+  particules_.erase(particules_.begin() + i);
+}
+
+void Accelerateur::evolue(double dt) {
+  //Avant de mettre à jour l'état des particules, on supprime toutes les particules qui sont sorties de l'accélérateur.
+  size_t i(0);
+  while (i < particules_.size()) {
+    if (particules_[i]->est_sortie()) supprimer_par(i);
+    else ++i;
+  }
+
+  for (auto& p : particules_) {
+    p->ajouter_f_magn((p->element_courant())->B(*p),dt); //On ajoute à la particule p le champ magnétique produit par l'élément dans lequel elle se trouve.
+
+    p->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
+
+    (p->element_courant())->passe_au_suivant(*p); //Mise à jour de l'élément courant de la particule p.
+
+    p->est_sortie(); //Vérifie si la particule est toujours dans un élément. Affecte nullptr à element_courant_ sinon.
+  }
 }
 
 //=======================================================================

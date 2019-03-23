@@ -28,7 +28,7 @@ public:
   //Méthodes
   virtual bool heurte_bord(Particule const& p) const = 0;
 
-  virtual bool passe_au_suivant(Particule& p) const;
+  virtual void passe_au_suivant(Particule& p) const;
 
   virtual Vecteur3D B(Particule const&) const; //champ magnétique
 
@@ -122,7 +122,7 @@ public:
 
   virtual void affiche(std::ostream& sortie) const override;
 
-  virtual Vecteur3D B(Particule const&) const;
+  virtual Vecteur3D B(Particule const&) const override;
 
   //DESSINER
   virtual void dessine() override { support->dessine(*this); }

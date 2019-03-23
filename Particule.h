@@ -5,8 +5,7 @@
 #include "Support_a_dessin.h"
 #include "constantes.h"
 #include "Vecteur3D.h"
-
-class Element;
+#include "Element.h"
 
 typedef const double Masse;
 
@@ -40,6 +39,8 @@ public:
   void ajouter_f_magn(Vecteur3D const&,double);
 
   void bouger(double);
+
+  bool est_sortie();
 
   //Opérateurs
   std::ostream& affiche(std::ostream&) const;

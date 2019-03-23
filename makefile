@@ -6,11 +6,12 @@ CXXFLAGS += -pedantic -Wall
 #CXXFLAGS += -pg               #pour profiler
 #CXXFLAGS += -O2               #pour optimiser la vitesse
 
-all:: testAccel1
+all:: testAccel1 exerciceP10
 
 #testVecteur3D: Vecteur3D.o testVecteur3D.o constantes.o
 #testParticule: Vecteur3D.o constantes.o Particule.o testParticule.o
 testAccel1: Accelerateur.o testAccel1.o Element.o constantes.o Particule.o Vecteur3D.o Dessinable.o Vue_Texte.o
+exerciceP10: exerciceP10.o Accelerateur.o Element.o constantes.o Particule.o Vecteur3D.o Dessinable.o Vue_Texte.o
 
 Vecteur3D.o: Vecteur3D.cc Vecteur3D.h constantes.h
 constantes.o: constantes.cc constantes.h
@@ -23,4 +24,5 @@ Dessinable.o: Dessinable.cc Dessinable.h Support_a_dessin.h
 #testVecteur3D.o: testVecteur3D.cc Vecteur3D.h
 #testParticule.o: testParticule.cc Particule.h
 #testElement.o: testElement.cc Element.h
-testAccel1.o: testAccel1.cc Accelerateur.h Support_a_dessin.h Dessinable.h
+testAccel1.o: testAccel1.cc Accelerateur.h Vue_Texte.h
+exerciceP10.o: exerciceP10.cc Accelerateur.h Vue_Texte.h

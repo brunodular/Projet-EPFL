@@ -17,7 +17,7 @@ class Accelerateur : public Dessinable {
 
 	public:
 		//Constructeurs
-		Accelerateur (Collection_P const&, Collection_E const&, SupportADessin* support); //pas besoin de mettre les vector par defaut car les vectors sont automatiquement initialise au vector vide
+		Accelerateur (Collection_P const&, Collection_E const&, SupportADessin* support); //pas besoin de mettre les vector par defaut car les vectors sont automatiquement initialisés au vector vide
 
 		Accelerateur(SupportADessin* support);
 
@@ -46,6 +46,8 @@ class Accelerateur : public Dessinable {
 		void ajouter_el(p_Element const&);
 
 			//Supprimer
+    void supprimer_par(size_t i);
+
 		void supprimer_par();
 		void supprimer_el();
 

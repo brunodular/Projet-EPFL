@@ -51,6 +51,12 @@ void Particule::bouger(double dt) {
   F_ = Vecteur3D();
 }
 
+bool Particule::est_sortie() {
+  if (element_courant_ == nullptr or element_courant_->heurte_bord(*this)) {
+    element_courant_ = nullptr;
+    return true;
+  } else return false;
+}
 
 ostream& Particule::affiche(ostream& out) const {
   return (out << "Une particule :" << endl << "  position : " << pos_ << endl << "  vitesse : " << v_ << endl << "  gamma : " << gamma() << endl << "  Energie (en GeV) : " << E() << endl << "  Masse (en GeV/c^2) : " << m_ << endl << "  Charge : " << q_ << endl << "  Force : " << F_ << endl);

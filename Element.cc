@@ -22,13 +22,13 @@ Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin
   }
 
 //Méthodes
-bool Element::passe_au_suivant(Particule& p) const {
+void Element::passe_au_suivant(Particule& p) const {
   if (prod_mixte(e3,p.pos(),pos_s_) > 0) {
     p.element_courant(el_suiv_);
-    return true;
-  } else {
+    //return true;
+  } /* else {
     return false;
-  }
+  } */ //méthode void plutôt que bool
 }
 
 Vecteur3D Element::B(Particule const&) const {
