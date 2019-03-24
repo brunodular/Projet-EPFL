@@ -18,7 +18,7 @@ private:
   Masse m_; //en GeV/c^2
   Masse m_kg_; //en kg
   double q_;
-  Vecteur3D F_;
+  Vecteur3D F_;	//Vecteur force
   Element* element_courant_; //élément dans lequel se trouve la particule
 
 public:

@@ -18,11 +18,11 @@ class Vue_Texte : public SupportADessin {
 		//METHODES DESSINE
 		virtual void dessine(Dipole const&) override;
 		virtual void dessine(Particule const&) override;
-		virtual void dessine(Accelerateur const&) override;
+		virtual void dessine(Accelerateur const& acc) {acc.affiche(flot_);}
 		virtual void dessine(ElementCourbe const&) override;
 		virtual void dessine(SectionDroite const&) override;
 		virtual void dessine(Element const&) override;
-    virtual void dessine(ElementDroit const&) override;
-    virtual void dessine(Quadrupole const&) override;
+		virtual void dessine(ElementDroit const&) override;
+		virtual void dessine(Quadrupole const&) override;
 
 };

@@ -46,7 +46,7 @@ class Accelerateur : public Dessinable {
 		void ajouter_el(p_Element const&);
 
 			//Supprimer
-    void supprimer_par(size_t i);
+		void supprimer_par(size_t i);
 
 		void supprimer_par();
 		void supprimer_el();
