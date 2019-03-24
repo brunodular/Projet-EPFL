@@ -2,6 +2,7 @@
 #include "Vue_Texte.h"
 using namespace std;
 
+//EXERCICE P9
 
 int main() {
 try {
