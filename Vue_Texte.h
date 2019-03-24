@@ -24,5 +24,6 @@ class Vue_Texte : public SupportADessin {
 		virtual void dessine(Element const&) override;
 		virtual void dessine(ElementDroit const&) override;
 		virtual void dessine(Quadrupole const&) override;
+		//virtual void dessine(Faisceau const&) override;
 
 };

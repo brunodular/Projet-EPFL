@@ -6,8 +6,8 @@ using namespace std;
 
 //Constructeur
 
-Faisceau::Faisceau (Particule* p, unsigned int nb, unsigned int l)
-	: particule_typique(Particule* (new Particule (p))), nb_p_(nb), lambda_(l) 
+Faisceau::Faisceau (p_Particule p, Collection_P const& par, const unsigned int lambda)
+	: particule_typique(Particule* (new Particule (p))), particules_(par), lambda_(lambda)
 {}
 
 //Methodes
@@ -43,4 +43,12 @@ double Faisceau::A_22() const {
 	
 }
 
+unsigned int Faisceau::nombre_p() const {
+	return lambda_*particules_.size();
+}
 
+//EVOLUTION
+
+void evolue(double dt) {
+	
+}
