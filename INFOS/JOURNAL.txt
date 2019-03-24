@@ -53,8 +53,14 @@
 
 - Ajout de la sous-classe Vue_Texte de SupportADessin qui permet de "dessiner" (dans ce cas d'afficher) les caractéristiques des particules, de l'accélérateur et des éléments que l'on veut représenter.
 
+-- 23/03 --
+
+- Ajout de la méthode void evolue(double dt); dans la classe Accélérateur.
+
+- Ecriture du test sous le nom de exerciceP10.
+
 -- 24/03 --
 
-- Debut de l'implémentation de la classe Faisceau
+- Debut de l'implémentation de la classe Faisceau.
 
 - Modification du fichier testParticule pour que l'on puisse utiliser la fonction dessine de la sous-classe Vue_Texte dans les tests (nous modifions les tests au fur et à mesure de l'évolution de notre programme afin de bien voir que notre code fonctionne correctement).
