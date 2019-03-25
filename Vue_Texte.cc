@@ -10,7 +10,7 @@ void Vue_Texte::dessine(Particule const& p) {
 }
 
 void Vue_Texte::dessine(Accelerateur const& acc) {
-	flot_ << acc;
+	acc.affiche(flot_);
 }
 
 void Vue_Texte::dessine(ElementCourbe const& elc) {
