@@ -35,6 +35,14 @@
 
 - Ajout de l'attribut element_courant_ dans la classe Particule, qui spécifie dans quel élément la particule se trouve (il est unique), et permet donc de savoir à quelles forces est soumise celle-ci.
 
+-- 17/03 --
+
+- Implémentation de la classe Accelerateur: nous avons décidé de mettre en attributs une collection hétérogène de pointeurs sur des Eléments (afin de garantir le polymorphisme) et une collection de pointeurs sur des Particules (afin de garantir le polymorphisme si jamais on décide de créer des sous-classes de Particule).
+
+- Ecriture du testAccel1 qui correspond à l'exerciceP9.
+
+- Debut de la construction des classes Dessinable et SupportADessin: toutes les classes que l'on voudra représenter lors de simulation vont être des sous-classes de la classe Dessinable.
+
 -- 21/03 --
 
 - Implémentation des classes Dessinable et SupportADessin, et modification du reste du code en conséquence.
@@ -42,3 +50,17 @@
 - Nous avions au départ choisi de définir un Element comme étant, par défaut, un élémént droit. Les éléments courbes héritaient, quant à eux, de la sous-classe ElementCourbe de Element. Nous avons changé d'avis : maintenant ElementDroit et ElementCourbe sont deux sous-classes de Element, dont héritent tous les types d'éléments (SectionDroite, Dipole, etc.). Cela nous paraît plus logique conceptuellement : il n'y a pas de raison qu'un élément soit, par défaut, droit et pas courbe.
 
 - Ajout de la classe Quadrupole.
+
+- Ajout de la sous-classe Vue_Texte de SupportADessin qui permet de "dessiner" (dans ce cas d'afficher) les caractéristiques des particules, de l'accélérateur et des éléments que l'on veut représenter.
+
+-- 23/03 --
+
+- Ajout de la méthode void evolue(double dt); dans la classe Accélérateur.
+
+- Ecriture du test sous le nom de exerciceP10.
+
+-- 24/03 --
+
+- Debut de l'implémentation de la classe Faisceau.
+
+- Modification du fichier testParticule pour que l'on puisse utiliser la fonction dessine de la sous-classe Vue_Texte dans les tests (nous modifions les tests au fur et à mesure de l'évolution de notre programme afin de bien voir que notre code fonctionne correctement).

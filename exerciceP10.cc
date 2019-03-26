@@ -1,6 +1,5 @@
 #include "Accelerateur.h"
 #include "Vue_Texte.h"
-#include <iostream>
 using namespace std;
 
 int main() {

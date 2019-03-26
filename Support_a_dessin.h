@@ -8,6 +8,7 @@ class ElementCourbe;
 class ElementDroit;
 class SectionDroite;
 class Quadrupole;
+class Faisceau;
 
 class SupportADessin {
 public:
@@ -21,6 +22,7 @@ public:
   virtual void dessine(Element const&) = 0;
   virtual void dessine(ElementDroit const&) = 0;
   virtual void dessine(Quadrupole const&) = 0;
+  //virtual void dessine(Faisceau const&) = 0;
 
   SupportADessin () = default;
 

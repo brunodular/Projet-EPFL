@@ -1,6 +1,7 @@
 #include <cmath>
 
 #include "Particule.h"
+#include "Vue_Texte.h"
 #include <iostream>
 #include <iomanip>
 
@@ -10,11 +11,18 @@ int main () {
 cout.setf(ios::scientific);
 cout << setprecision(10);
 
-Particule p1(Vecteur3D (3.00984,-0.391837,0),Vecteur3D (-210200.0,-2.64754e+08,0), 2, 0.938272, e);
-Particule p2(Vecteur3D (2.99016,-0.391837,0),Vecteur3D (210200.0,-2.64754e+08,0), 2, 0.938272, e);
+SupportADessin* p_Vue(new Vue_Texte(cout));
 
-cout << "P1 :" << endl << p1;
-cout << "P2 :" << endl << p2;
+Particule p1(Vecteur3D (3.00984,-0.391837,0),Vecteur3D (-210200.0,-2.64754e+08,0), 2, 0.938272, e, p_Vue);
+Particule p2(Vecteur3D (2.99016,-0.391837,0),Vecteur3D (210200.0,-2.64754e+08,0), 2, 0.938272, e, p_Vue);
+
+/*cout << "P1 :" << endl << p1;
+cout << "P2 :" << endl << p2;*/
+
+cout << "P1 : "<< endl;
+p_Vue->dessine(p1);
+cout << "P2 : "<<endl;
+p_Vue->dessine(p2);
 
 Vecteur3D B(0,0,7); double dt(1e-11);
 cout << "Ajout d'une force magnétique B = " << B << "(dt=" << dt << ")" << endl;
@@ -28,10 +36,14 @@ cout << endl;
 cout << "Les particules bougent une fois : " << endl;
 
 p1.bouger(dt);
-cout << "Nouveau P1 :" << endl << p1 << endl;
+cout << "Nouveau P1 :" << endl;
+p_Vue->dessine(p1);
+cout << endl;
 
 p2.bouger(dt);
-cout << "Nouveau P2 : " << endl << p2 << endl;
+cout << "Nouveau P2 : " << endl;
+p_Vue->dessine(p2);
+cout << endl;
 /*
 
 	cout << "Deux particules :" << endl << p1 << endl << " et " << p2 << endl;

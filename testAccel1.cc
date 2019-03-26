@@ -21,7 +21,8 @@ try {
 
 	cout << "Accelerateur 1 : " << endl;
 	Vue.dessine(acc1);
-	/*
+	
+	/*Ancienne version du test:
 	cout << "Accelerateur 1 : " << endl;
 
 	cout << acc1 << endl;
