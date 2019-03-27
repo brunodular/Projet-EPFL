@@ -33,13 +33,14 @@ double Particule::gamma() const {
   return 1/sqrt(1-(v_.norme2()/(c*c)));
 }
 
+//Etrange : la ligne de correction de la force fait une erreur de type char const*...
 void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
   if (!est_zero(dt)) {
     F_ += q_*(v_^B);
-    cout << F_ << endl;  //ICI
-    cout << "Angle : " << asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))) << endl;
-    F_ = F_.rotation((v_^F_),asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))));
-    cout << F_ << endl; //ICI
+    //cout << F_ << endl;  //ICI
+    //cout << "Angle : " << asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))) << endl;
+    //F_ = F_.rotation((v_^F_),asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))));
+    //cout << F_ << endl; //ICI
 
   }
 }
@@ -53,13 +54,21 @@ void Particule::bouger(double dt) {
 
 bool Particule::est_sortie() {
   if (element_courant_ == nullptr or element_courant_->heurte_bord(*this)) {
-    element_courant_ = nullptr;
+    element_courant_ = nullptr; cout << "Je suis sortie ^^" << endl;
     return true;
   } else return false;
 }
 
 ostream& Particule::affiche(ostream& out) const {
-  return (out << "Une particule :" << endl << "  position : " << pos_ << endl << "  vitesse : " << v_ << endl << "  gamma : " << gamma() << endl << "  Energie (en GeV) : " << E() << endl << "  Masse (en GeV/c^2) : " << m_ << endl << "  Charge : " << q_ << endl << "  Force : " << F_ << endl);
+  out << "Une particule :" << endl << "  position : " << pos_ << endl << "  vitesse : " << v_ << endl << "  gamma : " << gamma() << endl << "  Energie (en GeV) : " << E() << endl << "  Masse (en GeV/c^2) : " << m_ << endl << "  Charge : " << q_ << endl << "  Force : " << F_ << endl;
+
+  out << "est dans un élément :" << endl;
+  element_courant()->dessine();
+
+  //out << "dont l'élément suivant est :" << endl;
+  //(element_courant()->el_suiv_->dessine();
+
+  return out;
 }
 
 //=======================================================================

@@ -3,16 +3,52 @@
 using namespace std;
 
 int main() {
-  constexpr double dt(0.1);
+  try {
+    constexpr double dt(1e-11);
 
-  Vue_Texte* p_Vue (new Vue_Texte(cout));
-  Accelerateur CERN(p_Vue);
-  CERN.ajouter_par(new Particule(Vecteur3D(1.00984, -0.191837, 0), Vecteur3D(-210200, -2.64754e+08, 0), 2, 0.938272, e, p_Vue));
+    Vue_Texte* p_Vue (new Vue_Texte(cout));
+    Accelerateur CERN(p_Vue);
 
-  CERN.dessine();
-  CERN.evolue(dt); //Petit test juste pour voir si la méthode fonctionne. La particule va en fait disparaître dès la première itération de evolue car elle n'est dans aucun élément.
+    CERN.ajouter_el(new Quadrupole(Vecteur3D(3,2,0),Vecteur3D(3,1,0),0.1,1.2));
+    CERN.ajouter_el(new SectionDroite(Vecteur3D(3,1,0),Vecteur3D(3,0,0),0.1));
+    CERN.ajouter_el(new Quadrupole(Vecteur3D(3,0,0),Vecteur3D(3,-1,0),0.1,-1.2));
+    CERN.ajouter_el(new SectionDroite(Vecteur3D(3,-1,0),Vecteur3D(3,-2,0),0.1));
+    CERN.ajouter_el(new Dipole(Vecteur3D(3,-2,0),Vecteur3D(2,-3,0),0.1,1,5.89158));
 
-  CERN.dessine();
+    CERN.ajouter_el(new Quadrupole(Vecteur3D(2,-3,0),Vecteur3D(1,-3,0),0.1,1.2));
+    CERN.ajouter_el(new SectionDroite(Vecteur3D(1,-3,0),Vecteur3D(0,-3,0),0.1));
+    CERN.ajouter_el(new Quadrupole(Vecteur3D(0,-3,0),Vecteur3D(-1,-3,0),0.1,-1.2));
+    CERN.ajouter_el(new SectionDroite(Vecteur3D(-1,-3,0),Vecteur3D(-2,-3,0),0.1));
+    CERN.ajouter_el(new Dipole(Vecteur3D(-2,-3,0),Vecteur3D(-3,-2,0),0.1,1,5.89158));
+
+    CERN.ajouter_el(new Quadrupole(Vecteur3D(-3,-2,0),Vecteur3D(-3,-1,0),0.1,1.2));
+    CERN.ajouter_el(new SectionDroite(Vecteur3D(-3,-1,0),Vecteur3D(-3,0,0),0.1));
+    CERN.ajouter_el(new Quadrupole(Vecteur3D(-3,0,0),Vecteur3D(-3,1,0),0.1,-1.2));
+    CERN.ajouter_el(new SectionDroite(Vecteur3D(-3,1,0),Vecteur3D(-3,2,0),0.1));
+    CERN.ajouter_el(new Dipole(Vecteur3D(-3,2,0),Vecteur3D(-2,3,0),0.1,1,5.89158));
+
+    CERN.ajouter_el(new Quadrupole(Vecteur3D(-2,3,0),Vecteur3D(-1,3,0),0.1,1.2));
+    CERN.ajouter_el(new SectionDroite(Vecteur3D(-1,3,0),Vecteur3D(0,3,0),0.1));
+    CERN.ajouter_el(new Quadrupole(Vecteur3D(0,3,0),Vecteur3D(1,3,0),0.1,-1.2));
+    CERN.ajouter_el(new SectionDroite(Vecteur3D(1,3,0),Vecteur3D(2,3,0),0.1));
+    CERN.ajouter_el(new Dipole(Vecteur3D(2,3,0),Vecteur3D(3,2,0),0.1,1,5.89158));
+
+    CERN.souder_accelerateur();
+
+    CERN.ajouter_par(new Particule(Vecteur3D(3.01, 0, 0), Vecteur3D(0, -1, 0), 2, 0.938272, e));
+    //CERN.ajouter_par(new Particule(Vecteur3D(2.99, 0, 0), Vecteur3D(0, -1, 0), 2, 0.938272, e));
+
+    CERN.initialiser_particules();
+
+    CERN.dessine();
+    //CERN.affiche_part(cout);
+
+    for (size_t i(0);i<5000;++i) {
+      cout << i << endl;
+      CERN.evolue(dt);
+      CERN.affiche_part(cout);
+    }
+  } catch (char const* error) {cerr << *error << endl;}
 
   return 0;
 }

@@ -50,15 +50,63 @@ ostream& Accelerateur::affiche(ostream& sortie) const {
 	return sortie;
 }
 
+std::ostream& Accelerateur::affiche_part(std::ostream& sortie) const {
+  string str1="element";
+	string str2="particule";
+	string str3="suivant";
+	string str4=str3+'e';
+
+  if (particules_.size()!=0) {
+		sortie << "L'accélérateur contient ";
+		if (particules_.size()==1) {sortie << "la "+str2+" "+str4;}
+		else {sortie << "les " << particules_.size() << ' '+str2+'s'+' '+str4+'s';}
+		sortie << " :" << endl;
+
+		for (auto const& par : particules_) {
+			par->dessine();
+		}
+
+	} else {sortie << "L'accélérateur ne contient pas de particules." << endl;}
+
+	return sortie;
+}
+
 void Accelerateur::ajouter_par(p_Particule const& par) {
+  par->set_support(support);
 	particules_.push_back(par);
 }
 
 //J'ai modifié cette méthode car 'new Element(*el)' créait un pointeur vers un Element, et donc si on donnait un pointeur vers un Dipole par exemple, le Dipole était mis dans un Element et perdait donc ses attributs caractéristiques
 
 void Accelerateur::ajouter_el(p_Element const& el) {
+  el->set_support(support);
 	elements_.push_back(el);
 }
+
+//CONSTRUIRE
+
+void Accelerateur::souder_accelerateur() {
+  size_t n(elements_.size()); //nombre d'élément contenus dans l'accélérateur
+  if (n != 0) {
+    elements_.back()->el_suiv(elements_[0]);
+    for (size_t i(0); i<n-1; ++i) {
+      elements_[i]->el_suiv(elements_[i+1]);
+    }
+  }
+}
+
+
+void Accelerateur::initialiser_particules() {
+  if (elements_.size() != 0) {
+    for (auto& p : particules_) {
+      p->element_courant(elements_.front());
+      while(p->element_courant()->passe_au_suivant(*p));
+    }
+  }
+}
+
+
+//Supprimer
 
 void Accelerateur::supprimer_par() {
 	for (auto const& par : particules_) {
@@ -79,20 +127,24 @@ void Accelerateur::supprimer_par(size_t i) {
   particules_.erase(particules_.begin() + i);
 }
 
+//EVOLUTION
+
 void Accelerateur::evolue(double dt) {
   //Avant de mettre à jour l'état des particules, on supprime toutes les particules qui sont sorties de l'accélérateur.
+/*
   size_t i(0);
   while (i < particules_.size()) {
     if (particules_[i]->est_sortie()) supprimer_par(i);
     else ++i;
   }
+*/
 
   for (auto& p : particules_) {
     p->ajouter_f_magn((p->element_courant())->B(*p),dt); //On ajoute à la particule p le champ magnétique produit par l'élément dans lequel elle se trouve.
 
     p->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
 
-    (p->element_courant())->passe_au_suivant(*p); //Mise à jour de l'élément courant de la particule p.
+    if (p->element_courant()->passe_au_suivant(*p)) {cout << "Je passe au suivant" << endl;} //Mise à jour de l'élément courant de la particule p.
 
     p->est_sortie(); //Vérifie si la particule est toujours dans un élément. Affecte nullptr à element_courant_ sinon.
   }

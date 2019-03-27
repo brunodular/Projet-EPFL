@@ -57,10 +57,16 @@
 
 - Ajout de la méthode void evolue(double dt); dans la classe Accélérateur.
 
-- Ecriture du test sous le nom de exerciceP10.
+- Début du test sous le nom de exerciceP10. On a juste essayé de mettre une particule et un élément dans un accélérateur et de le dessiner en mode texte.
 
 -- 24/03 --
 
 - Debut de l'implémentation de la classe Faisceau.
 
 - Modification du fichier testParticule pour que l'on puisse utiliser la fonction dessine de la sous-classe Vue_Texte dans les tests (nous modifions les tests au fur et à mesure de l'évolution de notre programme afin de bien voir que notre code fonctionne correctement).
+
+-- 27/03 --
+
+- Ajout de méthodes permettant de constuire concrètement un accélérateur. L'une qui permet de 'souder' ensemble les différents éléments constituant l'accélérateur. D'un point de vue informatique, cela se fait en affectant à l'attribut el_suiv_ de chaque élément un pointeur vers l'élément qui le suit dans l'accélérateur.
+
+- Concrétisation du test exerciceP10, avec un accélérateur simple à 4 parties (chacune composées de : Quadrupôle - Section Droite - Quadrupôle - Section droite - Dipôle) et une particule. Après de nombreux essais et de correction, le test fonctionne enfin !

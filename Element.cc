@@ -21,14 +21,25 @@ Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin
     dir_ = ~(pos_s_-pos_e_);
   }
 
+//Getters
+//Element* Element::el_suiv() const {
+//  Element* el(el_suiv_);
+//  return el;
+//}
+
+//Setters
+void Element::el_suiv(Element* el) {
+  el_suiv_ = el;
+}
+
 //Méthodes
-void Element::passe_au_suivant(Particule& p) const {
+bool Element::passe_au_suivant(Particule& p) const {
   if (prod_mixte(e3,p.pos(),pos_s_) > 0) {
     p.element_courant(el_suiv_);
-    //return true;
-  } /* else {
+    return true;
+  } else {
     return false;
-  } */ //méthode void plutôt que bool
+  }
 }
 
 Vecteur3D Element::B(Particule const&) const {
@@ -69,7 +80,7 @@ ElementCourbe::ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,do
 
 //Méthodes
 bool ElementCourbe::heurte_bord(Particule const& p) const {
-  Vecteur3D X(p.pos()-pos_e_);
+  Vecteur3D X(p.pos()-centre_);
   return (X-(1/abs(courbure_))*(~(X-X.z()*e3))).norme2() > r_section_*r_section_;
 }
 
