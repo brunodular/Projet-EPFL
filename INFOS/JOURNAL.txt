@@ -47,7 +47,7 @@
 
 - Implémentation des classes Dessinable et SupportADessin, et modification du reste du code en conséquence.
 
-- Nous avions au départ choisi de définir un Element comme étant, par défaut, un élémént droit. Les éléments courbes héritaient, quant à eux, de la sous-classe ElementCourbe de Element. Nous avons changé d'avis : maintenant ElementDroit et ElementCourbe sont deux sous-classes de Element, dont héritent tous les types d'éléments (SectionDroite, Dipole, etc.). Cela nous paraît plus logique conceptuellement : il n'y a pas de raison qu'un élément soit, par défaut, droit et pas courbe.
+- Nous avions au départ choisi de définir un Element comme étant, par défaut, un élémént droit. Les éléments courbes héritaient, quant à eux, de la sous-classe ElementCourbe de Element. Nous avons changé d'avis : maintenant ElementDroit et ElementCourbe sont deux sous-classes de Element, dont héritent tous les types d'éléments (SectionDroite, Dipole, etc.). Cela nous paraît plus logique conceptuellement : il n'y a pas de raison qu'un élément soit, par défaut, plutôt droit que courbe.
 
 - Ajout de la classe Quadrupole.
 
