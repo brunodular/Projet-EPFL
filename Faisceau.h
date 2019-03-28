@@ -49,7 +49,8 @@ class Faisceau:public Dessinable {
 		double A_12_z() const;
 		double A_22_z() const;
 
-		unsigned int nombre_particules() const;	//renvoie le nombre de particules
+		unsigned int nombre_particules() const;	//renvoie le nombre de macro-particules
+    unsigned int nombre_particules_simulees() const; //renvoie le nombre de particules hypothétique
 
     //modifier particules
     void supprimer_par(size_t i);

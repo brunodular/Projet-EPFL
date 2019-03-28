@@ -158,6 +158,10 @@ unsigned int Faisceau::nombre_particules() const {
 	return particules_.size();
 }
 
+unsigned int Faisceau::nombre_particules_simulees() const {
+  return lambda_ * nombre_particules();
+}
+
 
 //modifier particules
 void Faisceau::supprimer_par(size_t i) {

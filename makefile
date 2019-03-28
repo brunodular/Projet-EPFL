@@ -9,7 +9,7 @@ CXXFLAGS += -pedantic -Wall
 all:: testAccel1 exerciceP10 testParticule testVecteur3D
 
 testVecteur3D: Vecteur3D.o testVecteur3D.o constantes.o
-testParticule: Vecteur3D.o constantes.o Particule.o testParticule.o Accelerateur.o Dessinable.o Vue_Texte.o
+testParticule: Vecteur3D.o constantes.o Particule.o testParticule.o Accelerateur.o Dessinable.o Vue_Texte.o Faisceau.o
 testAccel1: Accelerateur.o testAccel1.o Element.o constantes.o Particule.o Vecteur3D.o Dessinable.o Vue_Texte.o Faisceau.o
 exerciceP10: exerciceP10.o Accelerateur.o Element.o constantes.o Particule.o Vecteur3D.o Dessinable.o Vue_Texte.o Faisceau.o
 
