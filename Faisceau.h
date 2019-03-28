@@ -14,6 +14,17 @@ class Faisceau:public Dessinable {
 		const unsigned int lambda_;
 		Collection_P particules_;
 
+    //méthodes privées, utilisées dans les autres méthodes
+      //paramètres radiaux
+    double moyenne_pos_2_r() const;
+    double moyenne_vit_2_r() const;
+    double moyenne_pos_vit_r() const;
+
+      //paramètres verticaux
+    double moyenne_pos_2_z() const;
+    double moyenne_vit_2_z() const;
+    double moyenne_pos_vit_z() const;
+
 	public:
 
 		//Constructeur + Destructeur
@@ -31,7 +42,7 @@ class Faisceau:public Dessinable {
 		double A_11() const;	//renvoie un des coefficients des ellipses de phases
 		double A_12() const;	//de meme	//On a choisi d'implementer ces caracteristiques d'un faisceaux comme des methodes car celles-ci sont  est
 		double A_22() const;	//de meme
-		unsigned int nombre_p() const;	//renvoie le nombre de particules
+		unsigned int nombre_particules() const;	//renvoie le nombre de particules
 
 
 		//EVOLUTION
