@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = ex_gl1.0.0
-DISTDIR = /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/Qt_GL/.tmp/ex_gl1.0.0
+DISTDIR = /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/Qt_GL/.tmp/ex_gl1.0.0
 LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
 LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -L../general -lgeneral -lQt5OpenGL -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -374,7 +374,14 @@ glsphere.o: glsphere.cc glsphere.h
 vue_opengl.o: vue_opengl.cc vue_opengl.h \
 		../general/Support_a_dessin.h \
 		glsphere.h \
-		vertex_shader.h
+		vertex_shader.h \
+		../general/Accelerateur.h \
+		../general/Element.h \
+		../general/Dessinable.h \
+		../general/Particule.h \
+		../general/constantes.h \
+		../general/Vecteur3D.h \
+		../general/Faisceau.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o vue_opengl.o vue_opengl.cc
 
 qrc_resource.o: qrc_resource.cpp 

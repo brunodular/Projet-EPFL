@@ -16,6 +16,5 @@ HEADERS += \
     Support_a_dessin.h \
     Vecteur3D.h \
     Particule.h \
-    Faisceau.h \
     Element.h \
     constantes.h

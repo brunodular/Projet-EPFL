@@ -26,62 +26,114 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = ex_051.0.0
-DISTDIR = /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/.tmp/ex_051.0.0
+DISTDIR = /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/.tmp/ex_051.0.0
 SUBTARGETS    =  \
 		sub-general \
+		sub-vue_texte \
+		sub-Qt_GL \
 		sub-text
 
 
 sub-general-qmake_all:  FORCE
 	@test -d general/ || mkdir -p general/
-	cd general/ && $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/general/general.pro -o Makefile
+	cd general/ && $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/general/general.pro -o Makefile
 	cd general/ && $(MAKE) -f Makefile qmake_all
 sub-general: FORCE
 	@test -d general/ || mkdir -p general/
-	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/general/general.pro -o Makefile ) && $(MAKE) -f Makefile
+	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/general/general.pro -o Makefile ) && $(MAKE) -f Makefile
 sub-general-make_first: FORCE
 	@test -d general/ || mkdir -p general/
-	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/general/general.pro -o Makefile ) && $(MAKE) -f Makefile 
+	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/general/general.pro -o Makefile ) && $(MAKE) -f Makefile 
 sub-general-all: FORCE
 	@test -d general/ || mkdir -p general/
-	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/general/general.pro -o Makefile ) && $(MAKE) -f Makefile all
+	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/general/general.pro -o Makefile ) && $(MAKE) -f Makefile all
 sub-general-clean: FORCE
 	@test -d general/ || mkdir -p general/
-	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/general/general.pro -o Makefile ) && $(MAKE) -f Makefile clean
+	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/general/general.pro -o Makefile ) && $(MAKE) -f Makefile clean
 sub-general-distclean: FORCE
 	@test -d general/ || mkdir -p general/
-	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/general/general.pro -o Makefile ) && $(MAKE) -f Makefile distclean
+	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/general/general.pro -o Makefile ) && $(MAKE) -f Makefile distclean
 sub-general-install_subtargets: FORCE
 	@test -d general/ || mkdir -p general/
-	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/general/general.pro -o Makefile ) && $(MAKE) -f Makefile install
+	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/general/general.pro -o Makefile ) && $(MAKE) -f Makefile install
 sub-general-uninstall_subtargets: FORCE
 	@test -d general/ || mkdir -p general/
-	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/general/general.pro -o Makefile ) && $(MAKE) -f Makefile uninstall
+	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/general/general.pro -o Makefile ) && $(MAKE) -f Makefile uninstall
+sub-vue_texte-qmake_all:  FORCE
+	@test -d vue_texte/ || mkdir -p vue_texte/
+	cd vue_texte/ && $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/vue_texte/vue_texte.pro -o Makefile
+	cd vue_texte/ && $(MAKE) -f Makefile qmake_all
+sub-vue_texte: FORCE
+	@test -d vue_texte/ || mkdir -p vue_texte/
+	cd vue_texte/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/vue_texte/vue_texte.pro -o Makefile ) && $(MAKE) -f Makefile
+sub-vue_texte-make_first: FORCE
+	@test -d vue_texte/ || mkdir -p vue_texte/
+	cd vue_texte/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/vue_texte/vue_texte.pro -o Makefile ) && $(MAKE) -f Makefile 
+sub-vue_texte-all: FORCE
+	@test -d vue_texte/ || mkdir -p vue_texte/
+	cd vue_texte/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/vue_texte/vue_texte.pro -o Makefile ) && $(MAKE) -f Makefile all
+sub-vue_texte-clean: FORCE
+	@test -d vue_texte/ || mkdir -p vue_texte/
+	cd vue_texte/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/vue_texte/vue_texte.pro -o Makefile ) && $(MAKE) -f Makefile clean
+sub-vue_texte-distclean: FORCE
+	@test -d vue_texte/ || mkdir -p vue_texte/
+	cd vue_texte/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/vue_texte/vue_texte.pro -o Makefile ) && $(MAKE) -f Makefile distclean
+sub-vue_texte-install_subtargets: FORCE
+	@test -d vue_texte/ || mkdir -p vue_texte/
+	cd vue_texte/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/vue_texte/vue_texte.pro -o Makefile ) && $(MAKE) -f Makefile install
+sub-vue_texte-uninstall_subtargets: FORCE
+	@test -d vue_texte/ || mkdir -p vue_texte/
+	cd vue_texte/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/vue_texte/vue_texte.pro -o Makefile ) && $(MAKE) -f Makefile uninstall
+sub-Qt_GL-qmake_all:  FORCE
+	@test -d Qt_GL/ || mkdir -p Qt_GL/
+	cd Qt_GL/ && $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/Qt_GL/Qt_GL.pro -o Makefile
+	cd Qt_GL/ && $(MAKE) -f Makefile qmake_all
+sub-Qt_GL: FORCE
+	@test -d Qt_GL/ || mkdir -p Qt_GL/
+	cd Qt_GL/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/Qt_GL/Qt_GL.pro -o Makefile ) && $(MAKE) -f Makefile
+sub-Qt_GL-make_first: FORCE
+	@test -d Qt_GL/ || mkdir -p Qt_GL/
+	cd Qt_GL/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/Qt_GL/Qt_GL.pro -o Makefile ) && $(MAKE) -f Makefile 
+sub-Qt_GL-all: FORCE
+	@test -d Qt_GL/ || mkdir -p Qt_GL/
+	cd Qt_GL/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/Qt_GL/Qt_GL.pro -o Makefile ) && $(MAKE) -f Makefile all
+sub-Qt_GL-clean: FORCE
+	@test -d Qt_GL/ || mkdir -p Qt_GL/
+	cd Qt_GL/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/Qt_GL/Qt_GL.pro -o Makefile ) && $(MAKE) -f Makefile clean
+sub-Qt_GL-distclean: FORCE
+	@test -d Qt_GL/ || mkdir -p Qt_GL/
+	cd Qt_GL/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/Qt_GL/Qt_GL.pro -o Makefile ) && $(MAKE) -f Makefile distclean
+sub-Qt_GL-install_subtargets: FORCE
+	@test -d Qt_GL/ || mkdir -p Qt_GL/
+	cd Qt_GL/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/Qt_GL/Qt_GL.pro -o Makefile ) && $(MAKE) -f Makefile install
+sub-Qt_GL-uninstall_subtargets: FORCE
+	@test -d Qt_GL/ || mkdir -p Qt_GL/
+	cd Qt_GL/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/Qt_GL/Qt_GL.pro -o Makefile ) && $(MAKE) -f Makefile uninstall
 sub-text-qmake_all:  FORCE
 	@test -d text/ || mkdir -p text/
-	cd text/ && $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/text/text.pro -o Makefile
+	cd text/ && $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/text/text.pro -o Makefile
 	cd text/ && $(MAKE) -f Makefile qmake_all
 sub-text: FORCE
 	@test -d text/ || mkdir -p text/
-	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/text/text.pro -o Makefile ) && $(MAKE) -f Makefile
+	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/text/text.pro -o Makefile ) && $(MAKE) -f Makefile
 sub-text-make_first: FORCE
 	@test -d text/ || mkdir -p text/
-	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/text/text.pro -o Makefile ) && $(MAKE) -f Makefile 
+	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/text/text.pro -o Makefile ) && $(MAKE) -f Makefile 
 sub-text-all: FORCE
 	@test -d text/ || mkdir -p text/
-	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/text/text.pro -o Makefile ) && $(MAKE) -f Makefile all
+	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/text/text.pro -o Makefile ) && $(MAKE) -f Makefile all
 sub-text-clean: FORCE
 	@test -d text/ || mkdir -p text/
-	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/text/text.pro -o Makefile ) && $(MAKE) -f Makefile clean
+	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/text/text.pro -o Makefile ) && $(MAKE) -f Makefile clean
 sub-text-distclean: FORCE
 	@test -d text/ || mkdir -p text/
-	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/text/text.pro -o Makefile ) && $(MAKE) -f Makefile distclean
+	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/text/text.pro -o Makefile ) && $(MAKE) -f Makefile distclean
 sub-text-install_subtargets: FORCE
 	@test -d text/ || mkdir -p text/
-	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/text/text.pro -o Makefile ) && $(MAKE) -f Makefile install
+	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/text/text.pro -o Makefile ) && $(MAKE) -f Makefile install
 sub-text-uninstall_subtargets: FORCE
 	@test -d text/ || mkdir -p text/
-	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/text/text.pro -o Makefile ) && $(MAKE) -f Makefile uninstall
+	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/text/text.pro -o Makefile ) && $(MAKE) -f Makefile uninstall
 
 Makefile: ex_05.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -189,23 +241,29 @@ ex_05.pro:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ex_05.pro
 
-qmake_all: sub-general-qmake_all sub-text-qmake_all FORCE
+qmake_all: sub-general-qmake_all sub-vue_texte-qmake_all sub-Qt_GL-qmake_all sub-text-qmake_all FORCE
 
-make_first: sub-general-make_first sub-text-make_first  FORCE
-all: sub-general-all sub-text-all  FORCE
-clean: sub-general-clean sub-text-clean  FORCE
-distclean: sub-general-distclean sub-text-distclean  FORCE
+make_first: sub-general-make_first sub-vue_texte-make_first sub-Qt_GL-make_first sub-text-make_first  FORCE
+all: sub-general-all sub-vue_texte-all sub-Qt_GL-all sub-text-all  FORCE
+clean: sub-general-clean sub-vue_texte-clean sub-Qt_GL-clean sub-text-clean  FORCE
+distclean: sub-general-distclean sub-vue_texte-distclean sub-Qt_GL-distclean sub-text-distclean  FORCE
 	-$(DEL_FILE) Makefile
-install_subtargets: sub-general-install_subtargets sub-text-install_subtargets FORCE
-uninstall_subtargets: sub-general-uninstall_subtargets sub-text-uninstall_subtargets FORCE
+install_subtargets: sub-general-install_subtargets sub-vue_texte-install_subtargets sub-Qt_GL-install_subtargets sub-text-install_subtargets FORCE
+uninstall_subtargets: sub-general-uninstall_subtargets sub-vue_texte-uninstall_subtargets sub-Qt_GL-uninstall_subtargets sub-text-uninstall_subtargets FORCE
 
 sub-general-check:
 	@test -d general/ || mkdir -p general/
-	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/general/general.pro -o Makefile ) && $(MAKE) -f Makefile check
+	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/general/general.pro -o Makefile ) && $(MAKE) -f Makefile check
+sub-vue_texte-check:
+	@test -d vue_texte/ || mkdir -p vue_texte/
+	cd vue_texte/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/vue_texte/vue_texte.pro -o Makefile ) && $(MAKE) -f Makefile check
+sub-Qt_GL-check:
+	@test -d Qt_GL/ || mkdir -p Qt_GL/
+	cd Qt_GL/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/Qt_GL/Qt_GL.pro -o Makefile ) && $(MAKE) -f Makefile check
 sub-text-check:
 	@test -d text/ || mkdir -p text/
-	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/text/text.pro -o Makefile ) && $(MAKE) -f Makefile check
-check: sub-general-check sub-text-check
+	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/text/text.pro -o Makefile ) && $(MAKE) -f Makefile check
+check: sub-general-check sub-vue_texte-check sub-Qt_GL-check sub-text-check
 install:install_subtargets  FORCE
 
 uninstall: uninstall_subtargets FORCE
@@ -215,15 +273,23 @@ FORCE:
 dist: distdir FORCE
 	(cd `dirname $(DISTDIR)` && $(TAR) $(DISTNAME).tar $(DISTNAME) && $(COMPRESS) $(DISTNAME).tar) && $(MOVE) `dirname $(DISTDIR)`/$(DISTNAME).tar.gz . && $(DEL_FILE) -r $(DISTDIR)
 
-distdir: sub-general-distdir sub-text-distdir FORCE
+distdir: sub-general-distdir sub-vue_texte-distdir sub-Qt_GL-distdir sub-text-distdir FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/sanitize.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/gcc-base.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/gcc-base-unix.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-base.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-unix.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_concurrent_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_core.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_core_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_dbus.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_dbus_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_eglfs_device_lib_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_platformsupport_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_printsupport.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_printsupport_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_testlib.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_testlib_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml_private.pri /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_functions.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/resolve_config.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_post.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/warn_on.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/testcase_targets.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf ex_05.pro $(DISTDIR)/
 
 sub-general-distdir: FORCE
 	@test -d general/ || mkdir -p general/
-	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/general/general.pro -o Makefile ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/general
+	cd general/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/general/general.pro -o Makefile ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/general
+
+sub-vue_texte-distdir: FORCE
+	@test -d vue_texte/ || mkdir -p vue_texte/
+	cd vue_texte/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/vue_texte/vue_texte.pro -o Makefile ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/vue_texte
+
+sub-Qt_GL-distdir: FORCE
+	@test -d Qt_GL/ || mkdir -p Qt_GL/
+	cd Qt_GL/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/Qt_GL/Qt_GL.pro -o Makefile ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/Qt_GL
 
 sub-text-distdir: FORCE
 	@test -d text/ || mkdir -p text/
-	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/text/text.pro -o Makefile ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/text
+	cd text/ && ( test -e Makefile || $(QMAKE) /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/text/text.pro -o Makefile ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/text
 
