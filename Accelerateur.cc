@@ -137,7 +137,7 @@ void Accelerateur::evolue(double dt) {
 
       p->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
 
-      if (p->element_courant()->passe_au_suivant(*p)) {cout << "Je passe au suivant" << endl;} //Mise à jour de l'élément courant de la particule p.
+      p->element_courant()->passe_au_suivant(*p); //Mise à jour de l'élément courant de la particule p.
     }
   }
 }

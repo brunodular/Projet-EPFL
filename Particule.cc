@@ -62,15 +62,7 @@ bool Particule::est_sortie() {
 }
 
 ostream& Particule::affiche(ostream& out) const {
-  out << "Une particule :" << endl << "  position : " << pos_ << endl << "  vitesse : " << v_ << endl << "  gamma : " << gamma() << endl << "  Energie (en GeV) : " << E() << endl << "  Masse (en GeV/c^2) : " << m_ << endl << "  Charge : " << q_ << endl << "  Force : " << F_ << endl;
-
-  out << "est dans un élément :" << endl;
-  element_courant()->dessine();
-
-  //out << "dont l'élément suivant est :" << endl;
-  //(element_courant()->el_suiv_->dessine();
-
-  return out;
+  return (out << "Une particule :" << endl << "  position : " << pos_ << endl << "  vitesse : " << v_ << endl << "  gamma : " << gamma() << endl << "  Energie (en GeV) : " << E() << endl << "  Masse (en GeV/c^2) : " << m_ << endl << "  Charge : " << q_ << endl << "  Force : " << F_ << endl);
 }
 
 //=======================================================================
