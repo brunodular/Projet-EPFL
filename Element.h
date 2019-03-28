@@ -38,6 +38,9 @@ public:
 
   virtual void affiche(std::ostream&) const;
 
+  virtual double coord_orthogonale_position(Particule*) const = 0;
+  virtual double coord_orthogonale_vitesse(Particule*) const = 0;
+
   //DESSINER
   virtual void dessine() override { support->dessine(*this); }
 };
@@ -56,6 +59,9 @@ public:
   virtual void affiche(std::ostream&) const override;
 
   virtual bool heurte_bord(Particule const& p) const override;
+
+  virtual double coord_orthogonale_position(Particule*) const override;
+  virtual double coord_orthogonale_vitesse(Particule*) const override;
 
   //DESSINER
   virtual void dessine() override { support->dessine(*this); }
@@ -76,6 +82,9 @@ public:
   virtual bool heurte_bord(Particule const&) const override;
 
   virtual void affiche(std::ostream&) const override;
+
+  virtual double coord_orthogonale_position(Particule*) const override;
+  virtual double coord_orthogonale_vitesse(Particule*) const override;
 
   //DESSINER
   virtual void dessine() override { support->dessine(*this); }

@@ -15,6 +15,8 @@ Particule::Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q
 
 Vecteur3D Particule::pos() const {return pos_;}
 
+Vecteur3D Particule::v() const {return v_;}
+
 Element* Particule::element_courant() const {return element_courant_;}
 
 //setters

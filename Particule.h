@@ -27,6 +27,7 @@ public:
 
   //getters
   Vecteur3D pos() const;
+  Vecteur3D v() const;
   Element* element_courant() const;
 
   //setters

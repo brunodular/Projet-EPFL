@@ -11,7 +11,7 @@ typedef std::vector<p_Particule> Collection_P;
 class Faisceau:public Dessinable {
 	private:
 		p_Particule particule_typique_;	//Particule typique de reference
-		const unsigned int lambda_;		//Ou alors le mettre comme static ou comme une constante dans le fichier constante?
+		const unsigned int lambda_;
 		Collection_P particules_;
 
 	public:
@@ -19,20 +19,15 @@ class Faisceau:public Dessinable {
 		//Constructeur + Destructeur
 		Faisceau (p_Particule p,  unsigned int taille, const unsigned int lambda);
 
-		~Faisceau () {
-      delete particule_typique_;
-			for (auto& par : particules_) {
-				delete par;
-			}
-			particules_.clear();
-		}
+		~Faisceau ();
 
 		//Methodes
 		void affiche(std::ostream&) const;
 
 		//GETTERS
 		double E_moyenne() const;	//renvoie énergie moyenne
-		double emittance() const;	//renvoie émittance
+		double emittance_h() const;	//renvoie émittance
+    double emittance_v() const;
 		double A_11() const;	//renvoie un des coefficients des ellipses de phases
 		double A_12() const;	//de meme	//On a choisi d'implementer ces caracteristiques d'un faisceaux comme des methodes car celles-ci sont  est
 		double A_22() const;	//de meme

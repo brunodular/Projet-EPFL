@@ -62,6 +62,13 @@ void ElementDroit::affiche(ostream& sortie) const {
   Element::affiche(sortie);
 }
 
+double ElementDroit::coord_orthogonale_position(Particule* p) const {
+  return p->pos() * (e3^dir_);
+}
+double ElementDroit::coord_orthogonale_vitesse(Particule* p) const {
+  return p->v() * (e3^dir_);
+}
+
 bool ElementDroit::heurte_bord(Particule const& p) const {
   Vecteur3D X(p.pos()-pos_e_);
   return (X-(X*dir_)*dir_).norme2() > r_section_*r_section_;
@@ -87,6 +94,13 @@ bool ElementCourbe::heurte_bord(Particule const& p) const {
 void ElementCourbe::affiche(ostream& sortie) const {
 	Element::affiche(sortie);
 	sortie<<"  rayon de courbure : " << courbure_ << endl;
+}
+
+double ElementCourbe::coord_orthogonale_position(Particule* p) const {
+  return p->pos() * ((~(p->pos() - p->pos().z()))^dir_);
+}
+double ElementCourbe::coord_orthogonale_vitesse(Particule* p) const {
+  return p->v() * (~(p->pos() - p->pos().z()));
 }
 
 //=======================================================================
