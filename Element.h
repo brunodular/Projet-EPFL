@@ -63,7 +63,6 @@ public:
 
 //=======================================================================
 
-//Il y a un problème dans la méthode heurte_bord de ElementCourbe -> A résoudre !
 class ElementCourbe : public Element {
 protected:
   const double courbure_;
