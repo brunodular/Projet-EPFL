@@ -37,18 +37,23 @@ class Faisceau:public Dessinable {
 
 		//GETTERS
 		double E_moyenne() const;	//renvoie énergie moyenne
-		double emittance_h() const;	//renvoie émittance
-    double emittance_v() const;
-		double A_11() const;	//renvoie un des coefficients des ellipses de phases
-		double A_12() const;	//de meme	//On a choisi d'implementer ces caracteristiques d'un faisceaux comme des methodes car celles-ci sont  est
-		double A_22() const;	//de meme
+
+		double emittance_r() const;
+    double emittance_z() const;
+
+		double A_11_r() const;
+		double A_12_r() const;
+		double A_22_r() const;
+
+    double A_11_z() const;
+		double A_12_z() const;
+		double A_22_z() const;
+
 		unsigned int nombre_particules() const;	//renvoie le nombre de particules
 
-
-		//EVOLUTION
-		void evolue(double dt);
+    //modifier particules
+    void supprimer_par(size_t i);
 
 		//DESSINER
-		//virtual void dessine() override { support->dessine(*this); }
-
+		virtual void dessine() override { support->dessine(*this); }
 };

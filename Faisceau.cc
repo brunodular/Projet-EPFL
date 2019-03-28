@@ -1,13 +1,14 @@
 #include "Faisceau.h"
 #include <cmath>
+#include <vector>
 using namespace std;
 
 //=======================================================================
 
 //méthodes privées, utilisées dans les autres méthodes
   //paramètres verticaux
-double moyenne_pos_2_z() const {
-  if (nombre_particules == 0) return 0.0;
+double Faisceau::moyenne_pos_2_z() const {
+  if (nombre_particules() == 0) return 0.0;
   else {
     double moyenne(0.0);
     for (auto& p : particules_) {
@@ -19,8 +20,8 @@ double moyenne_pos_2_z() const {
     return (moyenne / nombre_particules());
   }
 }
-double moyenne_vit_2_z() const {
-  if (nombre_particules == 0) return 0.0;
+double Faisceau::moyenne_vit_2_z() const {
+  if (nombre_particules() == 0) return 0.0;
   else {
     double moyenne(0.0);
     for (auto& p : particules_) {
@@ -32,8 +33,8 @@ double moyenne_vit_2_z() const {
     return (moyenne / nombre_particules());
   }
 }
-double moyenne_pos_vit_z() const {
-  if (nombre_particules == 0) return 0.0;
+double Faisceau::moyenne_pos_vit_z() const {
+  if (nombre_particules() == 0) return 0.0;
   else {
     double moyenne(0.0);
     for (auto& p : particules_) {
@@ -48,8 +49,8 @@ double moyenne_pos_vit_z() const {
 }
 
 //paramètres radiaux
-double moyenne_pos_2_r() const {
-  if (nombre_particules == 0) return 0.0;
+double Faisceau::moyenne_pos_2_r() const {
+  if (nombre_particules() == 0) return 0.0;
   else {
     double moyenne(0.0);
     for (auto& p : particules_) {
@@ -61,8 +62,8 @@ double moyenne_pos_2_r() const {
     return (moyenne / nombre_particules());
   }
 }
-double moyenne_vit_2_r() const {
-  if (nombre_particules == 0) return 0.0;
+double Faisceau::moyenne_vit_2_r() const {
+  if (nombre_particules() == 0) return 0.0;
   else {
     double moyenne(0.0);
     for (auto& p : particules_) {
@@ -74,8 +75,8 @@ double moyenne_vit_2_r() const {
     return (moyenne / nombre_particules());
   }
 }
-double moyenne_pos_vit_r() const {
-  if (nombre_particules == 0) return 0.0;
+double Faisceau::moyenne_pos_vit_r() const {
+  if (nombre_particules() == 0) return 0.0;
   else {
     double moyenne(0.0);
     for (auto& p : particules_) {
@@ -92,7 +93,7 @@ double moyenne_pos_vit_r() const {
 //Constructeur
 
 Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda)
-	: particule_typique(Particule* (new Particule (p))), lambda_(lambda)
+	: particule_typique_(p), lambda_(lambda)
 {}
 
 //Destructeur
@@ -106,7 +107,7 @@ Faisceau::~Faisceau () {
 
 //Methodes
 
-void Faisceau::affiche(ostream& sortie) {
+void Faisceau::affiche(ostream& sortie) const {
 	sortie << "Particule typique du faisceau : " << endl;
 	particule_typique_->affiche(sortie);
 }
@@ -124,35 +125,42 @@ double Faisceau::E_moyenne() const {
   return moyenne;
 }
 
-double Faisceau::emittance_z const {
+double Faisceau::emittance_z() const {
   return sqrt(moyenne_pos_2_z()*moyenne_vit_2_z() - moyenne_pos_vit_z()*moyenne_pos_vit_z());
 }
 
-double Faisceau::emittance_r const {
+double Faisceau::emittance_r() const {
   return sqrt(moyenne_pos_2_r()*moyenne_vit_2_r() - moyenne_pos_vit_r()*moyenne_pos_vit_r());
 }
 
 
-double Faisceau::A_11() const {
-
+double Faisceau::A_11_r() const {
+  return (moyenne_vit_2_r()/emittance_r());
+}
+double Faisceau::A_12_r() const {
+  return (- moyenne_pos_vit_r()/emittance_r());
+}
+double Faisceau::A_22_r() const {
+  return (moyenne_pos_2_r()/emittance_r());
 }
 
-
-double Faisceau::A_12() const {
-
+double Faisceau::A_11_z() const {
+  return (moyenne_vit_2_z()/emittance_z());
 }
-
-
-double Faisceau::A_22() const {
-
+double Faisceau::A_12_z() const {
+  return (- moyenne_pos_vit_z()/emittance_z());
+}
+double Faisceau::A_22_z() const {
+  return (moyenne_pos_2_z()/emittance_z());
 }
 
 unsigned int Faisceau::nombre_particules() const {
 	return particules_.size();
 }
 
-//EVOLUTION
 
-void evolue(double dt) {
-
+//modifier particules
+void Faisceau::supprimer_par(size_t i) {
+  delete particules_[i];
+  particules_.erase(particules_.begin() + i);
 }
