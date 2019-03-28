@@ -2,4 +2,5 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
    general \
-   text
+   text \
+   Qt_GL
