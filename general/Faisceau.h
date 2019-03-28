@@ -56,5 +56,5 @@ class Faisceau:public Dessinable {
     void supprimer_par(size_t i);
 
 		//DESSINER
-		virtual void dessine() override { support->dessine(*this); }
+		/*virtual void dessine() override { support->dessine(*this); }*/
 };

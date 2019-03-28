@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = general1.0.0
-DISTDIR = /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/exerciceP12/general/.tmp/general1.0.0
+DISTDIR = /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/general/.tmp/general1.0.0
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -108,7 +108,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Support_a_dessin.h \
 		Vecteur3D.h \
 		Particule.h \
-		Faisceau.h \
 		Element.h \
 		constantes.h Accelerateur.cc \
 		Faisceau.cc \

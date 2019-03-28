@@ -17,7 +17,7 @@ class VueOpenGL : public SupportADessin {
   virtual void dessine(Element const&) override;
   virtual void dessine(ElementDroit const&) override;
   virtual void dessine(Quadrupole const&) override;
-  virtual void dessine(Faisceau const&) override;
+  /*virtual void dessine(Faisceau const&) override;*/
 
   // méthodes de (ré-)initialisation
   void init();
