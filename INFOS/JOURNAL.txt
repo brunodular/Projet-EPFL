@@ -70,3 +70,7 @@
 - Ajout de méthodes permettant de constuire concrètement un accélérateur. L'une qui permet de 'souder' ensemble les différents éléments constituant l'accélérateur. D'un point de vue informatique, cela se fait en affectant à l'attribut el_suiv_ de chaque élément un pointeur vers l'élément qui le suit dans l'accélérateur.
 
 - Concrétisation du test exerciceP10, avec un accélérateur simple à 4 parties (chacune composées de : Quadrupôle - Section Droite - Quadrupôle - Section droite - Dipôle) et une particule. Après de nombreux essais et de correction, le test fonctionne enfin !
+
+- Debut de la partie graphisme de notre projet: organisation de notre projet en de différents dossiers avec des fichiers .pro pour que ça compile correctement (toute la partie plutôt abstraite et conceptuelle est mise dans le dossier general, toute la partie graphisme est mise dans le dossier Qt_GL et toute la partie d'affichage sous forme de texte dans le dossier text). Pour cela nous avons décidé d'enlever la classe Contenu et de la remplacer par toutes les classes que nous avons créer pour représenter notre accélérateur.
+
+- Construction de la fonction dessine() pour une Particule et on a réussi à afficher une particule sans interaction et évolution pour l'instant.
