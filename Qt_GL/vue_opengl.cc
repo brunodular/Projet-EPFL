@@ -37,59 +37,59 @@ void VueOpenGL::dessine(Contenu const& a_dessiner)
 */
 				//------------------------------
 void VueOpenGL::dessine(Dipole const& d) {
-	
-	
-	
+
+
+
 };
 
 				//------------------------------
 
 void VueOpenGL::dessine(Particule const& p) {
 	QMatrix4x4 matrice;
-	
+
 	matrice.translate((p.pos()).x(), (p.pos()).y(), (p.pos()).z());
-	matrice.scale(0.25);
-	
-	dessineAxes(matrice, true);
+	matrice.scale(0.05);
+
+	//dessineAxes(matrice, true);
 	dessineSphere(matrice, 1.0, 1.0 ,0.0);
 };
 
 				//-----------------------------
 void VueOpenGL::dessine(Accelerateur const& acc) {
-	
+
 }
 
 				//----------------------------
 void VueOpenGL::dessine(ElementCourbe const& elc) {
-	
+
 }
 
 				//----------------------------
 void VueOpenGL::dessine(SectionDroite const& sd) {
-	
+
 }
 
 				//----------------------------
 void VueOpenGL::dessine(Element const& el) {
-	
+
 }
 
 				//---------------------------
 void VueOpenGL::dessine(ElementDroit const& eld) {
-	
+
 }
 
 				//---------------------------
 void VueOpenGL::dessine(Quadrupole const& qd) {
-	
-	
+
+
 }
 
 				//---------------------------
-/*				
+/*
 void VueOpenGL::dessine(Faisceau const& f) {
-	
-	
+
+
 }
 */
 
@@ -97,28 +97,28 @@ void VueOpenGL::dessine(Faisceau const& f) {
 void VueOpenGL::dessineAxes (QMatrix4x4 const& point_de_vue, bool en_couleur)
 {
   prog.setUniformValue("vue_modele", matrice_vue * point_de_vue);
- 
+
   glBegin(GL_LINES);
- 
+
   // axe X
   if (en_couleur) {
     prog.setAttributeValue(CouleurId, 1.0, 0.0, 0.0); // rouge
   } else {
     prog.setAttributeValue(CouleurId, 1.0, 1.0, 1.0); // blanc
-  }    
+  }
   prog.setAttributeValue(SommetId, 0.0, 0.0, 0.0);
   prog.setAttributeValue(SommetId, 1.0, 0.0, 0.0);
- 
+
   // axe Y
   if (en_couleur) prog.setAttributeValue(CouleurId, 0.0, 1.0, 0.0); // vert
   prog.setAttributeValue(SommetId, 0.0, 0.0, 0.0);
   prog.setAttributeValue(SommetId, 0.0, 1.0, 0.0);
- 
+
   // axe Z
   if (en_couleur) prog.setAttributeValue(CouleurId, 0.0, 0.0, 1.0); // bleu
   prog.setAttributeValue(SommetId, 0.0, 0.0, 0.0);
   prog.setAttributeValue(SommetId, 0.0, 0.0, 1.0);
- 
+
   glEnd();
 }
 
@@ -176,7 +176,7 @@ void VueOpenGL::init()
    */
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
-  
+
   sphere.initialize();
   initializePosition();
 }

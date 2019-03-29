@@ -1,8 +1,8 @@
 QT += core gui opengl widgets
 CONFIG += c++11
+CONFIG -= app_bundle
 
 win32:LIBS += -lopengl32
-
 
 TARGET = ex_gl
 

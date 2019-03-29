@@ -59,9 +59,9 @@ int main () {
 	cout << "Vecteur2:" << w << endl;
 	cout << "Vecteur3:" << u << endl;
 
-	cout << "Comparaison:";
-	if (w==v) { cout << "egal";}
-	else {cout << "different";}
+	cout << "Comparaison de v1 et v2 : ";
+	if (w == v) { cout << "égaux";}
+	else {cout << "différents";}
 	cout << endl;
 
 	cout << "Addition de v1 par v2: " << v+w << endl << endl;
@@ -76,7 +76,7 @@ int main () {
 
 	cout << "Norme de v1:" << v.norme() << endl << endl;
 
-	cout << "Norme au carree de v3:" << u.norme2() << endl << endl;
+	cout << "Norme au carré de v3:" << u.norme2() << endl << endl;
 
 	cout << "Vecteur unitaire selon l'axe de v1: " << ~v << endl << endl;
 
