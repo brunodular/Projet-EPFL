@@ -1,6 +1,9 @@
 #include "vue_opengl.h"
 #include "vertex_shader.h" // Identifiants Qt de nos différents attributs
 #include "Accelerateur.h"
+#include <cmath>
+
+constexpr double DEUXPI=2*M_PI;
 
 // ======================================================================
 /*METHODES DESSINER DE LA SOUS-CLASSE VueOpenGL*/
@@ -56,7 +59,8 @@ void VueOpenGL::dessine(Particule const& p) {
 
 				//-----------------------------
 void VueOpenGL::dessine(Accelerateur const& acc) {
-
+	QMatrix4x4 matrice;
+	dessineTore(matrice);
 }
 
 				//----------------------------
@@ -267,4 +271,29 @@ void VueOpenGL::dessineSphere (QMatrix4x4 const& point_de_vue,
   prog.setUniformValue("vue_modele", matrice_vue * point_de_vue);
   prog.setAttributeValue(CouleurId, rouge, vert, bleu);  // met la couleur
   sphere.draw(prog, SommetId);                           // dessine la sphère
+}
+
+
+//=======================================================================
+
+void VueOpenGL::dessineTore (QMatrix4x4 const& point_de_vue, uint numc, uint numt,
+								double rouge, double vert, double bleu)
+{
+	prog.setAttributeValue(Couleur, 1.0, 1.0, 1.0);
+	prog.setAttributeValue(SommetId, 0.0, 0.0, 0.0);
+	for (int i = 0; i < numc; i++) {
+		glBegin(GL_QUAD_STRIP);
+		for (int j = 0; j <= numt; j++) {
+			for (int k = 1; k >= 0; k--) {
+				double s = (i + k) % numc + 0.5;
+				double t = j % numt;
+		
+				double x = (1 + 0.1 * cos(s * DEUXPI / numc)) * cos(t * DEUXPI / numt);
+				double y = (1 + 0.1 * cos(s * DEUXPI / numc)) * sin(t * DEUXPI / numt);
+				double z = 0.1 * sin(s * DEUXPI/ numc);
+                glVertex3d(2 * x, 2 * y, 2 * z);
+            }
+        }
+        glEnd();
+    }
 }
