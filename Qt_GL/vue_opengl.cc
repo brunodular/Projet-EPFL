@@ -60,7 +60,7 @@ void VueOpenGL::dessine(Particule const& p) {
 				//-----------------------------
 void VueOpenGL::dessine(Accelerateur const& acc) {
 	QMatrix4x4 matrice;
-	dessineTore(matrice);
+	dessineSphere(matrice);
 }
 
 				//----------------------------
@@ -275,11 +275,10 @@ void VueOpenGL::dessineSphere (QMatrix4x4 const& point_de_vue,
 
 
 //=======================================================================
-
+/*
 void VueOpenGL::dessineTore (QMatrix4x4 const& point_de_vue, uint numc, uint numt,
 								double rouge, double vert, double bleu)
 {
-	prog.setUniformValue("vue_modele", matrice_vue * point_de_vue);
 	prog.setAttributeValue(CouleurId, rouge, vert, bleu);
 	prog.setAttributeValue(SommetId, 0.0, 0.0, 0.0);
 	for (int i = 0; i < numc; i++) {
@@ -298,4 +297,4 @@ void VueOpenGL::dessineTore (QMatrix4x4 const& point_de_vue, uint numc, uint num
         glEnd();
     }
 }
-
+*/

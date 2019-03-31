@@ -3,6 +3,7 @@
 
 int main(int argc, char* argv[])
 {
+  try{
   QApplication a(argc, argv);
 
   SupportADessin* p_Vue(new VueOpenGL());
@@ -15,9 +16,14 @@ int main(int argc, char* argv[])
   f.ajouter_par(p_Particule (new Particule(Vecteur3D(1.00984, -0.191837, 0), Vecteur3D(-210200, -2.64754e+08, 0), 2, 0.938272, e)));
   CERN.ajouter_faisceau(p_Faisceau (new Faisceau(f)));
   
+  CERN.souder_accelerateur();
+  CERN.initialiser_particules();
+  
   GLWidget w(nullptr, &CERN);
 
   w.show();
-
-  return a.exec();
+  
+   return a.exec();
+}
+catch (const char* error) {};
 }
