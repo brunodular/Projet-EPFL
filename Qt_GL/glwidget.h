@@ -40,6 +40,7 @@ private:
 
   // objets à dessiner, faire évoluer
   Particule* part_; 
+  Accelerateur* acc_;
   
   //Position de la souris
   QPoint lastMousePosition;
