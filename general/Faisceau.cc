@@ -207,16 +207,15 @@ Faisceau::~Faisceau () {
 
 //Methodes
 
-ostream& Faisceau::affiche(ostream& sortie) const {
-	if (particule_typique_!=nullptr) {Erreur err = {"pas de particules dans le faisceau",3};
-		throw err; }
-	else {sortie << "Particule typique du faisceau : " << endl;
-	particule_typique_->affiche(sortie);}
+ostream& Faisceau::affiche(ostream& sortie) const{
+	sortie << "Particule typique du faisceau : " << endl;
+	particule_typique()->affiche(sortie);
 	return sortie;
 }
 
-void Faisceau::set_support(SupportADessin* support_) {support=support_;
-	for (auto const& par : particules_) {
+void Faisceau::set_support(SupportADessin* support_) {
+	support=support_;
+	for (auto& par : particules_) {
 		par->set_support(support);
 	}
 	particule_typique_=particule_typique();
@@ -312,7 +311,7 @@ void Faisceau::supprimer_par(size_t i) {
 }
 
 void Faisceau::supprimer_par() {
-	for (auto const& par : particules_) {
+	for (auto& par : particules_) {
 		delete par;
 	}
 	particules_.clear();

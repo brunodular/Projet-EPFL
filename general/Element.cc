@@ -1,5 +1,6 @@
 #include <cmath>
 #include "Element.h"
+#include <string>
 using namespace std;
 
 //=======================================================================
