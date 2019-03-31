@@ -12,8 +12,8 @@ Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin
  : Dessinable(support), r_section_(r_section),el_suiv_(el_suiv) {
     double prod(prod_mixte(e3,pos_e,pos_s));
     if (prod == 0) { //pour s'assurer que l'élément est dans le bon sens
-      Erreur err = {"position d'entrée = position de sortie",2};
-      throw err;
+      //Erreur err = {"position d'entrée = position de sortie",2};
+      //throw err;
     } else if (prod > 0) {
       pos_s_ = pos_e; pos_e_ = pos_s;
     } else {

@@ -64,6 +64,7 @@ class Accelerateur : public Dessinable {
 
 		//EVOLUTION
 		void evolue(double dt);
+		void evoluetest(double dt) {};
 
 		//DESSINER
 		virtual void dessine() override { support->dessine(*this); }

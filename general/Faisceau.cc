@@ -218,7 +218,6 @@ void Faisceau::set_support(SupportADessin* support_) {
 	for (auto& par : particules_) {
 		par->set_support(support);
 	}
-	particule_typique_=particule_typique();
 }
 
 ostream& Faisceau::affiche_part(std::ostream& sortie) const {
@@ -254,12 +253,14 @@ Collection_P Faisceau::particules() const{return particules_;}
 
 double Faisceau::E_moyenne() const {
 	double moyenne(0.0);
+	cout << "Nombre de particules " << nombre_particules() << endl;
+	
   if (nombre_particules() != 0) {
     for (auto& p : particules_) {
       moyenne += p->E();
     }
     moyenne /= nombre_particules();
-  }
+  } 
   return moyenne;
 }
 
@@ -327,6 +328,7 @@ void Faisceau::initialiser_particules(p_Element const& el) {
       p->element_courant(el);
       while(p->element_courant()->passe_au_suivant(*p));
   }
+  particule_typique_=particule_typique();
 }
 
 //EVOLUTION
