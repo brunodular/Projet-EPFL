@@ -279,7 +279,7 @@ void VueOpenGL::dessineSphere (QMatrix4x4 const& point_de_vue,
 void VueOpenGL::dessineTore (QMatrix4x4 const& point_de_vue, uint numc, uint numt,
 								double rouge, double vert, double bleu)
 {
-	prog.setAttributeValue(Couleur, 1.0, 1.0, 1.0);
+	prog.setAttributeValue(CouleurId, 1.0, 1.0, 1.0);
 	prog.setAttributeValue(SommetId, 0.0, 0.0, 0.0);
 	for (int i = 0; i < numc; i++) {
 		glBegin(GL_QUAD_STRIP);
