@@ -1,10 +1,11 @@
 #include <QApplication>
 #include "glwidget.h"
 #include <iostream>
+using namespace std;
 
 int main(int argc, char* argv[])
 {
-	try{
+
   QApplication a(argc, argv);
 
   SupportADessin* p_Vue(new VueOpenGL());
@@ -24,7 +25,5 @@ int main(int argc, char* argv[])
 
   w.show();
   
-   return a.exec(); }
-   catch (const char*) {std::cout << "WTF";};
-
+   return a.exec();
 }
