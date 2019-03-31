@@ -1,7 +1,7 @@
 CONFIG += c++11
 CONFIG -= app_bundle
 
-TARGET = exerciceP10
+TARGET = testAccel1
 
 LIBS += \
 	-L../../general -lgeneral \
@@ -11,9 +11,9 @@ PRE_TARGETDEPS += \
 
 INCLUDEPATH += \
 	../../general \
-
+	
 SOURCES += \
-	exerciceP10.cc \
+	testAccel1.cc \
 	vue_texte.cc
 
 HEADERS += \
@@ -21,3 +21,4 @@ HEADERS += \
     vue_texte.h \
     ../../general/Dessinable.h \
     ../../general/Support_a_dessin.h
+

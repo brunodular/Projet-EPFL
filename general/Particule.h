@@ -28,6 +28,9 @@ public:
   //getters
   Vecteur3D pos() const;
   Vecteur3D v() const;
+  Vecteur3D F() const;
+  double m() const;
+  double q() const;
   Element* element_courant() const;
 
   //setters

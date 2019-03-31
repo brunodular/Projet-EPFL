@@ -86,12 +86,12 @@ void VueOpenGL::dessine(Quadrupole const& qd) {
 }
 
 				//---------------------------
-/*
+
 void VueOpenGL::dessine(Faisceau const& f) {
 
 
 }
-*/
+
 
 //=======================================================================
 void VueOpenGL::dessineAxes (QMatrix4x4 const& point_de_vue, bool en_couleur)

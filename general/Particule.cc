@@ -17,6 +17,12 @@ Vecteur3D Particule::pos() const {return pos_;}
 
 Vecteur3D Particule::v() const {return v_;}
 
+Vecteur3D Particule::F() const {return F_;}
+
+double Particule::m() const {return m_;}
+
+double Particule::q() const {return q_;}
+
 Element* Particule::element_courant() const {return element_courant_;}
 
 //setters
