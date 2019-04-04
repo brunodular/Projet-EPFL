@@ -73,6 +73,8 @@ ostream& Particule::affiche(ostream& out) const {
   return (out << "Une particule :" << endl << "  position : " << pos_ << endl << "  vitesse : " << v_ << endl << "  gamma : " << gamma() << endl << "  Energie (en GeV) : " << E() << endl << "  Masse (en GeV/c^2) : " << m_ << endl << "  Charge : " << q_ << endl << "  Force : " << F_ << endl);
 }
 
+void Particule::set_support(SupportADessin* support_) {support=support_;}
+
 //=======================================================================
 
 //Opérateurs externes

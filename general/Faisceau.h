@@ -31,9 +31,9 @@ class Faisceau : public Dessinable {
 	public:
 
 		//Constructeur + Destructeur
-		Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur const& acc, SupportADessin* support, double dx=0.05);
+		Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur const& acc, SupportADessin* support_, double dx=0.05);
 		
-		Faisceau(SupportADessin* support);
+		Faisceau(SupportADessin* support_);
 		
 		Faisceau () = default;
 		

@@ -95,8 +95,8 @@ double Faisceau::moyenne_pos_vit_r() const {
 
 //Constructeur
 
-Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur const& acc, SupportADessin* support, double dx)
-	: Dessinable(support), particule_typique_(p), lambda_(lambda)
+Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur const& acc, SupportADessin* support_, double dx)
+	: Dessinable(support_), particule_typique_(p), lambda_(lambda)
 {
 	for (size_t i=0; i<nombre/lambda; ++i) {
 		particules_.push_back(p_Particule (new Particule(p->pos(), p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda)));
@@ -126,7 +126,7 @@ ostream& Faisceau::affiche(ostream& sortie) const{
 void Faisceau::set_support(SupportADessin* support_) {
 	support=support_;
 	for (auto& par : particules_) {
-		par->set_support(support);
+		par->set_support(support_);
 	}
 }
 

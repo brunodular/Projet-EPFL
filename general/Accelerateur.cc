@@ -45,7 +45,8 @@ ostream& Accelerateur::affiche(ostream& sortie) const {
 		sortie << " : " << endl;
 	  
 		for (auto const& f : faisceaux_) {
-			f->dessine();
+			//f->dessine();  MARCHE PAS?????
+			f->affiche(sortie);
 		}
 	} else {sortie << "L'accelerateur ne contient pas de faisceaux." << endl;}
 
