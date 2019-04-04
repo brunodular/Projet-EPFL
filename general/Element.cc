@@ -26,6 +26,15 @@ Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin
 //  Element* el(el_suiv_);
 //  return el;
 //}
+Vecteur3D Element::pos_e() const {
+  return pos_e_;
+}
+Vecteur3D Element::pos_s() const {
+  return pos_s_;
+}
+double Element::r_section() const {
+  return r_section_;
+}
 
 //Setters
 void Element::el_suiv(Element* el) {

@@ -1,6 +1,8 @@
 #include "vue_opengl.h"
 #include "vertex_shader.h" // Identifiants Qt de nos différents attributs
 #include "Accelerateur.h"
+#include "Vecteur3D.h"
+#include <cmath>
 
 // ======================================================================
 /*METHODES DESSINER DE LA SOUS-CLASSE VueOpenGL*/
@@ -35,14 +37,12 @@ void VueOpenGL::dessine(Contenu const& a_dessiner)
 }
 
 */
-				//------------------------------
-void VueOpenGL::dessine(Dipole const& d) {
+
+void VueOpenGL::dessine(Dipole const& el) {
 
 
 
 };
-
-				//------------------------------
 
 void VueOpenGL::dessine(Particule const& p) {
 	QMatrix4x4 matrice;
@@ -54,38 +54,19 @@ void VueOpenGL::dessine(Particule const& p) {
 	dessineSphere(matrice, 1.0, 1.0 ,0.0);
 };
 
-				//-----------------------------
 void VueOpenGL::dessine(Accelerateur const& acc) {
-
+  for (auto const& e : acc.elements()) e->dessine();
 }
 
-				//----------------------------
-void VueOpenGL::dessine(ElementCourbe const& elc) {
-
+void VueOpenGL::dessine(SectionDroite const& el) {
+  dessineCylindre(el.pos_e(),el.pos_s(),el.r_section());
 }
 
-				//----------------------------
-void VueOpenGL::dessine(SectionDroite const& sd) {
-
+void VueOpenGL::dessine(Quadrupole const& el) {
+  dessineCylindre(el.pos_e(),el.pos_s(),el.r_section());
 }
 
-				//----------------------------
-void VueOpenGL::dessine(Element const& el) {
 
-}
-
-				//---------------------------
-void VueOpenGL::dessine(ElementDroit const& eld) {
-
-}
-
-				//---------------------------
-void VueOpenGL::dessine(Quadrupole const& qd) {
-
-
-}
-
-				//---------------------------
 /*
 void VueOpenGL::dessine(Faisceau const& f) {
 
@@ -175,7 +156,7 @@ void VueOpenGL::init()
    * de déclaration dans le sens trigonométrique.
    */
   glEnable(GL_DEPTH_TEST);
-  glEnable(GL_CULL_FACE);
+  //glEnable(GL_CULL_FACE);
 
   sphere.initialize();
   initializePosition();
@@ -267,4 +248,34 @@ void VueOpenGL::dessineSphere (QMatrix4x4 const& point_de_vue,
   prog.setUniformValue("vue_modele", matrice_vue * point_de_vue);
   prog.setAttributeValue(CouleurId, rouge, vert, bleu);  // met la couleur
   sphere.draw(prog, SommetId);                           // dessine la sphère
+}
+
+void VueOpenGL::dessineCylindre(Vecteur3D const& base, Vecteur3D const& end, double r) {
+  QMatrix4x4 matrice;
+
+  const int slices(30);
+  const int stacks(80);
+  const double length_stacks((end-base).norme()/stacks);
+  const double k(2*M_PI/slices);
+
+  Vecteur3D u = ~(end-base);
+  Vecteur3D v = r*u.orthogonal();
+  Vecteur3D w = u^v;
+
+  prog.setUniformValue("vue_modele", matrice_vue * matrice);
+  prog.setAttributeValue(CouleurId, 1.0, 1.0, 0.0);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+  for (int j(0); j < stacks; ++j) {
+    for (int i(0); i <= slices; ++i) {
+      glBegin(GL_QUAD_STRIP);
+      Vecteur3D P(base + j*length_stacks*u + cos(i*k)*v + sin(i*k)*w);
+      Vecteur3D Q(base + (j+1)*length_stacks*u + cos(i*k)*v + sin(i*k)*w);
+
+      glVertex3d(P.x(),P.y(),P.z());
+      glVertex3d(Q.x(),Q.y(),Q.z());
+    }
+  }
+
+  glEnd();
 }

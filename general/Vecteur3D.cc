@@ -107,6 +107,13 @@ Vecteur3D const Vecteur3D::operator~() const {
 	return (*this).unitaire();
 }
 
+Vecteur3D const Vecteur3D::orthogonal() const {
+  if (x_ != 0) return Vecteur3D(-y_/x_,1.0,0.0);
+  else if (y_ != 0) return Vecteur3D(1.0,-x_/y_,0.0);
+  else if (z_ != 0) return Vecteur3D(0.0,1.0,-y_/z_);
+  else return e1;
+}
+
 //=======================================================================
 
 //OPERATEUR EXTERNE

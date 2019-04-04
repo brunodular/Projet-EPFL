@@ -12,6 +12,15 @@ Accelerateur::Accelerateur (Collection_P const& p, Collection_E const& e, Suppor
 
 Accelerateur::Accelerateur(SupportADessin* support) : Dessinable(support) {}
 
+
+//Getters
+Collection_E Accelerateur::elements() const {
+  return elements_;
+}
+Collection_P Accelerateur::particules() const {
+  return particules_;
+}
+
 //Methodes
 
 ostream& Accelerateur::affiche(ostream& sortie) const {

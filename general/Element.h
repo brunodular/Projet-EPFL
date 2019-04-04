@@ -25,6 +25,9 @@ public:
 
   //Getters
   //virtual Element* el_suiv() const;
+  virtual Vecteur3D pos_e() const;
+  virtual Vecteur3D pos_s() const;
+  virtual double r_section() const;
 
   //Setters
   virtual void el_suiv(Element*);
@@ -40,9 +43,6 @@ public:
 
   virtual double coord_orthogonale_position(Particule*) const = 0;
   virtual double coord_orthogonale_vitesse(Particule*) const = 0;
-
-  //DESSINER
-  virtual void dessine() override { support->dessine(*this); }
 };
 
 //=======================================================================
@@ -62,9 +62,6 @@ public:
 
   virtual double coord_orthogonale_position(Particule*) const override;
   virtual double coord_orthogonale_vitesse(Particule*) const override;
-
-  //DESSINER
-  virtual void dessine() override { support->dessine(*this); }
 };
 
 //=======================================================================
@@ -85,9 +82,6 @@ public:
 
   virtual double coord_orthogonale_position(Particule*) const override;
   virtual double coord_orthogonale_vitesse(Particule*) const override;
-
-  //DESSINER
-  virtual void dessine() override { support->dessine(*this); }
 };
 
 //=======================================================================

@@ -32,8 +32,7 @@ public:
 
   //setters
   void element_courant(Element* new_element);
-  void setSupport(SupportADessin* support_) {support=support_;}
-  
+
   //Méthodes
   double E() const;
   double gamma() const;
@@ -49,9 +48,9 @@ public:
 
   //DESSINER
   virtual void dessine() override { support->dessine(*this); }
-  
+
   //EVOLUTION
-  
+
  void evolue (double) {}
 };
 

@@ -18,9 +18,8 @@ class Accelerateur : public Dessinable {
 
 	public:
 		//Constructeurs
-		Accelerateur (Collection_P const&, Collection_E const&, SupportADessin* support); //pas besoin de mettre les vector par defaut car les vectors sont automatiquement initialisés au vector vide
-
-		Accelerateur(SupportADessin* support);
+		Accelerateur(Collection_P const&, Collection_E const&, SupportADessin* support); //pas besoin de mettre les vector par defaut car les vectors sont automatiquement initialisés au vector vide
+		Accelerateur(SupportADessin* support = nullptr);
 
 		Accelerateur (Accelerateur const&)=delete;
 		Accelerateur& operator=(Accelerateur)=delete;
@@ -37,6 +36,10 @@ class Accelerateur : public Dessinable {
 			}
 			particules_.clear();
 		}
+
+    //Getters
+    Collection_E elements() const;
+    Collection_P particules() const;
 
 		//Methodes
 			//Afficher
