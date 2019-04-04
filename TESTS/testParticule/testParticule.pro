@@ -4,12 +4,13 @@ CONFIG -= app_bundle
 TARGET = testParticule
 
 LIBS += \
-	-L../../general -lgeneral \
-	-L../../vue_texte -lvue_texte
+	-L../../vue_texte -lvue_texte \
+  -L../../general -lgeneral
 
 PRE_TARGETDEPS += \
-	../../general/libgeneral.a \
-	../../vue_texte/libvue_texte.a
+  ../../vue_texte/libvue_texte.a \
+	../../general/libgeneral.a
+
 
 INCLUDEPATH += \
 	../../general \
