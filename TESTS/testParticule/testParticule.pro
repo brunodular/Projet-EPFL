@@ -1,5 +1,4 @@
 CONFIG += c++11
-CONFIG -= app_bundle
 
 TARGET = testParticule
 
@@ -19,4 +18,7 @@ SOURCES = testParticule.cc
 
 HEADERS += \
     ../../general/Particule.h \
+    ../../general/Accelerateur.h \
     ../../vue_texte/vue_texte.h \
+    ../../general/Dessinable.h \
+    ../../general/Support_a_dessin.h

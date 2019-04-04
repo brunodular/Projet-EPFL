@@ -37,16 +37,15 @@ double Particule::gamma() const {
 
 //Etrange : la ligne de correction de la force fait une erreur de type char const*...
 void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
-  if (!est_zero(dt)) {
+  if (!est_zero(dt) and !est.zero(B.norme2())) {
     cout << "AJOUT DE LA FORCE MAGNETIQUE : " << endl;
     
     F_ += q_*(v_^B);
-    cout << F_ << endl;  //ICI
-    cout << "Angle : " << asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))) << endl;
-    //F_ = F_.rotation((v_^F_),asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))));
-    cout << F_ << endl; //ICI
-
-  }
+    //cout << F_ << endl;  //ICI
+    //cout << "Angle : " << asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))) << endl;
+    F_ = F_.rotation((v_^F_),asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))));
+    //cout << F_ << endl; //ICI
+   }
 }
 
 void Particule::bouger(double dt) {

@@ -28,7 +28,7 @@ class Faisceau:public Dessinable {
 	public:
 
 		//Constructeur + Destructeur
-		Faisceau (p_Particule p,  unsigned int taille, const unsigned int lambda);
+		Faisceau (p_Particule p,  unsigned int taille, const unsigned int lambda, double dx=0.05);
 
 		~Faisceau ();
 
