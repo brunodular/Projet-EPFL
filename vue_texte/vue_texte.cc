@@ -33,8 +33,6 @@ void Vue_Texte::dessine(Quadrupole const& el) {
   el.affiche(flot_);
 }
 
-/*
 void Vue_Texte::dessine(Faisceau const& f) {
 	f.affiche(flot_);
 }
-*/

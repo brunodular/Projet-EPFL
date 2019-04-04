@@ -1,7 +1,7 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-   general \
-   Qt_GL \
-   TESTS \
-   text
+  general \
+  vue_texte \
+  Qt_GL \
+  TESTS
