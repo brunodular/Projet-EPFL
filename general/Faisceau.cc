@@ -99,7 +99,6 @@ Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambd
 //Destructeur
 Faisceau::~Faisceau () {
   delete particule_typique_;
-  particule_typique_=nullptr;
   for (auto& par : particules_) {
     delete par;
   }
