@@ -92,13 +92,9 @@ double Faisceau::moyenne_pos_vit_r() const {
 
 //Constructeur
 
-Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, double dx)
+Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda)
 	: particule_typique_(p), lambda_(lambda)
-{
-	for (size_t i=0; i<nombre/lambda; ++i) {
-		particules_.push_back(Particule*(new Particule(p)));
-	}
-}
+{}
 
 //Destructeur
 Faisceau::~Faisceau () {
