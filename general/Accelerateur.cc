@@ -64,8 +64,7 @@ std::ostream& Accelerateur::affiche_part(std::ostream& sortie) const {
 
 void Accelerateur::ajouter_faisceau(p_Faisceau const& f) {
   f->set_support(support);
-	faisceaux_.push_back(f);
-	
+  faisceaux_.push_back(p_Faisceau (new Faisceau(*f)));
 }
 
 //J'ai modifié cette méthode car 'new Element(*el)' créait un pointeur vers un Element, et donc si on donnait un pointeur vers un Dipole par exemple, le Dipole était mis dans un Element et perdait donc ses attributs caractéristiques
@@ -104,9 +103,6 @@ void Accelerateur::initialiser_particules() {
 //Supprimer
 
 void Accelerateur::supprimer_faisceau() {
-	for (auto& f : faisceaux_) {
-		delete f;
-	}
 	faisceaux_.clear();
 }
 
@@ -118,7 +114,6 @@ void Accelerateur::supprimer_el() {
 }
 
 void Accelerateur::supprimer_faisceau(size_t i) {
-	delete faisceaux_[i];
 	faisceaux_.erase(faisceaux_.begin()+i);
 }
 

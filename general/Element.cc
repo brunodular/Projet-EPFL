@@ -98,10 +98,10 @@ void ElementCourbe::affiche(ostream& sortie) const {
 }
 
 double ElementCourbe::coord_orthogonale_position(Particule* p) const {
-  return p->pos() * ((~(p->pos() - p->pos().z()))^dir_);
+  return p->pos() * (~(p->pos() - (p->pos().z())*e3));
 }
 double ElementCourbe::coord_orthogonale_vitesse(Particule* p) const {
-  return p->v() * (~(p->pos() - p->pos().z()));
+  return p->v() * (~(p->pos() - (p->pos().z()*e3)));
 }
 
 //=======================================================================

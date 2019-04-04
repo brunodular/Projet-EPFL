@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <memory>
 #include "Element.h"
 #include "Dessinable.h"
 #include "Faisceau.h"
@@ -33,6 +34,9 @@ class Accelerateur : public Dessinable {
 				delete el;
 			}
 			elements_.clear();
+			for (auto f : faisceaux_) {
+				delete f;
+			}
 			faisceaux_.clear();
 		}
 

@@ -91,116 +91,25 @@ double Faisceau::moyenne_pos_vit_r() const {
   }
 }
 
-
-//-----------------------------------------------------------------------
-
-Vecteur3D Faisceau::moyenne_vit() const {
-if (nombre_particules() == 0) return 0.0;
-  else {
-    double moyenneX(0.0);
-    double moyenneY(0.0);
-    double moyenneZ(0.0);
-    for (auto const& p : particules_) {
-      if (p->element_courant() != nullptr) {
-        double pos1(p->v().x());
-		double pos2(p->v().y());
-		double pos3(p->v().z());
-	    moyenneX += pos1;
-	    moyenneY += pos2;
-	    moyenneZ += pos3;
-      } 
-    }
-    unsigned int Nb=nombre_particules();
-    return Vecteur3D (moyenneX/Nb, moyenneY/Nb, moyenneZ/Nb);
-  }
-}
-
-Vecteur3D Faisceau::moyenne_pos() const {
-  if (nombre_particules() == 0) return 0.0;
-  else {
-    double moyenneX(0.0);
-    double moyenneY(0.0);
-    double moyenneZ(0.0);
-    for (auto const& p : particules_) {
-      if (p->element_courant() != nullptr) {
-        double pos1(p->pos().x());
-		double pos2(p->pos().y());
-		double pos3(p->pos().z());
-	    moyenneX += pos1;
-	    moyenneY += pos2;
-	    moyenneZ += pos3;
-      } 
-    }
-    unsigned int Nb=nombre_particules();
-    return Vecteur3D (moyenneX/Nb, moyenneY/Nb, moyenneZ/Nb);
-  }
-}
-
-Vecteur3D Faisceau::F_moyenne () const {
-  if (nombre_particules() == 0) return 0.0;
-  else {
-    double moyenneX(0.0);
-    double moyenneY(0.0);
-    double moyenneZ(0.0);
-    for (auto const& p : particules_) {
-      if (p->element_courant() != nullptr) {
-        double pos1(p->F().x());
-		double pos2(p->F().y());
-		double pos3(p->F().z());
-	    moyenneX += pos1;
-	    moyenneY += pos2;
-	    moyenneZ += pos3;
-      } 
-    }
-    unsigned int Nb=nombre_particules();
-    return Vecteur3D (moyenneX/Nb, moyenneY/Nb, moyenneZ/Nb);
-  }
-}
-
-double Faisceau::m_moyenne() const {
-  if (nombre_particules() == 0) return 0.0;
-  else {
-    double moyenne(0.0);
-    for (auto& p : particules_) {
-      if (p->element_courant() != nullptr) {
-        double masse(p->m());
-        moyenne += masse;
-      }
-    }
-    return (moyenne / nombre_particules());
-  }	
-}
-
-double Faisceau::q_moyenne() const {
-  if (nombre_particules() == 0) return 0.0;
-  else {
-    double moyenne(0.0);
-    for (auto& p : particules_) {
-      if (p->element_courant() != nullptr) {
-        double charge(p->q());
-        moyenne += charge;
-      }
-    }
-    return (moyenne / nombre_particules());
-  }		
-}
-
 //=======================================================================
 
 //Constructeur
 
-Faisceau::Faisceau (Collection_P const& particules, unsigned int lambda, SupportADessin* support, p_Particule p)
-	: Dessinable(support), lambda_(lambda), particules_(particules), particule_typique_(p)
-{particule_typique_=particule_typique();} 
+Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur const& acc, SupportADessin* support, double dx)
+	: Dessinable(support), particule_typique_(p), lambda_(lambda)
+{
+	for (size_t i=0; i<nombre/lambda; ++i) {
+		particules_.push_back(p_Particule (new Particule(p->pos(), p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda)));
+	}
+}
 
 Faisceau::Faisceau (SupportADessin* support) : Dessinable(support) {}
 
-//Destructeur
-Faisceau::~Faisceau () {
-  for (auto& par : particules_) {
-    delete par;
-  }
-  particules_.clear();
+Faisceau::Faisceau (Faisceau const& autre) {
+	this->supprimer_par();
+	for (auto const& par : autre.particules()) {
+		particules_.push_back(new Particule(*par));
+	}
 }
 
 //=======================================================================
@@ -208,8 +117,9 @@ Faisceau::~Faisceau () {
 //Methodes
 
 ostream& Faisceau::affiche(ostream& sortie) const{
-	sortie << "Particule typique du faisceau : " << endl;
-	particule_typique()->affiche(sortie);
+	for (auto& p : particules_) {
+		p->affiche(sortie);
+	}
 	return sortie;
 }
 
@@ -244,10 +154,6 @@ ostream& Faisceau::affiche_part(std::ostream& sortie) const {
 //========================================================================
 
 //GETTERS
-
-p_Particule Faisceau::particule_typique() const {
-	return p_Particule(new Particule(moyenne_pos(), moyenne_vit(), E_moyenne(), m_moyenne(), q_moyenne(), support, F_moyenne()));
-}
 
 Collection_P Faisceau::particules() const{return particules_;}
 
@@ -328,19 +234,24 @@ void Faisceau::initialiser_particules(p_Element const& el) {
       p->element_courant(el);
       while(p->element_courant()->passe_au_suivant(*p));
   }
-  particule_typique_=particule_typique();
 }
 
 //EVOLUTION
 void Faisceau::evolue(double dt) {
-  for (auto& p : particules_) {
-    if (not p->est_sortie()) { //vérifie si la particule est toujours dans l'accélérateur
+  size_t i(0);
+  while(i<nombre_particules()) {
+    if (not particules_[i]->est_sortie()) { //vérifie si la particule est toujours dans l'accélérateur
 
-      p->ajouter_f_magn((p->element_courant())->B(*p),dt); //On ajoute à la particule p le champ magnétique produit par l'élément dans lequel elle se trouve.
+      particules_[i]->ajouter_f_magn((particules_[i]->element_courant())->B(*particules_[i]),dt); //On ajoute à la particule p le champ magnétique produit par l'élément dans lequel elle se trouve.
 
-      p->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
+      particules_[i]->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
 
-      p->element_courant()->passe_au_suivant(*p); //Mise à jour de l'élément courant de la particule p.
-    }
+      particules_[i]->element_courant()->passe_au_suivant(*particules_[i]); //Mise à jour de l'élément courant de la particule p.
+      
+      ++i;
+    
+    } else {
+		supprimer_par(i);
+	}
   }
 }

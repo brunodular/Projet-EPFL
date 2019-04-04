@@ -23,7 +23,7 @@ private:
 
 public:
   //Constructeur
-  Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support = nullptr, Vecteur3D F = Vecteur3D());
+  Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support = nullptr);
 
   //getters
   Vecteur3D pos() const;
@@ -32,14 +32,14 @@ public:
   double m() const;
   double q() const;
   Element* element_courant() const;
+  double E() const;
+  double gamma() const;
 
   //setters
   void element_courant(Element* new_element);
   void setSupport(SupportADessin* support_) {support=support_;}
   
   //Méthodes
-  double E() const;
-  double gamma() const;
 
   void ajouter_f_magn(Vecteur3D const&,double);
 
