@@ -75,6 +75,7 @@ double Faisceau::moyenne_vit_2_r() const {
     return (moyenne / nombre_particules());
   }
 }
+
 double Faisceau::moyenne_pos_vit_r() const {
   if (nombre_particules() == 0) return 0.0;
   else {
@@ -90,38 +91,82 @@ double Faisceau::moyenne_pos_vit_r() const {
   }
 }
 
+//=======================================================================
+
 //Constructeur
 
-Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda)
-	: particule_typique_(p), lambda_(lambda)
-{}
-
-//Destructeur
-Faisceau::~Faisceau () {
-  delete particule_typique_;
-  for (auto& par : particules_) {
-    delete par;
-  }
-  particules_.clear();
+Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur const& acc, SupportADessin* support_, double dx)
+	: Dessinable(support_), particule_typique_(p), lambda_(lambda)
+{
+	for (size_t i=0; i<nombre/lambda; ++i) {
+		particules_.push_back(p_Particule (new Particule(p->pos(), p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda)));
+	}
 }
+
+Faisceau::Faisceau (SupportADessin* support) : Dessinable(support) {}
+
+Faisceau::Faisceau (Faisceau const& autre) {
+	this->supprimer_par();
+	for (auto const& par : autre.particules()) {
+		particules_.push_back(new Particule(*par));
+	}
+}
+
+//=======================================================================
 
 //Methodes
 
-void Faisceau::affiche(ostream& sortie) const {
-	sortie << "Particule typique du faisceau : " << endl;
-	particule_typique_->affiche(sortie);
+ostream& Faisceau::affiche(ostream& sortie) const{
+	for (auto& p : particules_) {
+		p->affiche(sortie);
+	}
+	return sortie;
 }
+
+void Faisceau::set_support(SupportADessin* support_) {
+	support=support_;
+	for (auto& par : particules_) {
+		par->set_support(support_);
+	}
+}
+
+ostream& Faisceau::affiche_part(std::ostream& sortie) const {
+	string str1="element";
+	string str2="particule";
+	string str3="suivant";
+	string str4=str3+'e';
+
+  if (particules_.size()!=0) {
+		sortie << "Le faisceau contient ";
+		if (particules_.size()==1) {sortie << "la "+str2+" "+str4;}
+		else {sortie << "les " << particules_.size() << ' '+str2+'s'+' '+str4+'s';}
+		sortie << " :" << endl;
+
+		for (auto const& par : particules_) {
+			par->dessine();
+		}
+
+	} else {sortie << "Le faisceau ne contient pas de particules." << endl;}
+
+	return sortie;
+}
+
+//========================================================================
 
 //GETTERS
 
+Collection_P Faisceau::particules() const{return particules_;}
+
 double Faisceau::E_moyenne() const {
 	double moyenne(0.0);
+	cout << "Nombre de particules " << nombre_particules() << endl;
+	
   if (nombre_particules() != 0) {
     for (auto& p : particules_) {
       moyenne += p->E();
     }
     moyenne /= nombre_particules();
-  }
+  } 
   return moyenne;
 }
 
@@ -137,9 +182,11 @@ double Faisceau::emittance_r() const {
 double Faisceau::A_11_r() const {
   return (moyenne_vit_2_r()/emittance_r());
 }
+
 double Faisceau::A_12_r() const {
   return (- moyenne_pos_vit_r()/emittance_r());
 }
+
 double Faisceau::A_22_r() const {
   return (moyenne_pos_2_r()/emittance_r());
 }
@@ -147,6 +194,7 @@ double Faisceau::A_22_r() const {
 double Faisceau::A_11_z() const {
   return (moyenne_vit_2_z()/emittance_z());
 }
+
 double Faisceau::A_12_z() const {
   return (- moyenne_pos_vit_z()/emittance_z());
 }
@@ -163,8 +211,47 @@ unsigned int Faisceau::nombre_particules_simulees() const {
 }
 
 
-//modifier particules
+//Modifier la collection de particules
 void Faisceau::supprimer_par(size_t i) {
   delete particules_[i];
   particules_.erase(particules_.begin() + i);
+}
+
+void Faisceau::supprimer_par() {
+	for (auto& par : particules_) {
+		delete par;
+	}
+	particules_.clear();
+}
+
+void Faisceau::ajouter_par(p_Particule const& par) {
+	par->set_support(support);
+	particules_.push_back(par);
+}
+
+void Faisceau::initialiser_particules(p_Element const& el) {
+	for (auto& p : particules_) {
+      p->element_courant(el);
+      while(p->element_courant()->passe_au_suivant(*p));
+  }
+}
+
+//EVOLUTION
+void Faisceau::evolue(double dt) {
+  size_t i(0);
+  while(i<nombre_particules()) {
+    if (not particules_[i]->est_sortie()) { //vérifie si la particule est toujours dans l'accélérateur
+
+      particules_[i]->ajouter_f_magn((particules_[i]->element_courant())->B(*particules_[i]),dt); //On ajoute à la particule p le champ magnétique produit par l'élément dans lequel elle se trouve.
+
+      particules_[i]->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
+
+      particules_[i]->element_courant()->passe_au_suivant(*particules_[i]); //Mise à jour de l'élément courant de la particule p.
+      
+      ++i;
+    
+    } else {
+		supprimer_par(i);
+	}
+  }
 }

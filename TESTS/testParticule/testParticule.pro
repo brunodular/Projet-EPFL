@@ -4,20 +4,18 @@ CONFIG -= app_bundle
 TARGET = testParticule
 
 LIBS += \
-	-L../../vue_texte -lvue_texte \
-  -L../../general -lgeneral
+	-L../../general -lgeneral \
 
 PRE_TARGETDEPS += \
-  ../../vue_texte/libvue_texte.a \
-	../../general/libgeneral.a
-
+	../../general/libgeneral.a \
 
 INCLUDEPATH += \
 	../../general \
-	../../vue_texte
 
-SOURCES = testParticule.cc
+SOURCES += \
+	testParticule.cc \
+	vue_texte.cc
 
 HEADERS += \
     ../../general/Particule.h \
-    ../../vue_texte/vue_texte.h \
+    vue_texte.h 

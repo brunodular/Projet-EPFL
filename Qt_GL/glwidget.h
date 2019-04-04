@@ -9,10 +9,9 @@
 class GLWidget : public QOpenGLWidget
 {
 public:
-  GLWidget(QWidget* parent = nullptr, Particule* part=nullptr)
+  GLWidget(QWidget* parent = nullptr, Accelerateur* acc=nullptr)
     : QOpenGLWidget(parent)
-    , part_(part)
-  {part_->setSupport(&vue);}
+    , acc_(acc) {}
   virtual ~GLWidget() {}
 
 private:
@@ -39,7 +38,7 @@ private:
   QTime chronometre;
 
   // objets à dessiner, faire évoluer
-  Particule* part_; 
+  Accelerateur* acc_;
   
   //Position de la souris
   QPoint lastMousePosition;

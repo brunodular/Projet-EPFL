@@ -7,22 +7,23 @@ using namespace std;
 //=======================================================================
 
 //Constructeur
-Accelerateur::Accelerateur (Collection_P const& p, Collection_E const& e, SupportADessin* support)
-  : Dessinable(support), particules_(p), elements_(e) {}
+Accelerateur::Accelerateur (Collection_F const& f, Collection_E const& e, SupportADessin* support)
+  : Dessinable(support), faisceaux_(f), elements_(e) {}
 
 Accelerateur::Accelerateur(SupportADessin* support) : Dessinable(support) {}
 
 //Methodes
 
 ostream& Accelerateur::affiche(ostream& sortie) const {
-	if (elements_.empty() and particules_.empty()) {
+	if (elements_.empty() and faisceaux_.empty()) {
 		sortie << "L'accélérateur est vide!";
 		return sortie;
 	}
 	string str1="element";
-	string str2="particule";
 	string str3="suivant";
 	string str4=str3+'e';
+	string str5="faisceau";
+	
 	if (elements_.size()!=0) {
 		sortie << "L'accélérateur contient ";
 		if (elements_.size()==1) {sortie << "l'"+str1+" "+str3;}
@@ -35,45 +36,36 @@ ostream& Accelerateur::affiche(ostream& sortie) const {
 
 	} else {sortie << "L'accélérateur ne contient pas d'éléments." << endl;}
 
-	if (particules_.size()!=0) {
-		sortie << "L'accélérateur contient ";
-		if (particules_.size()==1) {sortie << "la "+str2+" "+str4;}
-		else {sortie << "les " << particules_.size() << ' '+str2+'s'+' '+str4+'s';}
-		sortie << " :" << endl;
-
-		for (auto const& par : particules_) {
-			par->dessine();
+	
+	
+	if (faisceaux_.size()!=0 and faisceaux_[0]->nombre_particules()!=0) {
+		sortie << "L'accelerateur contient : ";
+		if (faisceaux_.size()==1) {sortie << "le "+str5+" "+str3;}
+		else {sortie << "les " << faisceaux_.size() << ' '+str5+'s'+str3+'s';}
+		sortie << " : " << endl;
+	  
+		for (auto const& f : faisceaux_) {
+			//f->dessine();  MARCHE PAS?????
+			f->affiche(sortie);
 		}
-
-	} else {sortie << "L'accélérateur ne contient pas de particules." << endl;}
+	} else {sortie << "L'accelerateur ne contient pas de faisceaux." << endl;}
 
 	return sortie;
 }
 
 std::ostream& Accelerateur::affiche_part(std::ostream& sortie) const {
-  string str1="element";
-	string str2="particule";
-	string str3="suivant";
-	string str4=str3+'e';
-
-  if (particules_.size()!=0) {
-		sortie << "L'accélérateur contient ";
-		if (particules_.size()==1) {sortie << "la "+str2+" "+str4;}
-		else {sortie << "les " << particules_.size() << ' '+str2+'s'+' '+str4+'s';}
-		sortie << " :" << endl;
-
-		for (auto const& par : particules_) {
-			par->dessine();
-		}
-
-	} else {sortie << "L'accélérateur ne contient pas de particules." << endl;}
-
-	return sortie;
+  if (!(faisceaux_.empty())) {
+	  for (auto const& f : faisceaux_) {
+		f->affiche_part(sortie);
+	}
+  }
+  
+  return sortie;
 }
 
-void Accelerateur::ajouter_par(p_Particule const& par) {
-  par->set_support(support);
-	particules_.push_back(par);
+void Accelerateur::ajouter_faisceau(p_Faisceau const& f) {
+  f->set_support(support);
+  faisceaux_.push_back(p_Faisceau (new Faisceau(*f)));
 }
 
 //J'ai modifié cette méthode car 'new Element(*el)' créait un pointeur vers un Element, et donc si on donnait un pointeur vers un Dipole par exemple, le Dipole était mis dans un Element et perdait donc ses attributs caractéristiques
@@ -81,6 +73,10 @@ void Accelerateur::ajouter_par(p_Particule const& par) {
 void Accelerateur::ajouter_el(p_Element const& el) {
   el->set_support(support);
 	elements_.push_back(el);
+}
+
+void Accelerateur::ajouter_faisceau_par(size_t i, p_Particule const& par) {
+	faisceaux_[i]->ajouter_par(par);
 }
 
 //CONSTRUIRE
@@ -98,47 +94,43 @@ void Accelerateur::souder_accelerateur() {
 
 void Accelerateur::initialiser_particules() {
   if (elements_.size() != 0) {
-    for (auto& p : particules_) {
-      p->element_courant(elements_.front());
-      while(p->element_courant()->passe_au_suivant(*p));
-    }
+	for (auto& f : faisceaux_) {
+		f->initialiser_particules(elements_.front());
+	}
   }
 }
 
 
 //Supprimer
 
-void Accelerateur::supprimer_par() {
-	for (auto const& par : particules_) {
-		delete par;
-	}
-	particules_.clear();
+void Accelerateur::supprimer_faisceau() {
+	faisceaux_.clear();
 }
 
 void Accelerateur::supprimer_el() {
-	for (auto const& el : elements_) {
+	for (auto& el : elements_) {
 		delete el;
 	}
 	elements_.clear();
 }
 
-void Accelerateur::supprimer_par(size_t i) {
-  delete particules_[i];
-  particules_.erase(particules_.begin() + i);
+void Accelerateur::supprimer_faisceau(size_t i) {
+	faisceaux_.erase(faisceaux_.begin()+i);
+}
+
+void Accelerateur::supprimer_faisceau_par(size_t i) {
+	faisceaux_[i]->supprimer_par();
+}
+
+void Accelerateur::supprimer_faisceau_par(size_t i, size_t j) {
+	faisceaux_[i]->supprimer_par(j);
 }
 
 //EVOLUTION
 
 void Accelerateur::evolue(double dt) {
-  for (auto& p : particules_) {
-    if (not p->est_sortie()) { //vérifie si la particule est toujours dans l'accélérateur
-
-      p->ajouter_f_magn((p->element_courant())->B(*p),dt); //On ajoute à la particule p le champ magnétique produit par l'élément dans lequel elle se trouve.
-
-      p->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
-
-      p->element_courant()->passe_au_suivant(*p); //Mise à jour de l'élément courant de la particule p.
-    }
+  for (auto& f : faisceaux_) {
+	f->evolue(dt);  
   }
 }
 
