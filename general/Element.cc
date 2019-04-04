@@ -95,6 +95,10 @@ ElementCourbe::ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,do
   centre_(0.5*(pos_e_+pos_s_)+(1/courbure_)*sqrt(1-courbure_*courbure_*0.25*(pos_s_-pos_e_).norme2())*(dir_^e3)) {}
 
 //Méthodes
+Vecteur3D ElementCourbe::centre() const {
+  return centre_;
+}
+
 bool ElementCourbe::heurte_bord(Particule const& p) const {
   Vecteur3D X(p.pos()-centre_);
   return (X-(1/abs(courbure_))*(~(X-X.z()*e3))).norme2() > r_section_*r_section_;

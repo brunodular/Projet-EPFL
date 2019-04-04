@@ -139,14 +139,19 @@ void Accelerateur::supprimer_par(size_t i) {
 //EVOLUTION
 
 void Accelerateur::evolue(double dt) {
-  for (auto& p : particules_) {
-    if (not p->est_sortie()) { //vérifie si la particule est toujours dans l'accélérateur
+  size_t i(0);
+  while(i < particules_.size()) {
+    if (not particules_[i]->est_sortie()) { //vérifie si la particule est toujours dans l'accélérateur
 
-      p->ajouter_f_magn((p->element_courant())->B(*p),dt); //On ajoute à la particule p le champ magnétique produit par l'élément dans lequel elle se trouve.
+      particules_[i]->ajouter_f_magn((particules_[i]->element_courant())->B(*particules_[i]),dt); //On ajoute à la particule p le champ magnétique produit par l'élément dans lequel elle se trouve.
 
-      p->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
+      particules_[i]->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
 
-      p->element_courant()->passe_au_suivant(*p); //Mise à jour de l'élément courant de la particule p.
+      particules_[i]->element_courant()->passe_au_suivant(*particules_[i]); //Mise à jour de l'élément courant de la particule p.
+
+      ++i;
+    } else {
+      supprimer_par(i);
     }
   }
 }

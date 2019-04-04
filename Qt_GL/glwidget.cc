@@ -134,8 +134,16 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     break;
 
   case Qt::Key_Space:
-	pause();
-	break;
+	  pause();
+	  break;
+
+  case Qt::Key_P:
+    vitesse_temps *= 1.6162;
+    break;
+
+  case Qt::Key_O:
+    vitesse_temps /= 1.6162;
+    break;
   };
 
   update(); // redessine
@@ -146,9 +154,11 @@ void GLWidget::timerEvent(QTimerEvent* event)
 {
   Q_UNUSED(event);
 
-  //double dt = chronometre.restart() / 1000.0;
+  double dt = vitesse_temps * 1e-10;
+  //chronometre.restart() / 1000.0;
 
-  //part_->evolue(dt);
+  acc_->evolue(dt);
+
   update();
 }
 

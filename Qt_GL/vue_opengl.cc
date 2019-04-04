@@ -39,9 +39,7 @@ void VueOpenGL::dessine(Contenu const& a_dessiner)
 */
 
 void VueOpenGL::dessine(Dipole const& el) {
-
-
-
+  dessineTore(el.centre(),el.pos_e(),el.pos_s(),el.r_section(),0.27,0.86,1.0);
 };
 
 void VueOpenGL::dessine(Particule const& p) {
@@ -50,20 +48,20 @@ void VueOpenGL::dessine(Particule const& p) {
 	matrice.translate((p.pos()).x(), (p.pos()).y(), (p.pos()).z());
 	matrice.scale(0.05);
 
-	//dessineAxes(matrice, true);
 	dessineSphere(matrice, 1.0, 1.0 ,0.0);
 };
 
 void VueOpenGL::dessine(Accelerateur const& acc) {
   for (auto const& e : acc.elements()) e->dessine();
+  for (auto const& p : acc.particules()) p->dessine();
 }
 
 void VueOpenGL::dessine(SectionDroite const& el) {
-  dessineCylindre(el.pos_e(),el.pos_s(),el.r_section());
+  dessineCylindre(el.pos_e(),el.pos_s(),el.r_section(),1.0,0.56,0.27);
 }
 
 void VueOpenGL::dessine(Quadrupole const& el) {
-  dessineCylindre(el.pos_e(),el.pos_s(),el.r_section());
+  dessineCylindre(el.pos_e(),el.pos_s(),el.r_section(),0.27,0.86,1.0);
 }
 
 
@@ -247,15 +245,17 @@ void VueOpenGL::dessineSphere (QMatrix4x4 const& point_de_vue,
 {
   prog.setUniformValue("vue_modele", matrice_vue * point_de_vue);
   prog.setAttributeValue(CouleurId, rouge, vert, bleu);  // met la couleur
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   sphere.draw(prog, SommetId);                           // dessine la sphère
 }
 
-void VueOpenGL::dessineCylindre(Vecteur3D const& base, Vecteur3D const& end, double r) {
+void VueOpenGL::dessineCylindre(Vecteur3D const& base, Vecteur3D const& end, double r, double rouge, double vert, double bleu) {
   QMatrix4x4 matrice;
 
-  const int slices(30);
-  const int stacks(80);
-  const double length_stacks((end-base).norme()/stacks);
+  const double stacks_length_2(2 * stacks_length);
+
+  const int slices(ceil(2*M_PI*r/slices_height));
+  const int stacks(ceil((end-base).norme()/stacks_length_2));
   const double k(2*M_PI/slices);
 
   Vecteur3D u = ~(end-base);
@@ -265,12 +265,13 @@ void VueOpenGL::dessineCylindre(Vecteur3D const& base, Vecteur3D const& end, dou
   prog.setUniformValue("vue_modele", matrice_vue * matrice);
   prog.setAttributeValue(CouleurId, 1.0, 1.0, 0.0);
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  prog.setAttributeValue(CouleurId, rouge, vert, bleu);
 
   for (int j(0); j < stacks; ++j) {
     for (int i(0); i <= slices; ++i) {
       glBegin(GL_QUAD_STRIP);
-      Vecteur3D P(base + j*length_stacks*u + cos(i*k)*v + sin(i*k)*w);
-      Vecteur3D Q(base + (j+1)*length_stacks*u + cos(i*k)*v + sin(i*k)*w);
+      Vecteur3D P(base + j*stacks_length_2*u + cos(i*k)*v + sin(i*k)*w);
+      Vecteur3D Q(base + (j+1)*stacks_length_2*u + cos(i*k)*v + sin(i*k)*w);
 
       glVertex3d(P.x(),P.y(),P.z());
       glVertex3d(Q.x(),Q.y(),Q.z());
@@ -278,4 +279,43 @@ void VueOpenGL::dessineCylindre(Vecteur3D const& base, Vecteur3D const& end, dou
   }
 
   glEnd();
+}
+
+void VueOpenGL::dessineTore(Vecteur3D const& centre, Vecteur3D const& base, Vecteur3D const& end, double minor_radius, double rouge, double vert, double bleu) {
+  const double major_radius((centre-base).norme());
+  const double proportion(1/M_PI*asin((base-end).norme()/(2*major_radius)));
+
+  const double a(slices_height/minor_radius);
+  const double b(1/(proportion*major_radius/stacks_length));
+
+  const int stacks(ceil(2*M_PI*major_radius*proportion/stacks_length));
+  const int slices(ceil(2*M_PI*minor_radius/slices_height));
+
+  //construction d'une base orthonormale placée au centre du tore
+  Vecteur3D u = ~(centre - base);
+  Vecteur3D v = ~(centre - end);
+  if ((u^v).norme2() == 0) v = u ^ e3;
+  else v = ~(v - (u*v)*u);
+  Vecteur3D w = u ^ v;
+
+  prog.setUniformValue("vue_modele", matrice_vue);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+  for (int i(0); i < slices; ++i) {
+    glBegin(GL_QUAD_STRIP);
+    prog.setAttributeValue(CouleurId, rouge, vert, bleu);
+    for (int j(0); j <= ceil(proportion*stacks); ++j) {
+      for (int k(1); k >= 0; --k) {
+        double s((i+k) % slices + 0.5);
+        double t(j % stacks + stacks/2);
+
+        double x((major_radius + minor_radius * cos(s*a)) * cos(t*b));
+        double y((major_radius + minor_radius * cos(s*a)) * sin(t*b));
+        double z(minor_radius * sin(s*a));
+        Vecteur3D P(centre + x*u + y*v + z*w);
+        glVertex3d(P.x(),P.y(),P.z());
+      }
+    }
+    glEnd();
+  }
 }

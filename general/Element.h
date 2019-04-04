@@ -76,6 +76,8 @@ public:
   ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,SupportADessin* support = nullptr,Element* el_suiv = nullptr);
 
   //Méthodes
+  virtual Vecteur3D centre() const;
+
   virtual bool heurte_bord(Particule const&) const override;
 
   virtual void affiche(std::ostream&) const override;
