@@ -37,7 +37,6 @@ public:
 
   //setters
   void element_courant(Element* new_element);
-  void set_support(SupportADessin* support_);
   
   //Méthodes
 

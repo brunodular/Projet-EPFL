@@ -59,8 +59,10 @@ void VueOpenGL::dessine(Particule const& p) {
 
 				//-----------------------------
 void VueOpenGL::dessine(Accelerateur const& acc) {
-	QMatrix4x4 matrice;
-	dessineSphere(matrice);
+	acc.dessine_faisceau();
+	/*
+	acc->dessine_element();
+	*/
 }
 
 				//----------------------------
@@ -89,11 +91,9 @@ void VueOpenGL::dessine(Quadrupole const& qd) {
 
 }
 
-				//---------------------------
-
+				//--------------------------
 void VueOpenGL::dessine(Faisceau const& f) {
-
-
+	f.dessine_particule();
 }
 
 

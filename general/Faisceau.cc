@@ -123,10 +123,10 @@ ostream& Faisceau::affiche(ostream& sortie) const{
 	return sortie;
 }
 
-void Faisceau::set_support(SupportADessin* support_) {
-	support=support_;
+void Faisceau::set_support(SupportADessin* sup) {
+	support=sup;
 	for (auto& par : particules_) {
-		par->set_support(support_);
+		par->set_support(sup);
 	}
 }
 
@@ -254,4 +254,14 @@ void Faisceau::evolue(double dt) {
 		supprimer_par(i);
 	}
   }
+}
+
+//DESSINER
+
+void Faisceau::dessine_particule() const {
+	if(nombre_particules()!=0 and support!=nullptr) {
+		for (auto const& p : particules_) {
+			support->dessine(*p);
+		}
+	}
 }

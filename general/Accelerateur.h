@@ -72,6 +72,8 @@ class Accelerateur : public Dessinable {
 
 		//DESSINER
 		virtual void dessine() override { support->dessine(*this); }
+		virtual void dessine_faisceau() const;
+		virtual void dessine_element() const;
 };
 
 //Operateur externe
