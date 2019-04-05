@@ -4,40 +4,6 @@
 #include "Vecteur3D.h"
 #include <cmath>
 
-// ======================================================================
-/*METHODES DESSINER DE LA SOUS-CLASSE VueOpenGL*/
-
-/*
-void VueOpenGL::dessine(Contenu const& a_dessiner)
-{
-   // Dessine le 1er cube (à l'origine)
-  dessineCube();
-
-  QMatrix4x4 matrice;
-  // Dessine le 2e cube
-  matrice.translate(0.0, 1.5, 0.0);
-  matrice.scale(0.25);
-  dessineCube(matrice);
-  dessineAxes(matrice);
-
-  // Dessine le 3e cube
-  matrice.setToIdentity();
-  matrice.translate(0.0, 0.0, 1.5);
-  matrice.scale(0.25);
-  matrice.rotate(45.0, 0.0, 1.0, 0.0);
-  dessineCube(matrice);
-
-  // Dessine le 4e cube
-  matrice.setToIdentity();
-  matrice.rotate(a_dessiner.infos(), 0.0, 5.0, 0.0);
-  matrice.translate(0.0, 2.3, 0.0);
-  matrice.rotate(a_dessiner.infos(), 1.0, 0.0, 0.0);
-  matrice.scale(0.2);
-  dessineCube(matrice);
-}
-
-*/
-
 void VueOpenGL::dessine(Dipole const& el) {
   dessineTore(el.centre(),el.pos_e(),el.pos_s(),el.r_section(),0.27,0.86,1.0);
 };
@@ -46,7 +12,7 @@ void VueOpenGL::dessine(Particule const& p) {
 	QMatrix4x4 matrice;
 
 	matrice.translate((p.pos()).x(), (p.pos()).y(), (p.pos()).z());
-	matrice.scale(0.05);
+	matrice.scale(0.02);
 
 	dessineSphere(matrice, 1.0, 1.0 ,0.0);
 };
@@ -67,7 +33,6 @@ void VueOpenGL::dessine(Quadrupole const& el) {
 
 /*
 void VueOpenGL::dessine(Faisceau const& f) {
-
 
 }
 */
@@ -165,9 +130,7 @@ void VueOpenGL::initializePosition()
 {
   // position initiale
   matrice_vue.setToIdentity();
-  matrice_vue.translate(0.0, 0.0, -4.0);
-  matrice_vue.rotate(60.0, 0.0, 1.0, 0.0);
-  matrice_vue.rotate(45.0, 0.0, 0.0, 1.0);
+  matrice_vue.translate(0.0, 0.0, -5.0);
 }
 
 // ======================================================================

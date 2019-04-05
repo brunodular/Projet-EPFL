@@ -11,7 +11,7 @@ class GLWidget : public QOpenGLWidget
 public:
   GLWidget(QWidget* parent = nullptr, Accelerateur* a = nullptr)
     : QOpenGLWidget(parent)
-    , acc_(a), vitesse_temps(1.0)
+    , vitesse_temps(1.0), acc_(a)
   {acc_->set_support(&vue);}
   virtual ~GLWidget() {}
 

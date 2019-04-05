@@ -58,7 +58,7 @@ void Particule::bouger(double dt) {
 
 bool Particule::est_sortie() {
   if (element_courant_ == nullptr or element_courant_->heurte_bord(*this)) {
-    element_courant_ = nullptr; cout << "Je suis sortie ^^" << endl;
+    element_courant_ = nullptr;
     return true;
   } else return false;
 }

@@ -151,7 +151,7 @@ void Accelerateur::evolue(double dt) {
 
       ++i;
     } else {
-      supprimer_par(i);
+      supprimer_par(i); cout << particules_.size() << endl;
     }
   }
 }

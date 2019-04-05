@@ -11,7 +11,7 @@ public:
    : vbo(QGLBuffer::VertexBuffer), ibo(QGLBuffer::IndexBuffer)
  {}
 
-  void initialize(GLuint slices = 25, GLuint stacks = 25);
+  void initialize(GLuint slices = 20, GLuint stacks = 20);
 
   void draw(QOpenGLShaderProgram& program, int attributeLocation);
 
