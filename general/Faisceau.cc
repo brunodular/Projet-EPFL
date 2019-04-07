@@ -95,12 +95,18 @@ double Faisceau::moyenne_pos_vit_r() const {
 
 //Constructeur
 
-Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur const& acc, SupportADessin* support_, double dx)
-	: Dessinable(support_), particule_typique_(p), lambda_(lambda)
+Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur const& acc, SupportADessin* support, double dx)
+	: Dessinable(support), particule_typique_(p), lambda_(lambda)
 {
-	for (size_t i=0; i<nombre/lambda; ++i) {
+	/*for (size_t i=0; i<nombre/lambda; ++i) {
 		particules_.push_back(p_Particule (new Particule(p->pos(), p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda)));
 	}
+	*/
+	for (int i(0); i < nombre/lambda; ++i) {
+		particules_.push_back(new Particule(Vecteur3D(p->pos().x() + (134.6712*i-floor(134.6712*i))/50,  p->pos().y()*i + (432.1234*i-floor(432.1234*i))/5, (432.1234*i-floor(432.1234*i))/50), p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda));
+	}
+	
+	
 }
 
 Faisceau::Faisceau (SupportADessin* support) : Dessinable(support) {}
@@ -123,10 +129,10 @@ ostream& Faisceau::affiche(ostream& sortie) const{
 	return sortie;
 }
 
-void Faisceau::set_support(SupportADessin* support_) {
-	support=support_;
+void Faisceau::set_support(SupportADessin* sup) {
+	support_=sup;
 	for (auto& par : particules_) {
-		par->set_support(support_);
+		par->set_support(sup);
 	}
 }
 
@@ -225,7 +231,7 @@ void Faisceau::supprimer_par() {
 }
 
 void Faisceau::ajouter_par(p_Particule const& par) {
-	par->set_support(support);
+	par->set_support(support_);
 	particules_.push_back(par);
 }
 
@@ -251,7 +257,18 @@ void Faisceau::evolue(double dt) {
       ++i;
     
     } else {
-		supprimer_par(i);
+		supprimer_par(i); 
+		//cout << nombre_particules() << endl;
 	}
   }
+}
+
+//DESSINER
+
+void Faisceau::dessine_particule() const {
+	if(nombre_particules()!=0 and support_!=nullptr) {
+		for (auto const& p : particules_) {
+			support_->dessine(*p);
+		}
+	}
 }

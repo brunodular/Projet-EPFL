@@ -8,94 +8,35 @@ constexpr double DEUXPI=2*M_PI;
 // ======================================================================
 /*METHODES DESSINER DE LA SOUS-CLASSE VueOpenGL*/
 
-/*
-void VueOpenGL::dessine(Contenu const& a_dessiner)
-{
-   // Dessine le 1er cube (à l'origine)
-  dessineCube();
-
-  QMatrix4x4 matrice;
-  // Dessine le 2e cube
-  matrice.translate(0.0, 1.5, 0.0);
-  matrice.scale(0.25);
-  dessineCube(matrice);
-  dessineAxes(matrice);
-
-  // Dessine le 3e cube
-  matrice.setToIdentity();
-  matrice.translate(0.0, 0.0, 1.5);
-  matrice.scale(0.25);
-  matrice.rotate(45.0, 0.0, 1.0, 0.0);
-  dessineCube(matrice);
-
-  // Dessine le 4e cube
-  matrice.setToIdentity();
-  matrice.rotate(a_dessiner.infos(), 0.0, 5.0, 0.0);
-  matrice.translate(0.0, 2.3, 0.0);
-  matrice.rotate(a_dessiner.infos(), 1.0, 0.0, 0.0);
-  matrice.scale(0.2);
-  dessineCube(matrice);
-}
-
-*/
-				//------------------------------
-void VueOpenGL::dessine(Dipole const& d) {
-
-
-
+void VueOpenGL::dessine(Dipole const& el) {
+  dessineTore(el.centre(),el.pos_e(),el.pos_s(),el.r_section(),0.27,0.86,1.0);
 };
-
-				//------------------------------
 
 void VueOpenGL::dessine(Particule const& p) {
 	QMatrix4x4 matrice;
 
 	matrice.translate((p.pos()).x(), (p.pos()).y(), (p.pos()).z());
-	matrice.scale(0.05);
+	matrice.scale(0.02);
 
-	//dessineAxes(matrice, true);
 	dessineSphere(matrice, 1.0, 1.0 ,0.0);
 };
 
-				//-----------------------------
 void VueOpenGL::dessine(Accelerateur const& acc) {
-	QMatrix4x4 matrice;
-	dessineSphere(matrice);
+  for (auto const& e : acc.elements()) e->dessine();
+  for (auto const& f : acc.faisceaux()) f->dessine();
 }
 
-				//----------------------------
-void VueOpenGL::dessine(ElementCourbe const& elc) {
-
+void VueOpenGL::dessine(SectionDroite const& el) {
+  dessineCylindre(el.pos_e(),el.pos_s(),el.r_section(),1.0,0.56,0.27);
 }
 
-				//----------------------------
-void VueOpenGL::dessine(SectionDroite const& sd) {
-
+void VueOpenGL::dessine(Quadrupole const& el) {
+  dessineCylindre(el.pos_e(),el.pos_s(),el.r_section(),0.27,0.86,1.0);
 }
-
-				//----------------------------
-void VueOpenGL::dessine(Element const& el) {
-
-}
-
-				//---------------------------
-void VueOpenGL::dessine(ElementDroit const& eld) {
-
-}
-
-				//---------------------------
-void VueOpenGL::dessine(Quadrupole const& qd) {
-
-
-}
-
-				//---------------------------
 
 void VueOpenGL::dessine(Faisceau const& f) {
-
-
+	for (auto const& p : f.particules()) p->dessine();
 }
-
 
 //=======================================================================
 void VueOpenGL::dessineAxes (QMatrix4x4 const& point_de_vue, bool en_couleur)
@@ -190,9 +131,7 @@ void VueOpenGL::initializePosition()
 {
   // position initiale
   matrice_vue.setToIdentity();
-  matrice_vue.translate(0.0, 0.0, -4.0);
-  matrice_vue.rotate(60.0, 0.0, 1.0, 0.0);
-  matrice_vue.rotate(45.0, 0.0, 0.0, 1.0);
+  matrice_vue.translate(0.0, 0.0, -5.0);
 }
 
 // ======================================================================
@@ -270,31 +209,77 @@ void VueOpenGL::dessineSphere (QMatrix4x4 const& point_de_vue,
 {
   prog.setUniformValue("vue_modele", matrice_vue * point_de_vue);
   prog.setAttributeValue(CouleurId, rouge, vert, bleu);  // met la couleur
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   sphere.draw(prog, SommetId);                           // dessine la sphère
 }
 
+void VueOpenGL::dessineCylindre(Vecteur3D const& base, Vecteur3D const& end, double r, double rouge, double vert, double bleu) {
+  QMatrix4x4 matrice;
 
-//=======================================================================
-/*
-void VueOpenGL::dessineTore (QMatrix4x4 const& point_de_vue, uint numc, uint numt,
-								double rouge, double vert, double bleu)
-{
-	prog.setAttributeValue(CouleurId, rouge, vert, bleu);
-	prog.setAttributeValue(SommetId, 0.0, 0.0, 0.0);
-	for (int i = 0; i < numc; i++) {
-		glBegin(GL_QUAD_STRIP);
-		for (int j = 0; j <= numt; j++) {
-			for (int k = 1; k >= 0; k--) {
-				double s = (i + k) % numc + 0.5;
-				double t = j % numt;
-		
-				double x = (1 + 0.1 * cos(s * DEUXPI / numc)) * cos(t * DEUXPI / numt);
-				double y = (1 + 0.1 * cos(s * DEUXPI / numc)) * sin(t * DEUXPI / numt);
-				double z = 0.1 * sin(s * DEUXPI/ numc);
-                glVertex3d(2 * x, 2 * y, 2 * z);
-            }
-        }
-        glEnd();
+  const double stacks_length_2(2 * stacks_length);
+
+  const int slices(ceil(2*M_PI*r/slices_height));
+  const int stacks(ceil((end-base).norme()/stacks_length_2));
+  const double k(2*M_PI/slices);
+
+  Vecteur3D u = ~(end-base);
+  Vecteur3D v = r*u.orthogonal();
+  Vecteur3D w = u^v;
+
+  prog.setUniformValue("vue_modele", matrice_vue * matrice);
+  prog.setAttributeValue(CouleurId, 1.0, 1.0, 0.0);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  prog.setAttributeValue(CouleurId, rouge, vert, bleu);
+
+  for (int j(0); j < stacks; ++j) {
+    for (int i(0); i <= slices; ++i) {
+      glBegin(GL_QUAD_STRIP);
+      Vecteur3D P(base + j*stacks_length_2*u + cos(i*k)*v + sin(i*k)*w);
+      Vecteur3D Q(base + (j+1)*stacks_length_2*u + cos(i*k)*v + sin(i*k)*w);
+
+      glVertex3d(P.x(),P.y(),P.z());
+      glVertex3d(Q.x(),Q.y(),Q.z());
     }
+  }
+
+  glEnd();
 }
-*/
+
+void VueOpenGL::dessineTore(Vecteur3D const& centre, Vecteur3D const& base, Vecteur3D const& end, double minor_radius, double rouge, double vert, double bleu) {
+  const double major_radius((centre-base).norme());
+  const double proportion(1/M_PI*asin((base-end).norme()/(2*major_radius)));
+
+  const double a(slices_height/minor_radius);
+  const double b(1/(proportion*major_radius/stacks_length));
+
+  const int stacks(ceil(2*M_PI*major_radius*proportion/stacks_length));
+  const int slices(ceil(2*M_PI*minor_radius/slices_height));
+
+  //construction d'une base orthonormale placée au centre du tore
+  Vecteur3D u = ~(centre - base);
+  Vecteur3D v = ~(centre - end);
+  if ((u^v).norme2() == 0) v = u ^ e3;
+  else v = ~(v - (u*v)*u);
+  Vecteur3D w = u ^ v;
+
+  prog.setUniformValue("vue_modele", matrice_vue);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+  for (int i(0); i < slices; ++i) {
+    glBegin(GL_QUAD_STRIP);
+    prog.setAttributeValue(CouleurId, rouge, vert, bleu);
+    for (int j(0); j <= ceil(proportion*stacks); ++j) {
+      for (int k(1); k >= 0; --k) {
+        double s((i+k) % slices + 0.5);
+        double t(j % stacks + stacks/2);
+
+        double x((major_radius + minor_radius * cos(s*a)) * cos(t*b));
+        double y((major_radius + minor_radius * cos(s*a)) * sin(t*b));
+        double z(minor_radius * sin(s*a));
+        Vecteur3D P(centre + x*u + y*v + z*w);
+        glVertex3d(P.x(),P.y(),P.z());
+      }
+    }
+    glEnd();
+  }
+}

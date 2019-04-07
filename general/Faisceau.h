@@ -31,7 +31,7 @@ class Faisceau : public Dessinable {
 	public:
 
 		//Constructeur + Destructeur
-		Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur const& acc, SupportADessin* support_, double dx=0.05);
+		Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur const& acc, SupportADessin* support_=nullptr, double dx=0.05);
 		
 		Faisceau(SupportADessin* support_);
 		
@@ -46,7 +46,7 @@ class Faisceau : public Dessinable {
 		//Methodes
 		std::ostream& affiche(std::ostream&) const;
 		std::ostream& affiche_part(std::ostream&) const;
-		void set_support(SupportADessin*);
+		virtual void set_support(SupportADessin*) override;
 
 		//GETTERS
 		Collection_P particules() const;
@@ -74,7 +74,8 @@ class Faisceau : public Dessinable {
 		void initialiser_particules(p_Element const&);
 		
 		//DESSINER
-		virtual void dessine() override { support->dessine(*this); }
+		virtual void dessine() override { support_->dessine(*this); }
+		virtual void dessine_particule() const;
 		
 		//EVOLUTION
 		void evolue(double);

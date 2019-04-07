@@ -25,7 +25,10 @@ public:
 
   //Getters
   //virtual Element* el_suiv() const;
-
+  virtual Vecteur3D pos_e() const;
+  virtual Vecteur3D pos_s() const;
+  virtual double r_section() const;
+  
   //Setters
   virtual void el_suiv(Element*);
 
@@ -42,7 +45,7 @@ public:
   virtual double coord_orthogonale_vitesse(Particule*) const = 0;
 
   //DESSINER
-  virtual void dessine() override { support->dessine(*this); }
+  virtual void dessine() override { support_->dessine(*this); }
 };
 
 //=======================================================================
@@ -64,7 +67,7 @@ public:
   virtual double coord_orthogonale_vitesse(Particule*) const override;
 
   //DESSINER
-  virtual void dessine() override { support->dessine(*this); }
+  virtual void dessine() override { support_->dessine(*this); }
 };
 
 //=======================================================================
@@ -79,6 +82,8 @@ public:
   ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,SupportADessin* support = nullptr,Element* el_suiv = nullptr);
 
   //Méthodes
+  virtual Vecteur3D centre() const;
+  
   virtual bool heurte_bord(Particule const&) const override;
 
   virtual void affiche(std::ostream&) const override;
@@ -87,7 +92,7 @@ public:
   virtual double coord_orthogonale_vitesse(Particule*) const override;
 
   //DESSINER
-  virtual void dessine() override { support->dessine(*this); }
+  virtual void dessine() override { support_->dessine(*this); }
 };
 
 //=======================================================================
@@ -101,7 +106,7 @@ public:
   virtual void affiche(std::ostream&) const override;
 
   //DESSINER
-  virtual void dessine() override { support->dessine(*this); }
+  virtual void dessine() override { support_->dessine(*this); }
 };
 
 //=======================================================================
@@ -120,7 +125,7 @@ public:
   virtual void affiche(std::ostream&) const override;
 
   //DESSINER
-  virtual void dessine() override { support->dessine(*this); }
+  virtual void dessine() override { support_->dessine(*this); }
 };
 
 //=======================================================================
@@ -138,5 +143,5 @@ public:
   virtual Vecteur3D B(Particule const&) const override;
 
   //DESSINER
-  virtual void dessine() override { support->dessine(*this); }
+  virtual void dessine() override { support_->dessine(*this); }
 };

@@ -37,7 +37,6 @@ public:
 
   //setters
   void element_courant(Element* new_element);
-  void set_support(SupportADessin* support_);
   
   //Méthodes
 
@@ -51,7 +50,7 @@ public:
   std::ostream& affiche(std::ostream&) const;
 
   //DESSINER
-  virtual void dessine() override { support->dessine(*this); }
+  virtual void dessine() override { support_->dessine(*this); }
   
   //EVOLUTION
   

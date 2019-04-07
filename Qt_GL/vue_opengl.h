@@ -4,7 +4,12 @@
 #include <QOpenGLShaderProgram> // Classe qui regroupe les fonctions OpenGL liées aux shaders
 #include <QMatrix4x4>
 #include "Support_a_dessin.h"
+#include "Vecteur3D.h"
+#include "Element.h"
 #include "glsphere.h"
+
+const double slices_height(0.08);
+const double stacks_length(0.025);
 
 class VueOpenGL : public SupportADessin {
  public:
@@ -12,10 +17,10 @@ class VueOpenGL : public SupportADessin {
   virtual void dessine(Dipole const&) override;
   virtual void dessine(Particule const&) override;
   virtual void dessine(Accelerateur const&) override;
-  virtual void dessine(ElementCourbe const&) override;
+  virtual void dessine(ElementCourbe const&) override {}
   virtual void dessine(SectionDroite const&) override;
-  virtual void dessine(Element const&) override;
-  virtual void dessine(ElementDroit const&) override;
+  virtual void dessine(Element const&) override {}
+  virtual void dessine(ElementDroit const&) override {}
   virtual void dessine(Quadrupole const&) override;
   virtual void dessine(Faisceau const&) override;
 
@@ -36,8 +41,8 @@ class VueOpenGL : public SupportADessin {
   void dessineCube(QMatrix4x4 const& point_de_vue = QMatrix4x4() );
   void dessineSphere(QMatrix4x4 const& point_de_vue,
                      double rouge = 1.0, double vert = 1.0, double bleu = 1.0);
- /*void dessineTore (QMatrix4x4 const& point_de_vue, uint numc=100, uint numt=100,
-					double rouge = 1.0, double vert = 1.0, double bleu = 1.0);*/
+  void dessineCylindre(Vecteur3D const& base, Vecteur3D const& end, double r,double rouge = 1.0, double vert = 1.0, double bleu = 1.0);
+  void dessineTore(Vecteur3D const& centre, Vecteur3D const& base, Vecteur3D const& end, double minor_radius, double rouge = 1.0, double vert = 1.0, double bleu = 1.0);
 
  private:
   // Un shader OpenGL encapsulé dans une classe Qt

@@ -37,6 +37,8 @@ class Vecteur3D {
 		Vecteur3D const operator*(double) const;	//multiplication par un scalaire
 		Vecteur3D const operator~() const;			//vecteur unitaire
 
+		Vecteur3D const orthogonal() const;
+
 		double operator*(Vecteur3D const&) const;	//produit scalaire
 		Vecteur3D const operator^(Vecteur3D) const;	//produit vectoriel
 

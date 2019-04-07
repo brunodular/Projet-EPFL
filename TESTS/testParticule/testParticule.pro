@@ -5,17 +5,18 @@ TARGET = testParticule
 
 LIBS += \
 	-L../../general -lgeneral \
+	-L../../vue_texte -lvue_texte
 
 PRE_TARGETDEPS += \
 	../../general/libgeneral.a \
-
+	../../vue_texte/libvue_texte.a
+	
 INCLUDEPATH += \
 	../../general \
-
-SOURCES += \
-	testParticule.cc \
-	vue_texte.cc
+	../../vue_texte
+	
+SOURCES = testParticule.cc 
 
 HEADERS += \
     ../../general/Particule.h \
-    vue_texte.h 
+    ../../vue_texte/vue_texte.h 

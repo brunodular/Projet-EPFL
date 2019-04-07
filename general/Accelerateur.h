@@ -39,6 +39,10 @@ class Accelerateur : public Dessinable {
 			}
 			faisceaux_.clear();
 		}
+		
+		//Getters
+		Collection_E elements() const;
+		Collection_F faisceaux() const;
 
 		//Methodes
 			//Afficher
@@ -68,10 +72,12 @@ class Accelerateur : public Dessinable {
 
 		//EVOLUTION
 		void evolue(double dt);
-		void evoluetest(double dt) {};
 
 		//DESSINER
-		virtual void dessine() override { support->dessine(*this); }
+		virtual void dessine() override { if(support_!=nullptr) support_->dessine(*this); }
+		virtual void dessine_faisceau() const;
+		virtual void dessine_element() const;
+		virtual void set_support(SupportADessin*) override;
 };
 
 //Operateur externe

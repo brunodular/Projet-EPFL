@@ -43,7 +43,7 @@ double Particule::gamma() const {
 
 //Etrange : la ligne de correction de la force fait une erreur de type char const*...
 void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
-  if (!est_zero(dt)) {
+  if (!est_zero(dt) and !(est_zero(B.norme2()))) {
     //cout << "AJOUT DE LA FORCE MAGNETIQUE : " << endl;
     
     F_ += q_*(v_^B);
@@ -64,7 +64,7 @@ void Particule::bouger(double dt) {
 
 bool Particule::est_sortie() {
   if (element_courant_ == nullptr or element_courant_->heurte_bord(*this)) {
-    element_courant_ = nullptr; cout << "Je suis sortie ^^" << endl;
+    element_courant_ = nullptr;
     return true;
   } else return false;
 }
@@ -72,8 +72,6 @@ bool Particule::est_sortie() {
 ostream& Particule::affiche(ostream& out) const {
   return (out << "Une particule :" << endl << "  position : " << pos_ << endl << "  vitesse : " << v_ << endl << "  gamma : " << gamma() << endl << "  Energie (en GeV) : " << E() << endl << "  Masse (en GeV/c^2) : " << m_ << endl << "  Charge : " << q_ << endl << "  Force : " << F_ << endl);
 }
-
-void Particule::set_support(SupportADessin* support_) {support=support_;}
 
 //=======================================================================
 

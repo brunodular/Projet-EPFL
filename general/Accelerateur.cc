@@ -12,6 +12,14 @@ Accelerateur::Accelerateur (Collection_F const& f, Collection_E const& e, Suppor
 
 Accelerateur::Accelerateur(SupportADessin* support) : Dessinable(support) {}
 
+//Getters
+Collection_E Accelerateur::elements() const {
+  return elements_;
+}
+Collection_F Accelerateur::faisceaux() const {
+  return faisceaux_;
+}
+
 //Methodes
 
 ostream& Accelerateur::affiche(ostream& sortie) const {
@@ -64,14 +72,14 @@ std::ostream& Accelerateur::affiche_part(std::ostream& sortie) const {
 }
 
 void Accelerateur::ajouter_faisceau(p_Faisceau const& f) {
-  f->set_support(support);
-  faisceaux_.push_back(p_Faisceau (new Faisceau(*f)));
+  f->set_support(support_);
+  faisceaux_.push_back(f);
 }
 
 //J'ai modifié cette méthode car 'new Element(*el)' créait un pointeur vers un Element, et donc si on donnait un pointeur vers un Dipole par exemple, le Dipole était mis dans un Element et perdait donc ses attributs caractéristiques
 
 void Accelerateur::ajouter_el(p_Element const& el) {
-  el->set_support(support);
+  el->set_support(support_);
 	elements_.push_back(el);
 }
 
@@ -132,6 +140,32 @@ void Accelerateur::evolue(double dt) {
   for (auto& f : faisceaux_) {
 	f->evolue(dt);  
   }
+}
+
+//DESSINER
+void Accelerateur::dessine_faisceau() const {
+	if (faisceaux_.size()!=0 and support_!=nullptr) {
+		for (auto const& f : faisceaux_) {
+			f->dessine();
+		}
+	}
+}
+
+void Accelerateur::dessine_element() const {
+	if (elements_.size()!=0) {
+		for (auto const& el : elements_) {
+			el->dessine();
+		}
+	}
+}
+
+void Accelerateur::set_support(SupportADessin* sup) {
+	support_=sup;
+	if (faisceaux_.size()!=0 and sup!=nullptr) {
+		for (auto const& f : faisceaux_) {
+			f->set_support(sup);
+		}
+	}
 }
 
 //=======================================================================

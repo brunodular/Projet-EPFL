@@ -1,6 +1,7 @@
 #include <QKeyEvent>
 #include <QTimerEvent>
 #include <QMatrix4x4>
+#include <iostream>
 #include "glwidget.h"
 
 //=======================================================================
@@ -75,7 +76,7 @@ void GLWidget::paintGL()
 void GLWidget::keyPressEvent(QKeyEvent* event)
 {
   constexpr double petit_angle(5.0); // en degrés
-  constexpr double petit_pas(1.0);
+  constexpr double petit_pas(0.25);
 
   switch (event->key()) {
 
@@ -136,6 +137,14 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
   case Qt::Key_Space:
 	pause();
 	break;
+	
+  case Qt::Key_P:
+    vitesse_temps *= 1.6162;
+    break;
+
+  case Qt::Key_O:
+    vitesse_temps /= 1.6162;
+    break;
   };
 
   update(); // redessine
@@ -146,7 +155,8 @@ void GLWidget::timerEvent(QTimerEvent* event)
 {
   Q_UNUSED(event);
 
-  double dt = chronometre.restart() / 1000.0;
+  double dt = vitesse_temps * 1e-10;
+  //double dt = chronometre.restart() / 1000.0;
 
   acc_->evolue(dt);
   

@@ -9,9 +9,10 @@
 class GLWidget : public QOpenGLWidget
 {
 public:
-  GLWidget(QWidget* parent = nullptr, Accelerateur* acc=nullptr)
+  GLWidget(QWidget* parent = nullptr, Accelerateur* a=nullptr)
     : QOpenGLWidget(parent)
-    , acc_(acc) {}
+    , vitesse_temps(1.0), acc_(a) 
+    {acc_->set_support(&vue);}
   virtual ~GLWidget() {}
 
 private:
@@ -36,6 +37,7 @@ private:
   int timerId;
   // pour faire évoluer les objets avec le bon "dt"
   QTime chronometre;
+  double vitesse_temps;
 
   // objets à dessiner, faire évoluer
   Accelerateur* acc_;
