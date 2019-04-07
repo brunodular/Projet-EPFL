@@ -73,3 +73,11 @@ Question 9.2
 Question 9.3
 
   Dans les classes contenant des pointeurs il faut faire attention à proposer des méthodes qui permettent de supprimer les pointeurs et leurs zones mémoires, il faut faire attention à ne pas prendre des variables locales dans les méthodes et il faut faire attention à bien allouer la mémoire.
+  
+Question 11.1 
+
+  Dans la classe Faisceau, nous avons implémenté les caractéristiques d'un faisceau de la manièere suivante:
+- particule typique: comme pointeur sur une particule en attribut car cela assure que l'on garde en mémoire la position initiale de notre faisceau
+- nombre de vraies particules: comme méthode car ce nombre change au cours du temps
+- coefficient lambda: comme attribut car celui ne change pas au cours du temps
+- l'énergie moyenne du faisceau, émittance et les coefficients des ellipses de phases ont été implémenté comme des méthodes 
