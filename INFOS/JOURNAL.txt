@@ -74,3 +74,21 @@
 - Debut de la partie graphisme de notre projet: organisation de notre projet en de différents dossiers avec des fichiers .pro pour que ça compile correctement (toute la partie plutôt abstraite et conceptuelle est mise dans le dossier general, toute la partie graphisme est mise dans le dossier Qt_GL et toute la partie d'affichage sous forme de texte dans le dossier text). Pour cela nous avons décidé d'enlever la classe Contenu et de la remplacer par toutes les classes que nous avons créer pour représenter notre accélérateur.
 
 - Construction de la fonction dessine() pour une Particule et on a réussi à afficher une particule sans interaction et évolution pour l'instant.
+
+-- 31/03 --
+
+- Implémentation de la classe Faisceau dans la classe Accélérateur comme une collection hétérogène de faisceaux, et donc avec cela a eu lieu toute la modification de la classe Accélérateur (avec par exemple la reécriture des méthodes initialiser_particules(), set_support(), etc.) 
+
+- Segmentation fault lorsqu'on veut dessiner l'accélérateur (problème qui sera résolu le jeudi 04/04).
+
+-- 04/04 --
+
+- Implémentation de la méthode DessineCylindre et DessineTore dans la classe VueOpenGL qui permettent de dessiner les élements que l'on désire repésenter dans notre accélérateur.
+
+- Résolution du Segmentation fault: le problème était une mauvaise initialisation du support dans le main_qt_gl qui faisait que lorsqu'on appellait la méthode dessine de accélérateur, un segmentation fault avait lieu.
+
+- AFFICHAGE DE 1000 PARTICULES QUI TOURNENT DAS UN ACCELERATEUR!!! (accélérateur qui n'est pas constitué d'une collection de faisceaux mais une collection de particules).
+
+-- 07/04 --
+
+- Affichage d'un accélérateur constitué de faisceaux.
