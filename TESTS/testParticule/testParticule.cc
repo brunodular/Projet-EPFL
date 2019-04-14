@@ -1,6 +1,6 @@
 #include <cmath>
 
-#include "Particule.h"
+#include "Accelerateur.h"
 #include "vue_texte.h"
 #include <iostream>
 #include <iomanip>

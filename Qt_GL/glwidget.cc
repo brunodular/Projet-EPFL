@@ -155,8 +155,8 @@ void GLWidget::timerEvent(QTimerEvent* event)
 {
   Q_UNUSED(event);
 
-  double dt = vitesse_temps * 1e-10;
-  //double dt = chronometre.restart() / 1000.0;
+  //double dt = vitesse_temps * 1e-10;
+  double dt = chronometre.restart() * 1e-12 * vitesse_temps;
 
   acc_->evolue(dt);
   
@@ -175,4 +175,48 @@ void GLWidget::pause()
 	killTimer(timerId);
 	timerId = 0;
   }
+}
+
+
+//METHODES POUR CONSTRUIRE ACCELERATEUR
+
+void GLWidget::ajouter_mailleFODO(Vecteur3D const& entree, Vecteur3D const& sortie) {
+	Vecteur3D v=~(sortie-entree);
+	if (!est_zero(v.norme2())) {
+		acc_->ajouter_el(new Quadrupole(entree,Vecteur3D(entree.x()+v.x(),entree.y()+v.y(),0),0.3,1.2));
+		acc_->ajouter_el(new SectionDroite(Vecteur3D(entree.x()+v.x(),entree.y()+v.y(),0),Vecteur3D(entree.x()+2*v.x(),entree.y()+2*v.y(),0),0.3));
+		acc_->ajouter_el(new Quadrupole(Vecteur3D(entree.x()+2*v.x(),entree.y()+2*v.y(),0),Vecteur3D(entree.x()+3*v.x(),entree.y()+3*v.y(),0),0.3,-1.2));
+		acc_->ajouter_el(new SectionDroite(Vecteur3D(entree.x()+3*v.x(),entree.y()+3*v.y(),0),sortie,0.3));
+	} else {Erreur err{"Entree=sortie", 6};
+		throw err;}
+}
+
+void GLWidget::ajouter_dipole(Vecteur3D const& entree, Vecteur3D const& sortie) {
+	acc_->ajouter_el(new Dipole(entree,sortie,0.3,1,5.89158));
+}
+
+void GLWidget::ajouter_structure_P10() {
+	ajouter_mailleFODO(Vecteur3D(3,2,0),Vecteur3D(3,-2,0));
+	ajouter_dipole(Vecteur3D(3,-2,0),Vecteur3D(2,-3,0));
+	
+	ajouter_mailleFODO(Vecteur3D(2,-3,0),Vecteur3D(-2,-3,0));
+	ajouter_dipole(Vecteur3D(-2,-3,0),Vecteur3D(-3,-2,0));
+	
+	ajouter_mailleFODO(Vecteur3D(-3,-2,0),Vecteur3D(-3,2,0));
+	ajouter_dipole(Vecteur3D(-3,2,0),Vecteur3D(-2,3,0));
+	
+	ajouter_mailleFODO(Vecteur3D(-2,3,0),Vecteur3D(2,3,0));
+	ajouter_dipole(Vecteur3D(2,3,0),Vecteur3D(3,2,0));
+}
+
+void GLWidget::souder_accelerateur() {
+	acc_->souder_accelerateur();
+}
+
+void GLWidget::initialiser_particules() {
+	acc_->initialiser_particules();
+}
+
+void GLWidget::ajouter_faisceau(p_Faisceau const& f) {
+	acc_->ajouter_faisceau(f);
 }

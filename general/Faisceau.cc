@@ -95,17 +95,17 @@ double Faisceau::moyenne_pos_vit_r() const {
 
 //Constructeur
 
-Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur const& acc, SupportADessin* support, double dx)
+Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur* const& acc, SupportADessin* support, double dx)
 	: Dessinable(support), particule_typique_(p), lambda_(lambda)
 {
 	/*for (size_t i=0; i<nombre/lambda; ++i) {
 		particules_.push_back(p_Particule (new Particule(p->pos(), p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda)));
 	}
+	
 	*/
 	for (int i(0); i < nombre/lambda; ++i) {
 		particules_.push_back(new Particule(Vecteur3D(p->pos().x() + (134.6712*i-floor(134.6712*i))/50,  p->pos().y()*i + (432.1234*i-floor(432.1234*i))/5, (432.1234*i-floor(432.1234*i))/50), p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda));
-	}
-	
+	}	
 	
 }
 

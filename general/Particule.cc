@@ -1,7 +1,10 @@
 #include "Particule.h"
 #include <cmath>
 #include <iostream>
+#include <iomanip>
 using namespace std;
+
+constexpr uint MARGE(25);
 
 //========================================================================
 
@@ -70,7 +73,7 @@ bool Particule::est_sortie() {
 }
 
 ostream& Particule::affiche(ostream& out) const {
-  return (out << "Une particule :" << endl << "  position : " << pos_ << endl << "  vitesse : " << v_ << endl << "  gamma : " << gamma() << endl << "  Energie (en GeV) : " << E() << endl << "  Masse (en GeV/c^2) : " << m_ << endl << "  Charge : " << q_ << endl << "  Force : " << F_ << endl);
+  return (out << "Une particule :" << endl << setw(MARGE) << "  position : " << pos_ << endl << setw(MARGE) << "  vitesse : " << v_ << endl << setw(MARGE) << "  gamma : " << gamma() << endl << setw(MARGE) << "  Energie (en GeV) : " << E() << endl << setw(MARGE) << "  Masse (en GeV/c^2) : " << m_ << endl << setw(MARGE) << "  Charge : " << q_ << endl << setw(MARGE) << "  Force : " << F_ << endl);
 }
 
 //=======================================================================

@@ -18,5 +18,5 @@ INCLUDEPATH += \
 SOURCES = testParticule.cc 
 
 HEADERS += \
-    ../../general/Particule.h \
+    ../../general/Accelerateur.h \
     ../../vue_texte/vue_texte.h 

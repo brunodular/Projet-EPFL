@@ -21,7 +21,7 @@ Vecteur3D const Vecteur3D::unitaire() const {
   if (!est_zero(norme(),EPS)) {
     return (*this * (1/norme()));
   } else {
-	  Erreur err={"Division par zero", 4};
+	  Erreur err={"Division par zero, unitaire()", 4};
     throw err;
   }
 }

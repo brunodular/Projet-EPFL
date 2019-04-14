@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = testParticule1.0.0
-DISTDIR = /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-Faisceau/TESTS/testParticule/.tmp/testParticule1.0.0
+DISTDIR = /home/druenne/Desktop/myfiles/Programmation/projet/Travail_Courant/Projet-EPFL-master/TESTS/testParticule/.tmp/testParticule1.0.0
 LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
 LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -L../../general -lgeneral -L../../vue_texte -lvue_texte -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -106,7 +106,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		testParticule.pro ../../general/Particule.h \
+		testParticule.pro ../../general/Accelerateur.h \
 		../../vue_texte/vue_texte.h testParticule.cc
 QMAKE_TARGET  = testParticule
 DESTDIR       = #avoid trailing-slash linebreak
@@ -271,7 +271,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../../general/Particule.h ../../vue_texte/vue_texte.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../general/Accelerateur.h ../../vue_texte/vue_texte.h $(DISTDIR)/
 	$(COPY_FILE) --parents testParticule.cc $(DISTDIR)/
 
 

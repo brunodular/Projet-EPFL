@@ -1,7 +1,10 @@
 #include <cmath>
 #include "Element.h"
 #include <string>
+#include <iomanip>
 using namespace std;
+
+constexpr uint MARGE(25);
 
 //=======================================================================
 
@@ -12,8 +15,8 @@ Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin
  : Dessinable(support), r_section_(r_section),el_suiv_(el_suiv) {
     double prod(prod_mixte(e3,pos_e,pos_s));
     if (prod == 0) { //pour s'assurer que l'élément est dans le bon sens
-      //Erreur err = {"position d'entrée = position de sortie",2};
-      //throw err;
+      Erreur err = {"position d'entrée = position de sortie",2};
+      throw err;
     } else if (prod > 0) {
       pos_s_ = pos_e; pos_e_ = pos_s;
     } else {
@@ -57,7 +60,7 @@ Vecteur3D Element::B(Particule const&) const {
 }
 
 void Element::affiche(ostream& sortie) const {
-	sortie << "  entree : " << pos_e_ << endl << "  sortie : " << pos_s_ << endl << "  rayon de chambre : " << r_section_ << endl;
+	sortie << setw(MARGE) << "  entree : " << pos_e_ << endl << setw(MARGE) << "  sortie : " << pos_s_ << endl << setw(MARGE) << "  rayon de chambre : " << r_section_ << endl;
 }
 
 //=======================================================================
@@ -107,7 +110,7 @@ bool ElementCourbe::heurte_bord(Particule const& p) const {
 
 void ElementCourbe::affiche(ostream& sortie) const {
 	Element::affiche(sortie);
-	sortie<<"  rayon de courbure : " << courbure_ << endl;
+	sortie<< setw(MARGE) <<"  rayon de courbure : " << courbure_ << endl;
 }
 
 double ElementCourbe::coord_orthogonale_position(Particule* p) const {
@@ -145,9 +148,10 @@ Vecteur3D Dipole::B(Particule const&) const {
 }
 
 void Dipole::affiche(ostream& sortie) const {
+	
 	sortie << "Dipole" << endl;
 	ElementCourbe::affiche(sortie);
-	sortie << "  champ magnetique : " << Vecteur3D(0, 0, Bz_) << endl;
+	sortie << setw(MARGE) << "  champ magnetique : " << Vecteur3D(0, 0, Bz_) << endl;
 }
 
 //=======================================================================
@@ -161,7 +165,7 @@ Quadrupole::Quadrupole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double b
 void Quadrupole::affiche(std::ostream& sortie) const {
   sortie << "Quadrupôle" << endl;
   ElementDroit::affiche(sortie);
-  sortie << "  intensité de l'aimant : " << b_ << endl;
+  sortie << setw(MARGE) << "  intensité de l'aimant : " << b_ << endl;
 }
 
 Vecteur3D Quadrupole::B(Particule const& p) const {

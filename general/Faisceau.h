@@ -31,7 +31,7 @@ class Faisceau : public Dessinable {
 	public:
 
 		//Constructeur + Destructeur
-		Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur const& acc, SupportADessin* support_=nullptr, double dx=0.05);
+		Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur* const& acc=nullptr, SupportADessin* support_=nullptr, double dx=0.05);
 		
 		Faisceau(SupportADessin* support_);
 		
@@ -47,6 +47,7 @@ class Faisceau : public Dessinable {
 		std::ostream& affiche(std::ostream&) const;
 		std::ostream& affiche_part(std::ostream&) const;
 		virtual void set_support(SupportADessin*) override;
+		void set_accelerateur();
 
 		//GETTERS
 		Collection_P particules() const;

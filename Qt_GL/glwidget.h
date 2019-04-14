@@ -15,6 +15,14 @@ public:
     {acc_->set_support(&vue);}
   virtual ~GLWidget() {}
 
+	// Methodes qui construit l'accelerateur
+  void ajouter_mailleFODO(Vecteur3D const& entree, Vecteur3D const& sortie);
+  void ajouter_dipole(Vecteur3D const& entree, Vecteur3D const& sortie);
+  void ajouter_structure_P10();
+  void souder_accelerateur();
+  void initialiser_particules();
+  void ajouter_faisceau(p_Faisceau const&);
+
 private:
   // Les 3 méthodes clés de la classe QOpenGLWidget à réimplémenter
   virtual void initializeGL()                  override;
