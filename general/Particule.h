@@ -24,6 +24,7 @@ private:
 public:
   //Constructeur
   Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support = nullptr);
+  Particule(Accelerateur const& acc, double pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support = nullptr);
 
   //getters
   Vecteur3D pos() const;
@@ -37,7 +38,7 @@ public:
 
   //setters
   void element_courant(Element* new_element);
-  
+
   //Méthodes
 
   void ajouter_f_magn(Vecteur3D const&,double);
@@ -51,9 +52,9 @@ public:
 
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }
-  
+
   //EVOLUTION
-  
+
  void evolue (double) {}
 };
 

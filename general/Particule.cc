@@ -1,4 +1,5 @@
 #include "Particule.h"
+#include "Accelerateur.h"
 #include <cmath>
 #include <iostream>
 #include <iomanip>
@@ -11,6 +12,9 @@ constexpr uint MARGE(25);
 //Constructeur
 Particule::Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support)
  : Dessinable(support), pos_(pos), v_((c*sqrt(1-pow(m/E,2)))*(~v_dir)), m_(m), m_kg_(e*1e+9*m_/(c*c)), q_(q) {}
+
+Particule::Particule(Accelerateur const& acc, double pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support)
+ : Particule(acc.abs_en_pos(pos),v_dir,E,m,q,support) {}
 
 //=======================================================================
 
@@ -48,7 +52,7 @@ double Particule::gamma() const {
 void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
   if (!est_zero(dt) and !(est_zero(B.norme2()))) {
     //cout << "AJOUT DE LA FORCE MAGNETIQUE : " << endl;
-    
+
     F_ += q_*(v_^B);
     //cout << F_ << endl;  //ICI
     //cout << "Angle : " << asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))) << endl;

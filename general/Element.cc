@@ -12,7 +12,7 @@ constexpr uint MARGE(25);
 
 //Constructeurs
 Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support,Element* el_suiv)
- : Dessinable(support), r_section_(r_section),el_suiv_(el_suiv) {
+ : Dessinable(support), r_section_(r_section),el_suiv_(el_suiv), longueur_(0.0) {
     double prod(prod_mixte(e3,pos_e,pos_s));
     if (prod == 0) { //pour s'assurer que l'élément est dans le bon sens
       Erreur err = {"position d'entrée = position de sortie",2};
@@ -38,6 +38,9 @@ Vecteur3D Element::pos_s() const {
 }
 double Element::r_section() const {
   return r_section_;
+}
+double Element::longueur() const {
+  return longueur_;
 }
 
 //Setters
@@ -68,7 +71,10 @@ void Element::affiche(ostream& sortie) const {
 //Class ElementDroit
 
 //Constructeur
-ElementDroit::ElementDroit(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support,Element* el_suiv) : Element(pos_e, pos_s, r_section, support, el_suiv) {}
+ElementDroit::ElementDroit(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support,Element* el_suiv) :
+  Element(pos_e, pos_s, r_section, support, el_suiv) {
+    longueur_ = (pos_s_ - pos_e_).norme();
+  }
 
 //Méthodes
 void ElementDroit::affiche(ostream& sortie) const {
@@ -87,6 +93,10 @@ bool ElementDroit::heurte_bord(Particule const& p) const {
   return (X-(X*dir_)*dir_).norme2() > r_section_*r_section_;
 }
 
+Vecteur3D ElementDroit::abs_en_pos(double x) const {
+  return pos_e_ + (x*longueur_)*dir_;
+}
+
 
 //=======================================================================
 
@@ -96,7 +106,9 @@ bool ElementDroit::heurte_bord(Particule const& p) const {
 ElementCourbe::ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,SupportADessin* support,Element* el_suiv) :
   Element(pos_e, pos_s, r_section, support, el_suiv),
   courbure_(courbure),
-  centre_(0.5*(pos_e_+pos_s_)+(1/courbure_)*sqrt(1-courbure_*courbure_*0.25*(pos_s_-pos_e_).norme2())*(dir_^e3)) {}
+  centre_(0.5*(pos_e_+pos_s_)+(1/courbure_)*sqrt(1-courbure_*courbure_*0.25*(pos_s_-pos_e_).norme2())*(dir_^e3)) {
+    longueur_ = 2*asin((pos_s_ - pos_e_).norme()*courbure_/2.0)/courbure_;
+  }
 
 //Méthodes
 Vecteur3D ElementCourbe::centre() const {
@@ -118,6 +130,13 @@ double ElementCourbe::coord_orthogonale_position(Particule* p) const {
 }
 double ElementCourbe::coord_orthogonale_vitesse(Particule* p) const {
   return p->v() * (~(p->pos() - (p->pos().z()*e3)));
+}
+
+Vecteur3D ElementCourbe::abs_en_pos(double x) const {
+  double theta(2*asin(longueur_*courbure_/2)); //angle au centre de courbure
+  Vecteur3D u(pos_s_-centre_);
+  Vecteur3D v(u^e3);
+  return centre_ + cos(x*theta)*u+sin(x*theta)*v;
 }
 
 //=======================================================================
@@ -148,7 +167,7 @@ Vecteur3D Dipole::B(Particule const&) const {
 }
 
 void Dipole::affiche(ostream& sortie) const {
-	
+
 	sortie << "Dipole" << endl;
 	ElementCourbe::affiche(sortie);
 	sortie << setw(MARGE) << "  champ magnetique : " << Vecteur3D(0, 0, Bz_) << endl;

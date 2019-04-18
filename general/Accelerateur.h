@@ -17,6 +17,7 @@ class Accelerateur : public Dessinable {
 	private:
 		Collection_F faisceaux_;		//Pointeurs pour le polymorphisme et c'est moins risque d'utliser des unique_ptr lors d'oubli
 		Collection_E elements_;
+    double longueur_;
 
 	public:
 		//Constructeurs
@@ -39,7 +40,7 @@ class Accelerateur : public Dessinable {
 			}
 			faisceaux_.clear();
 		}
-		
+
 		//Getters
 		Collection_E elements() const;
 		Collection_F faisceaux() const;
@@ -52,12 +53,16 @@ class Accelerateur : public Dessinable {
 			//Ajouter
 
 		//ces méthodes affectent le support de l'Accélérateur aux supports des particules et éléments ajoutés.
-		void ajouter_faisceau(p_Faisceau const&);
+		void ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl);
 		void ajouter_el(p_Element const&);
 		void ajouter_faisceau_par(size_t i, p_Particule const&);
 
 		//CONSTRUIRE
 		void souder_accelerateur(); //Cette méthode soude tous les éléments entre eux en settant l'élément suivant el_suiv_ de chaque élément comme pointeur vers l'élément qui le suit dans le vecteur elements_. Cette méthode suppose que les élément ont étés ajoutés dans l'ordre attendu.
+
+
+    //Abscisse curviligne
+    Vecteur3D abs_en_pos(double x) const;
 
 		void initialiser_particules(); //Initialise les élément_courant_ des Particules
 
@@ -66,7 +71,7 @@ class Accelerateur : public Dessinable {
 
 		void supprimer_faisceau();
 		void supprimer_el();
-		
+
 		void supprimer_faisceau_par(size_t i);
 		void supprimer_faisceau_par(size_t i, size_t j);
 

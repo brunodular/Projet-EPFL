@@ -11,7 +11,7 @@ class GLWidget : public QOpenGLWidget
 public:
   GLWidget(QWidget* parent = nullptr, Accelerateur* a=nullptr)
     : QOpenGLWidget(parent)
-    , vitesse_temps(1.0), acc_(a) 
+    , vitesse_temps(1.0), acc_(a)
     {acc_->set_support(&vue);}
   virtual ~GLWidget() {}
 
@@ -21,7 +21,7 @@ public:
   void ajouter_structure_P10();
   void souder_accelerateur();
   void initialiser_particules();
-  void ajouter_faisceau(p_Faisceau const&);
+  void ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl);
 
 private:
   // Les 3 méthodes clés de la classe QOpenGLWidget à réimplémenter
@@ -49,7 +49,7 @@ private:
 
   // objets à dessiner, faire évoluer
   Accelerateur* acc_;
-  
+
   //Position de la souris
   QPoint lastMousePosition;
 };
