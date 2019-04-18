@@ -92,3 +92,14 @@
 -- 07/04 --
 
 - Affichage d'un accélérateur constitué de faisceaux.
+
+-- 18/04 --
+
+- Implémentation de l'abscisse curviligne qui depend de l'accelerateur: ceci correspond a la methode abs_en_pos de la classe Accelerateur, qui prend un double entre 0 et 1 et retourne un Vecteur3D. Idee d'egalement cree une methode qui fait la conversion inverse qui pourrait avoir son utilite dans la classe Case. Modification du constructeur de la classe Faisceau avec cette methode.
+
+- Implementation des interactions interparticulaires avec la methode de la classe particule correspondante qui est utilisee dans la methode evolue de Faisceau
+
+- Debut de l'implementation de la classe Case qui correspond a une lamelle circulaire de l'espace qui est une collection heterogene de particules et de la modification de la classe Accelerateur pour pouvoir initialiser ces cases qui en quelque sorte "decoupent" l'accelerateur en lamelle circulaire. Decision de mettre des pointeurs vers des Cases dans Particule. 
+
+- Probleme: * mauvaise initialisation du pointeur vers la case courante dans la classe Particule a regle
+* pas vraiment d'optimisation en fait ^^
