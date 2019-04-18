@@ -8,7 +8,8 @@ SOURCES += \
 	Particule.cc \
 	Element.cc \
 	Vecteur3D.cc \
-	constantes.cc
+	constantes.cc \
+	Case.cc
 
 HEADERS += \
     Accelerateur.h \
@@ -18,4 +19,5 @@ HEADERS += \
     Particule.h \
     Faisceau.h \
     Element.h \
-    constantes.h
+    constantes.h \
+    Case.h

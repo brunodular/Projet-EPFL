@@ -24,7 +24,8 @@ HEADERS += \
     glsphere.h \
     ../general/Dessinable.h \
     ../general/Support_a_dessin.h \
-    ../general/Accelerateur.h
+    ../general/Accelerateur.h \
+    ../general/Case.h
 
 RESOURCES += \
     resource.qrc

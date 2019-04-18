@@ -14,8 +14,7 @@ int main(int argc, char* argv[])
     
     w.souder_accelerateur();
     
-    //w.ajouter_faisceau(new Faisceau (p_Particule (new Particule(Vecteur3D(3.01, 0, 0), Vecteur3D(0, -1, 0), 2, 0.938272, e)), 1000, 10));
-	w.ajouter_faisceau(new Faisceau (p_Particule (new Particule(Vecteur3D(3.01, 1.5, 0), Vecteur3D(0, -1, 0), 2, 0.938272, e)), 1000, 10));
+    w.ajouter_faisceau(p_Particule (new Particule(Vecteur3D(3.01, 0, 0), Vecteur3D(0, -1, 0), 2, 0.938272, e)), 0.1, 100, 10, 0.15);
 	
 	w.initialiser_particules();
   

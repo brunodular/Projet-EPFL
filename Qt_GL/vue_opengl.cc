@@ -3,10 +3,8 @@
 #include "Accelerateur.h"
 #include <cmath>
 
-constexpr double DEUXPI=2*M_PI;
-
 // ======================================================================
-/*METHODES DESSINER DE LA SOUS-CLASSE VueOpenGL*/
+//METHODES DESSINER DE LA SOUS-CLASSE VueOpenGL
 
 void VueOpenGL::dessine(Dipole const& el) {
   dessineTore(el.centre(),el.pos_e(),el.pos_s(),el.r_section(),0.27,0.86,1.0);
@@ -24,6 +22,7 @@ void VueOpenGL::dessine(Particule const& p) {
 void VueOpenGL::dessine(Accelerateur const& acc) {
   for (auto const& e : acc.elements()) e->dessine();
   for (auto const& f : acc.faisceaux()) f->dessine();
+  for (auto const& cas : acc.cases()) cas->dessine();
 }
 
 void VueOpenGL::dessine(SectionDroite const& el) {
@@ -36,6 +35,10 @@ void VueOpenGL::dessine(Quadrupole const& el) {
 
 void VueOpenGL::dessine(Faisceau const& f) {
 	for (auto const& p : f.particules()) p->dessine();
+}
+
+void VueOpenGL::dessine(Case const& cases) {
+	
 }
 
 //=======================================================================
@@ -283,3 +286,9 @@ void VueOpenGL::dessineTore(Vecteur3D const& centre, Vecteur3D const& base, Vect
     glEnd();
   }
 }
+
+/*
+void VueOpenGL::dessineParallelelipede(Vecteur3D const& debut, Vecteur3D const& fin, double longueur, double largeur, double hauteur) {
+	prog.setUniformValue("vue_modele", matrice_vue);
+	
+} */

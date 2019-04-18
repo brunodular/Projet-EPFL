@@ -5,7 +5,7 @@ using namespace std;
 
 //=======================================================================
 
-//méthodes privées, utilisées dans les autres méthodes
+//Méthodes privées, utilisées dans les autres méthodes
   //paramètres verticaux
 double Faisceau::moyenne_pos_2_z() const {
   if (nombre_particules() == 0) return 0.0;
@@ -95,20 +95,16 @@ double Faisceau::moyenne_pos_vit_r() const {
 
 //Constructeur
 
-Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur* const& acc, SupportADessin* support, double dx)
-	: Dessinable(support), particule_typique_(p), lambda_(lambda)
+Faisceau::Faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, SupportADessin* support_)
+	: Dessinable(support_), particule_typique_(p), lambda_(lambda)
 {
-	/*for (size_t i=0; i<nombre/lambda; ++i) {
-		particules_.push_back(p_Particule (new Particule(p->pos(), p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda)));
-	}
-	
-	
-	for (int i(0); i < nombre/lambda; ++i) {
-		particules_.push_back(new Particule(Vecteur3D(p->pos().x() + (134.6712*i-floor(134.6712*i))/50,  p->pos().y()*i + (432.1234*i-floor(432.1234*i))/5, (432.1234*i-floor(432.1234*i))/50), p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda));
-	}	
-	*/
-}
+  unsigned int macro_nombre(nombre/lambda);
+  double dx(dl/macro_nombre);
 
+	for (size_t i(0); i<macro_nombre; ++i) {
+		particules_.push_back(p_Particule (new Particule(acc, x - 0.5*dl + i*dx, p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda)));
+  }
+}
 Faisceau::Faisceau (SupportADessin* support) : Dessinable(support) {}
 
 Faisceau::Faisceau (Faisceau const& autre) {
@@ -216,6 +212,7 @@ unsigned int Faisceau::nombre_particules_simulees() const {
   return lambda_ * nombre_particules();
 }
 
+//=======================================================================
 
 //Modifier la collection de particules
 void Faisceau::supprimer_par(size_t i) {
@@ -239,15 +236,28 @@ void Faisceau::initialiser_particules(p_Element const& el) {
 	for (auto& p : particules_) {
       p->element_courant(el);
       while(p->element_courant()->passe_au_suivant(*p));
-  }
+	}
 }
+
+void Faisceau::initialiser_particules(Case* const& ca) {
+	for (auto& p : particules_) {
+		p->case_courante(ca);
+		while (p->case_courante()->passe_au_suivant(*p));
+		p->case_courante()->ajouter_par(p);
+	}
+}
+
+//=======================================================================
 
 //EVOLUTION
 void Faisceau::evolue(double dt) {
   size_t i(0);
   while(i<nombre_particules()) {
-    if (not particules_[i]->est_sortie()) { //vérifie si la particule est toujours dans l'accélérateur
-
+    if (not particules_[i]->est_sortie() and particules_[i]->case_courante()!=nullptr) { //vérifie si la particule est toujours dans l'accélérateur
+      for (auto const& p : particules_[i]->case_courante()->particules()) {
+		  particules_[i]->ajouter_force_inter_particulaire(*p); //On ajoute à la particule les interactions électromagnétiques entre les différentes d'une meme case
+	  }
+	  
       particules_[i]->ajouter_f_magn((particules_[i]->element_courant())->B(*particules_[i]),dt); //On ajoute à la particule p le champ magnétique produit par l'élément dans lequel elle se trouve.
 
       particules_[i]->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
@@ -257,11 +267,16 @@ void Faisceau::evolue(double dt) {
       ++i;
     
     } else {
-		supprimer_par(i); 
+		Erreur err {"CASE COURANTE EST NULLPTR", 8};
+		throw err;
+		
+		//supprimer_par(i);
 		//cout << nombre_particules() << endl;
 	}
   }
 }
+
+//=======================================================================
 
 //DESSINER
 

@@ -36,3 +36,7 @@ void Vue_Texte::dessine(Quadrupole const& el) {
 void Vue_Texte::dessine(Faisceau const& f) {
 	f.affiche(flot_);
 }
+
+void Vue_Texte::dessine(Case const& cases) {
+	cases.affiche(flot_);
+}

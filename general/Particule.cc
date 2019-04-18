@@ -1,16 +1,18 @@
 #include "Particule.h"
+#include "Accelerateur.h"
 #include <cmath>
 #include <iostream>
 #include <iomanip>
 using namespace std;
-
-constexpr uint MARGE(25);
 
 //========================================================================
 
 //Constructeur
 Particule::Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support)
  : Dessinable(support), pos_(pos), v_((c*sqrt(1-pow(m/E,2)))*(~v_dir)), m_(m), m_kg_(e*1e+9*m_/(c*c)), q_(q) {}
+
+Particule::Particule(Accelerateur const& acc, double pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support)
+ : Particule(acc.abs_en_pos(pos),v_dir,E,m,q,support) {}
 
 //=======================================================================
 
@@ -27,11 +29,13 @@ double Particule::m() const {return m_;}
 double Particule::q() const {return q_;}
 
 Element* Particule::element_courant() const {return element_courant_;}
+Case* Particule::case_courante() const {return case_courante_;}
 
 //setters
 
 void Particule::element_courant(Element* new_element) {element_courant_ = new_element;}
 
+void Particule::case_courante(Case* new_case) {case_courante_=new_case;}
 //=======================================================================
 
 //Méthodes
@@ -44,7 +48,7 @@ double Particule::gamma() const {
   return 1/sqrt(1-(v_.norme2()/(c*c)));
 }
 
-//Etrange : la ligne de correction de la force fait une erreur de type char const*...
+	//Methode qui ajoute la force magnetique edes éléments sur les particules
 void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
   if (!est_zero(dt) and !(est_zero(B.norme2()))) {
     //cout << "AJOUT DE LA FORCE MAGNETIQUE : " << endl;
@@ -58,6 +62,17 @@ void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
   }
 }
 
+	//Méthode qui ajoute les forces d'une particule relativiste sur une autre
+	
+void Particule::ajouter_force_inter_particulaire(Particule const& p) {
+	Vecteur3D r(pos_-p.pos());
+	double d=r.norme();
+	if (d!=0) {
+		double g=gamma();
+		F_ -= q_*q_/(4*M_PI*e_0*d*d*d*g*g)*r;
+	}
+}
+	
 void Particule::bouger(double dt) {
   Vecteur3D a = (1/(gamma()*m_kg_))*F_;
   v_ = v_ + dt*a;

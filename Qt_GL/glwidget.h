@@ -21,7 +21,7 @@ public:
   void ajouter_structure_P10();
   void souder_accelerateur();
   void initialiser_particules();
-  void ajouter_faisceau(p_Faisceau const&);
+  void ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl);
 
 private:
   // Les 3 méthodes clés de la classe QOpenGLWidget à réimplémenter

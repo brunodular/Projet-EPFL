@@ -7,6 +7,8 @@
 #include "Vecteur3D.h"
 #include "Element.h"
 
+class Case;
+
 typedef const double Masse;
 
 //=======================================================================
@@ -20,11 +22,13 @@ private:
   double q_;
   Vecteur3D F_;	//Vecteur force
   Element* element_courant_; //élément dans lequel se trouve la particule
+  Case* case_courante_; //case dans laquelle la particule se trouve
 
 public:
   //Constructeur
   Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support = nullptr);
-
+  Particule(Accelerateur const& acc, double pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support = nullptr);
+  
   //getters
   Vecteur3D pos() const;
   Vecteur3D v() const;
@@ -32,15 +36,18 @@ public:
   double m() const;
   double q() const;
   Element* element_courant() const;
+  Case* case_courante() const;
   double E() const;
   double gamma() const;
 
   //setters
   void element_courant(Element* new_element);
+  void case_courante(Case*);
   
   //Méthodes
 
   void ajouter_f_magn(Vecteur3D const&,double);
+  void ajouter_force_inter_particulaire(Particule const&);
 
   void bouger(double);
 

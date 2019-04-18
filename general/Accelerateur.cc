@@ -6,21 +6,28 @@ using namespace std;
 
 //=======================================================================
 
-//Constructeur
+//CONSTRUCTEURS
 Accelerateur::Accelerateur (Collection_F const& f, Collection_E const& e, SupportADessin* support)
-  : Dessinable(support), faisceaux_(f), elements_(e) {}
+  : Dessinable(support), faisceaux_(f), elements_(e), longueur_(0.0) {}
 
-Accelerateur::Accelerateur(SupportADessin* support) : Dessinable(support) {}
+Accelerateur::Accelerateur(SupportADessin* support) : Dessinable(support), longueur_(0.0) {}
 
-//Getters
+//=======================================================================
+
+//GETTERS
 Collection_E Accelerateur::elements() const {
   return elements_;
 }
 Collection_F Accelerateur::faisceaux() const {
   return faisceaux_;
 }
+Collection_C Accelerateur::cases() const {
+	return cases_;
+}
 
-//Methodes
+//========================================================================
+
+//AFFICHER
 
 ostream& Accelerateur::affiche(ostream& sortie) const {
 	if (elements_.empty() and faisceaux_.empty()) {
@@ -71,12 +78,14 @@ std::ostream& Accelerateur::affiche_part(std::ostream& sortie) const {
   return sortie;
 }
 
-void Accelerateur::ajouter_faisceau(p_Faisceau const& f) {
-  f->set_support(support_);
-  faisceaux_.push_back(f);
-}
+//=======================================================================
 
-//J'ai modifié cette méthode car 'new Element(*el)' créait un pointeur vers un Element, et donc si on donnait un pointeur vers un Dipole par exemple, le Dipole était mis dans un Element et perdait donc ses attributs caractéristiques
+//AJOUTER
+
+void Accelerateur::ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl) {
+  faisceaux_.push_back(p_Faisceau(new Faisceau(p,x,nombre,lambda,dl,*this)));
+  faisceaux_.back()->set_support(support_);
+}
 
 void Accelerateur::ajouter_el(p_Element const& el) {
   el->set_support(support_);
@@ -87,18 +96,33 @@ void Accelerateur::ajouter_faisceau_par(size_t i, p_Particule const& par) {
 	faisceaux_[i]->ajouter_par(par);
 }
 
+//=======================================================================
+
 //CONSTRUIRE
 
 void Accelerateur::souder_accelerateur() {
   size_t n(elements_.size()); //nombre d'élément contenus dans l'accélérateur
   if (n != 0) {
-    elements_.back()->el_suiv(elements_[0]);
-    for (size_t i(0); i<n-1; ++i) {
-      elements_[i]->el_suiv(elements_[i+1]);
-    }
+    initialiser_elements(n);
+    initialiser_cases();
   }
 }
 
+void Accelerateur::initialiser_elements(size_t n) {
+	for (size_t i(1); i<n; ++i) {
+      if (i!=n-1) {
+		  elements_[i]->el_suiv(elements_[i+1]);
+	  } else {
+		  elements_.back()->el_suiv(elements_[0]);
+	  }
+	  
+      if (i!=0) {
+		  elements_[i]->el_preced(elements_[i-1]);
+	  } else {
+		  elements_.front()->el_preced(elements_[n-1]);
+	  }
+    }
+}
 
 void Accelerateur::initialiser_particules() {
   if (elements_.size() != 0) {
@@ -106,10 +130,33 @@ void Accelerateur::initialiser_particules() {
 		f->initialiser_particules(elements_.front());
 	}
   }
+  if (cases_.size()!=0) {
+	  for (auto& f : faisceaux_) {
+		  f->initialiser_particules(cases_.front());
+	  }
+  }
 }
 
 
-//Supprimer
+void Accelerateur::initialiser_cases() {
+	if (longueur_!=0) {
+		for (size_t i(0); i<NB_CASES; ++i) {
+			double j=i;
+			cases_.push_back(new Case(j/NB_CASES,(j+1)/NB_CASES, *this));
+			if (i-1>=0) {
+				cases_[i-1]->case_suiv(cases_[i]);
+				cases_[i]->case_preced(cases_[i-1]);
+			}
+			cases_[i]->set_support(support_);
+		}
+		cases_.front()->case_preced(cases_.back());
+		cases_.back()->case_suiv(cases_.front());
+	}
+}
+
+//=======================================================================
+
+//SUPPRIMER
 
 void Accelerateur::supprimer_faisceau() {
 	faisceaux_.clear();
@@ -134,6 +181,22 @@ void Accelerateur::supprimer_faisceau_par(size_t i, size_t j) {
 	faisceaux_[i]->supprimer_par(j);
 }
 
+//=======================================================================
+
+//ABSCISSE CURVILIGNE
+Vecteur3D Accelerateur::abs_en_pos(double x) const {
+  x *= longueur_;
+  if (x < 0) x += longueur_;
+  size_t i(0);
+  while (x > elements_[i]->longueur()) {
+    x -= elements_[i]->longueur();
+    ++i;
+  }
+  return elements_[i]->abs_en_pos(x / elements_[i]->longueur());
+}
+
+//=======================================================================
+
 //EVOLUTION
 
 void Accelerateur::evolue(double dt) {
@@ -141,6 +204,8 @@ void Accelerateur::evolue(double dt) {
 	f->evolue(dt);  
   }
 }
+
+//=======================================================================
 
 //DESSINER
 void Accelerateur::dessine_faisceau() const {

@@ -217,6 +217,6 @@ void GLWidget::initialiser_particules() {
 	acc_->initialiser_particules();
 }
 
-void GLWidget::ajouter_faisceau(p_Faisceau const& f) {
-	acc_->ajouter_faisceau(f);
+void GLWidget::ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl) {
+	acc_->ajouter_faisceau(p, x,  nombre, lambda, dl);
 }
