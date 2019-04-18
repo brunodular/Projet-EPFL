@@ -72,7 +72,8 @@ std::ostream& Accelerateur::affiche_part(std::ostream& sortie) const {
 }
 
 void Accelerateur::ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl) {
-  faisceaux_.push_back(p_Faisceau(new Faisceau(p,x,nombre,lambda,dl,*this,support_)));
+  faisceaux_.push_back(p_Faisceau(new Faisceau(p,x,nombre,lambda,dl,*this)));
+  faisceaux_.back()->set_support(support_);
 }
 
 //J'ai modifié cette méthode car 'new Element(*el)' créait un pointeur vers un Element, et donc si on donnait un pointeur vers un Dipole par exemple, le Dipole était mis dans un Element et perdait donc ses attributs caractéristiques
@@ -103,6 +104,7 @@ void Accelerateur::souder_accelerateur() {
 
 Vecteur3D Accelerateur::abs_en_pos(double x) const {
   x *= longueur_;
+  if (x < 0) x += longueur_;
   size_t i(0);
   while (x > elements_[i]->longueur()) {
     x -= elements_[i]->longueur();
@@ -113,9 +115,9 @@ Vecteur3D Accelerateur::abs_en_pos(double x) const {
 
 void Accelerateur::initialiser_particules() {
   if (elements_.size() != 0) {
-	for (auto& f : faisceaux_) {
-		f->initialiser_particules(elements_.front());
-	}
+	  for (auto& f : faisceaux_) {
+		  f->initialiser_particules(elements_.front());
+    }
   }
 }
 
