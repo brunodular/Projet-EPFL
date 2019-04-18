@@ -119,8 +119,8 @@ void VueOpenGL::init()
    * Le Back-face culling consiste à ne dessiner que les face avec ordre
    * de déclaration dans le sens trigonométrique.
    */
-  glEnable(GL_DEPTH_TEST);
-  glEnable(GL_CULL_FACE);
+  //glEnable(GL_DEPTH_TEST);
+  //glEnable(GL_CULL_FACE);
 
   sphere.initialize();
   initializePosition();
