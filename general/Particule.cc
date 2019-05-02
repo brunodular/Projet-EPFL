@@ -71,6 +71,8 @@ void Particule::bouger(double dt) {
 
 bool Particule::est_sortie() {
   if (element_courant_ == nullptr or element_courant_->heurte_bord(*this)) {
+    if (element_courant_ == nullptr) cout << "Je n'ai pas d'élément..." << endl;
+    else cout << "J'ai heurté le bord" << endl;
     element_courant_ = nullptr;
     return true;
   } else return false;

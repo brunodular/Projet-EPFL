@@ -183,12 +183,7 @@ Dipole::Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,
 
 //Méthodes
 Vecteur3D Dipole::B(Particule const& p) const {
-  if (p.v() * dir_ > 0) {
-    return Vecteur3D(0,0,Bz_);
-  } else {
-    return Vecteur3D(0,0,-Bz_);
-  }
-
+  return Vecteur3D(0,0,Bz_);
 }
 
 void Dipole::affiche(ostream& sortie) const {

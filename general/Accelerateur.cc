@@ -90,13 +90,14 @@ void Accelerateur::ajouter_faisceau_par(size_t i, p_Particule const& par) {
 //CONSTRUIRE
 
 void Accelerateur::souder_accelerateur() {
-  size_t n(elements_.size()); //nombre d'élément contenus dans l'accélérateur
+  size_t n(elements_.size()); //nombre d'éléments contenus dans l'accélérateur
   if (n != 0) {
-    for (size_t i(0); i<n; ++i) {
+    for (size_t i(1); i<n; ++i) {
       elements_[i]->el_suiv(elements_[(i+1)%n]);
       elements_[i]->el_prec(elements_[(i-1)%n]);
       longueur_ += elements_[i]->longueur();
     }
+    elements_[0]->el_prec(elements_[n-1]);
   }
 }
 

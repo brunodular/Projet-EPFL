@@ -254,13 +254,15 @@ void Faisceau::evolue(double dt) {
 
       particules_[i]->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
 
-      particules_[i]->element_courant()->passe_au_suivant(*particules_[i]); //Mise à jour de l'élément courant de la particule p.
-
+      if (particules_[i]->element_courant()->passe_au_suivant(*particules_[i]))
+      {
+        cout << "Je suis passé dans :" << endl;
+        particules_[i]->element_courant()->affiche(cout); //Mise à jour de l'élément courant de la particule p.
+      }
       ++i;
 
   } else {
 		supprimer_par(i);
-		//cout << nombre_particules() << endl;
 	}
   }
 }
