@@ -1,3 +1,4 @@
+#include "Accelerateur.h"
 #include "Faisceau.h"
 #include <cmath>
 #include <vector>
@@ -95,18 +96,15 @@ double Faisceau::moyenne_pos_vit_r() const {
 
 //Constructeur
 
-Faisceau::Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur* const& acc, SupportADessin* support, double dx)
-	: Dessinable(support), particule_typique_(p), lambda_(lambda)
+Faisceau::Faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, SupportADessin* support_)
+	: Dessinable(support_), particule_typique_(p), lambda_(lambda)
 {
-	/*for (size_t i=0; i<nombre/lambda; ++i) {
-		particules_.push_back(p_Particule (new Particule(p->pos(), p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda)));
-	}
-	
-	
-	for (int i(0); i < nombre/lambda; ++i) {
-		particules_.push_back(new Particule(Vecteur3D(p->pos().x() + (134.6712*i-floor(134.6712*i))/50,  p->pos().y()*i + (432.1234*i-floor(432.1234*i))/5, (432.1234*i-floor(432.1234*i))/50), p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda));
-	}	
-	*/
+  unsigned int macro_nombre(nombre/lambda);
+  double dx(dl/macro_nombre);
+
+	for (size_t i(0); i<macro_nombre; ++i) {
+		particules_.push_back(p_Particule (new Particule(acc, x - 0.5*dl + i*dx, p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda)));
+  }
 }
 
 Faisceau::Faisceau (SupportADessin* support) : Dessinable(support) {}
@@ -166,13 +164,13 @@ Collection_P Faisceau::particules() const{return particules_;}
 double Faisceau::E_moyenne() const {
 	double moyenne(0.0);
 	cout << "Nombre de particules " << nombre_particules() << endl;
-	
+
   if (nombre_particules() != 0) {
     for (auto& p : particules_) {
       moyenne += p->E();
     }
     moyenne /= nombre_particules();
-  } 
+  }
   return moyenne;
 }
 
@@ -253,11 +251,11 @@ void Faisceau::evolue(double dt) {
       particules_[i]->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
 
       particules_[i]->element_courant()->passe_au_suivant(*particules_[i]); //Mise à jour de l'élément courant de la particule p.
-      
+
       ++i;
-    
+
     } else {
-		supprimer_par(i); 
+		supprimer_par(i);
 		//cout << nombre_particules() << endl;
 	}
   }

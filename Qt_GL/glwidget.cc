@@ -20,16 +20,16 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
    * Pour activer le "mouse tracking" if faut lancer setMouseTracking(true)
    * par exemple dans le constructeur de cette classe.
    */
- 
+
   if (event->buttons() & Qt::LeftButton) {
 	constexpr double petit_angle(.4); // en degrés
- 
+
 	// Récupère le mouvement relatif par rapport à la dernière position de la souris
 	QPointF d = event->pos() - lastMousePosition;
 	lastMousePosition = event->pos();
- 
+
 	vue.rotate(petit_angle * d.manhattanLength(), d.y(), d.x(), 0);
- 
+
 	update();
   }
 }
@@ -44,14 +44,14 @@ void GLWidget::initializeGL()
 // ======================================================================
 void GLWidget::resizeGL(int width, int height)
 {
-  /* On commance par dire sur quelle partie de la 
+  /* On commance par dire sur quelle partie de la
    * fenêtre OpenGL doit dessiner.
    * Ici on lui demande de dessiner sur toute la fenêtre.
    */
   glViewport(0, 0, width, height);
 
   /* Puis on modifie la matrice de projection du shader.
-   * Pour ce faire on crée une matrice identité (constructeur 
+   * Pour ce faire on crée une matrice identité (constructeur
    * par défaut), on la multiplie par la droite par une matrice
    * de perspective.
    * Plus de détail sur cette matrice
@@ -137,7 +137,7 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
   case Qt::Key_Space:
 	pause();
 	break;
-	
+
   case Qt::Key_P:
     vitesse_temps *= 1.6162;
     break;
@@ -159,7 +159,7 @@ void GLWidget::timerEvent(QTimerEvent* event)
   double dt = chronometre.restart() * 1e-12 * vitesse_temps;
 
   acc_->evolue(dt);
-  
+
   update();
 }
 
@@ -198,13 +198,13 @@ void GLWidget::ajouter_dipole(Vecteur3D const& entree, Vecteur3D const& sortie) 
 void GLWidget::ajouter_structure_P10() {
 	ajouter_mailleFODO(Vecteur3D(3,2,0),Vecteur3D(3,-2,0));
 	ajouter_dipole(Vecteur3D(3,-2,0),Vecteur3D(2,-3,0));
-	
+
 	ajouter_mailleFODO(Vecteur3D(2,-3,0),Vecteur3D(-2,-3,0));
 	ajouter_dipole(Vecteur3D(-2,-3,0),Vecteur3D(-3,-2,0));
-	
+
 	ajouter_mailleFODO(Vecteur3D(-3,-2,0),Vecteur3D(-3,2,0));
 	ajouter_dipole(Vecteur3D(-3,2,0),Vecteur3D(-2,3,0));
-	
+
 	ajouter_mailleFODO(Vecteur3D(-2,3,0),Vecteur3D(2,3,0));
 	ajouter_dipole(Vecteur3D(2,3,0),Vecteur3D(3,2,0));
 }
@@ -217,6 +217,6 @@ void GLWidget::initialiser_particules() {
 	acc_->initialiser_particules();
 }
 
-void GLWidget::ajouter_faisceau(p_Faisceau const& f) {
-	acc_->ajouter_faisceau(f);
+void GLWidget::ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl) {
+	acc_->ajouter_faisceau(p, x,  nombre, lambda, dl);
 }

@@ -1,9 +1,7 @@
 #include "vue_opengl.h"
-#include "vertex_shader.h" // Identifiants Qt de nos différents attributs
+#include "vertex_shader.h"
 #include "Accelerateur.h"
 #include <cmath>
-
-constexpr double DEUXPI=2*M_PI;
 
 // ======================================================================
 /*METHODES DESSINER DE LA SOUS-CLASSE VueOpenGL*/

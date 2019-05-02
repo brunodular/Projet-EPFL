@@ -15,6 +15,7 @@ protected:
   const double r_section_;  //rayon de la section de la chambre à vide
   Vecteur3D dir_;     //direction de l'élément
   Element* el_suiv_;  //pointeur sur l'élément suivant
+  double longueur_;
 
 public:
   //Constructeur
@@ -28,7 +29,8 @@ public:
   virtual Vecteur3D pos_e() const;
   virtual Vecteur3D pos_s() const;
   virtual double r_section() const;
-  
+  virtual double longueur() const;
+
   //Setters
   virtual void el_suiv(Element*);
 
@@ -43,6 +45,8 @@ public:
 
   virtual double coord_orthogonale_position(Particule*) const = 0;
   virtual double coord_orthogonale_vitesse(Particule*) const = 0;
+
+  virtual Vecteur3D abs_en_pos(double x) const = 0;
 
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }
@@ -66,6 +70,8 @@ public:
   virtual double coord_orthogonale_position(Particule*) const override;
   virtual double coord_orthogonale_vitesse(Particule*) const override;
 
+  virtual Vecteur3D abs_en_pos(double x) const override;
+
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }
 };
@@ -83,13 +89,15 @@ public:
 
   //Méthodes
   virtual Vecteur3D centre() const;
-  
+
   virtual bool heurte_bord(Particule const&) const override;
 
   virtual void affiche(std::ostream&) const override;
 
   virtual double coord_orthogonale_position(Particule*) const override;
   virtual double coord_orthogonale_vitesse(Particule*) const override;
+
+  virtual Vecteur3D abs_en_pos(double x) const override;
 
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }

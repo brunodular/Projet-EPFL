@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Dessinable.h"
 #include "Particule.h"
 #include <vector>
@@ -31,27 +33,26 @@ class Faisceau : public Dessinable {
 	public:
 
 		//Constructeur + Destructeur
-		Faisceau (p_Particule p, unsigned int nombre, const unsigned int lambda, Accelerateur* const& acc=nullptr, SupportADessin* support_=nullptr, double dx=0.05);
-		
+		Faisceau (p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, SupportADessin* support_=nullptr); //x et dl sont des abscisses curvilignes, donc entre 0 et 1
+
 		Faisceau(SupportADessin* support_);
-		
+
 		Faisceau () = default;
-		
+
 		~Faisceau () = default;
-		
+
 		Faisceau (Faisceau const&);
-		
+
 		Faisceau& operator=(Faisceau const&) = default;
 
 		//Methodes
 		std::ostream& affiche(std::ostream&) const;
 		std::ostream& affiche_part(std::ostream&) const;
 		virtual void set_support(SupportADessin*) override;
-		void set_accelerateur();
 
 		//GETTERS
 		Collection_P particules() const;
-		
+
 		double E_moyenne() const;	//renvoie énergie moyenne
 
 		double emittance_r() const;
@@ -73,11 +74,11 @@ class Faisceau : public Dessinable {
 		void supprimer_par();
 		void ajouter_par(p_Particule const&);
 		void initialiser_particules(p_Element const&);
-		
+
 		//DESSINER
 		virtual void dessine() override { support_->dessine(*this); }
 		virtual void dessine_particule() const;
-		
+
 		//EVOLUTION
 		void evolue(double);
 };
