@@ -58,7 +58,7 @@ class Accelerateur : public Dessinable {
 		void ajouter_faisceau_par(size_t i, p_Particule const&);
 
 		//CONSTRUIRE
-		void souder_accelerateur(); //Cette méthode soude tous les éléments entre eux en settant l'élément suivant el_suiv_ de chaque élément comme pointeur vers l'élément qui le suit dans le vecteur elements_. Cette méthode suppose que les élément ont étés ajoutés dans l'ordre attendu.
+		void souder_accelerateur(); //Cette méthode soude tous les éléments entre eux en settant l'élément suivant/précédent de chaque élément comme pointeur vers l'élément qui le suit/précède dans le vecteur elements_. Cette méthode suppose que les élément ont étés ajoutés dans l'ordre attendu.
 
 
     //Abscisse curviligne

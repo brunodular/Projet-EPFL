@@ -92,11 +92,9 @@ void Accelerateur::ajouter_faisceau_par(size_t i, p_Particule const& par) {
 void Accelerateur::souder_accelerateur() {
   size_t n(elements_.size()); //nombre d'élément contenus dans l'accélérateur
   if (n != 0) {
-    elements_.back()->el_suiv(elements_[0]);
-    longueur_ += elements_.back()->longueur();
-
-    for (size_t i(0); i<n-1; ++i) {
-      elements_[i]->el_suiv(elements_[i+1]);
+    for (size_t i(0); i<n; ++i) {
+      elements_[i]->el_suiv(elements_[(i+1)%n]);
+      elements_[i]->el_prec(elements_[(i-1)%n]);
       longueur_ += elements_[i]->longueur();
     }
   }
@@ -108,7 +106,7 @@ Vecteur3D Accelerateur::abs_en_pos(double x) const {
   size_t i(0);
   while (x > elements_[i]->longueur()) {
     x -= elements_[i]->longueur();
-    ++i;
+    i = (i+1)%elements_.size();
   }
   return elements_[i]->abs_en_pos(x / elements_[i]->longueur());
 }
@@ -116,7 +114,7 @@ Vecteur3D Accelerateur::abs_en_pos(double x) const {
 void Accelerateur::initialiser_particules() {
   if (elements_.size() != 0) {
 	  for (auto& f : faisceaux_) {
-		  f->initialiser_particules(elements_.front());
+		  f->initialiser_particules(*this);
     }
   }
 }

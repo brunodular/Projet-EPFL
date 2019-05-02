@@ -14,12 +14,13 @@ protected:
   Vecteur3D pos_s_;   //position de sortie
   const double r_section_;  //rayon de la section de la chambre à vide
   Vecteur3D dir_;     //direction de l'élément
-  Element* el_suiv_;  //pointeur sur l'élément suivant
+  Element* el_suiv_ = nullptr;  //pointeur sur l'élément suivant
+  Element* el_prec_ = nullptr;  //pointeur sur l'élément précédent
   double longueur_;
 
 public:
   //Constructeur
-  Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support = nullptr,Element* el_suiv = nullptr);
+  Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support = nullptr);
 
   //Destructeur
   virtual ~Element() {};
@@ -32,12 +33,14 @@ public:
   virtual double longueur() const;
 
   //Setters
-  virtual void el_suiv(Element*);
+  void el_suiv(Element*);
+  void el_prec(Element*);
 
   //Méthodes
   virtual bool heurte_bord(Particule const& p) const = 0;
 
-  virtual bool passe_au_suivant(Particule& p) const;
+  bool passe_au_suivant(Particule& p) const;
+  bool est_dans(Particule const& p) const;
 
   virtual Vecteur3D B(Particule const&) const; //champ magnétique
 
@@ -57,7 +60,7 @@ public:
 class ElementDroit : public Element {
 public:
   //Constructeur
-  ElementDroit(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support = nullptr,Element* el_suiv = nullptr);
+  ElementDroit(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support = nullptr);
 
   //Destructeur
   virtual ~ElementDroit() {};
@@ -85,7 +88,7 @@ protected:
 
 public:
   //Constructeur
-  ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,SupportADessin* support = nullptr,Element* el_suiv = nullptr);
+  ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,SupportADessin* support = nullptr);
 
   //Méthodes
   virtual Vecteur3D centre() const;
@@ -108,7 +111,7 @@ public:
 class SectionDroite : public ElementDroit {
 public:
   //Constructeur
-  SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section, SupportADessin* support = nullptr, Element* el_suiv = nullptr);
+  SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section, SupportADessin* support = nullptr);
 
   //Méthodes
   virtual void affiche(std::ostream&) const override;
@@ -125,7 +128,7 @@ private:
 
 public:
   //Constructeur
-  Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,double Bz, SupportADessin* support = nullptr, Element* el_suiv = nullptr);
+  Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,double Bz, SupportADessin* support = nullptr);
 
   //Méthodes
   virtual Vecteur3D B(Particule const&) const override;
@@ -144,7 +147,7 @@ private:
 
 public:
   //Constructeurs
-  Quadrupole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double b,SupportADessin* support = nullptr,Element* el_suiv = nullptr);
+  Quadrupole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double b,SupportADessin* support = nullptr);
 
   virtual void affiche(std::ostream& sortie) const override;
 

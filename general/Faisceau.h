@@ -73,7 +73,7 @@ class Faisceau : public Dessinable {
 		void supprimer_par(size_t i);		//supprime i-eme particules du faisceau
 		void supprimer_par();
 		void ajouter_par(p_Particule const&);
-		void initialiser_particules(p_Element const&);
+		void initialiser_particules(Accelerateur const& acc);
 
 		//DESSINER
 		virtual void dessine() override { support_->dessine(*this); }

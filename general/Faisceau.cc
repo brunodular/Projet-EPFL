@@ -233,10 +233,14 @@ void Faisceau::ajouter_par(p_Particule const& par) {
 	particules_.push_back(par);
 }
 
-void Faisceau::initialiser_particules(p_Element const& el) {
-	for (auto& p : particules_) {
-      p->element_courant(el);
-      while(p->element_courant()->passe_au_suivant(*p));
+void Faisceau::initialiser_particules(Accelerateur const& acc) {
+  size_t n((acc.elements()).size());
+  for (auto& p : particules_) {
+    size_t i(0);
+    while(i< n and not acc.elements()[i]->est_dans(*p)) {
+      ++i;
+    }
+    if (i < n) p->element_courant(acc.elements()[i]);
   }
 }
 
@@ -254,7 +258,7 @@ void Faisceau::evolue(double dt) {
 
       ++i;
 
-    } else {
+  } else {
 		supprimer_par(i);
 		//cout << nombre_particules() << endl;
 	}

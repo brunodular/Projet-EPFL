@@ -11,8 +11,8 @@ constexpr uint MARGE(25);
 //Class Element
 
 //Constructeurs
-Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support,Element* el_suiv)
- : Dessinable(support), r_section_(r_section),el_suiv_(el_suiv), longueur_(0.0) {
+Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support)
+ : Dessinable(support), r_section_(r_section), longueur_(0.0) {
     double prod(prod_mixte(e3,pos_e,pos_s));
     if (prod == 0) { //pour s'assurer que l'élément est dans le bon sens
       Erreur err = {"position d'entrée = position de sortie",2};
@@ -48,14 +48,34 @@ void Element::el_suiv(Element* el) {
   el_suiv_ = el;
 }
 
+void Element::el_prec(Element* el) {
+  el_prec_ = el;
+}
+
 //Méthodes
 bool Element::passe_au_suivant(Particule& p) const {
-  if (prod_mixte(e3,p.pos(),pos_s_) > 0) {
-    p.element_courant(el_suiv_);
-    return true;
+  if (p.v() * dir_ > 0) {
+    if (prod_mixte(e3,p.pos(),pos_s_) > 0) {
+      p.element_courant(el_suiv_);
+      return true;
+    } else {
+      return false;
+    }
   } else {
-    return false;
+    if (prod_mixte(e3,p.pos(),pos_e_) < 0) {
+      p.element_courant(el_prec_);
+      return true;
+    } else {
+      return false;
+    }
   }
+}
+
+bool Element::est_dans(Particule const& p) const {
+  if (prod_mixte(e3,p.pos(),pos_s_) < 0 and prod_mixte(e3,p.pos(),pos_e_) > 0) {
+    if (not heurte_bord(p)) return true;
+    else return false;
+  } else return false;
 }
 
 Vecteur3D Element::B(Particule const&) const {
@@ -71,8 +91,8 @@ void Element::affiche(ostream& sortie) const {
 //Class ElementDroit
 
 //Constructeur
-ElementDroit::ElementDroit(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support,Element* el_suiv) :
-  Element(pos_e, pos_s, r_section, support, el_suiv) {
+ElementDroit::ElementDroit(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support) :
+  Element(pos_e, pos_s, r_section, support) {
     longueur_ = (pos_s_ - pos_e_).norme();
   }
 
@@ -103,8 +123,8 @@ Vecteur3D ElementDroit::abs_en_pos(double x) const {
 //Class ElementCourbe
 
 //Constructeurs
-ElementCourbe::ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,SupportADessin* support,Element* el_suiv) :
-  Element(pos_e, pos_s, r_section, support, el_suiv),
+ElementCourbe::ElementCourbe(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,SupportADessin* support) :
+  Element(pos_e, pos_s, r_section, support),
   courbure_(courbure),
   centre_(0.5*(pos_e_+pos_s_)+(1/courbure_)*sqrt(1-courbure_*courbure_*0.25*(pos_s_-pos_e_).norme2())*(dir_^e3)) {
     longueur_ = 2*asin((pos_s_ - pos_e_).norme()*courbure_/2.0)/courbure_;
@@ -143,8 +163,8 @@ Vecteur3D ElementCourbe::abs_en_pos(double x) const {
 
 //Class SectionDroite
 
-SectionDroite::SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support,Element* el_suiv)
-: ElementDroit(pos_e, pos_s, r_section, support, el_suiv) {}
+SectionDroite::SectionDroite(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin* support)
+: ElementDroit(pos_e, pos_s, r_section, support) {}
 
 //Méthodes
 void SectionDroite::affiche(ostream& sortie) const {
@@ -158,12 +178,17 @@ void SectionDroite::affiche(ostream& sortie) const {
 
 //Constructeurs
 
-Dipole::Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,double Bz,SupportADessin* support,Element* el_suiv) :
-  ElementCourbe(pos_e, pos_s, r_section, courbure, support, el_suiv), Bz_(Bz) {}
+Dipole::Dipole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double courbure,double Bz,SupportADessin* support) :
+  ElementCourbe(pos_e, pos_s, r_section, courbure, support), Bz_(Bz) {}
 
 //Méthodes
-Vecteur3D Dipole::B(Particule const&) const {
-  return Vecteur3D(0,0,Bz_);
+Vecteur3D Dipole::B(Particule const& p) const {
+  if (p.v() * dir_ > 0) {
+    return Vecteur3D(0,0,Bz_);
+  } else {
+    return Vecteur3D(0,0,-Bz_);
+  }
+
 }
 
 void Dipole::affiche(ostream& sortie) const {
@@ -178,7 +203,7 @@ void Dipole::affiche(ostream& sortie) const {
 //Class Quadrupole
 
 //Constructeurs
-Quadrupole::Quadrupole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double b,SupportADessin* support,Element* el_suiv) : ElementDroit(pos_e,pos_s,r_section,support,el_suiv), b_(b) {}
+Quadrupole::Quadrupole(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double b,SupportADessin* support) : ElementDroit(pos_e,pos_s,r_section,support), b_(b) {}
 
 //Méthodes
 void Quadrupole::affiche(std::ostream& sortie) const {
