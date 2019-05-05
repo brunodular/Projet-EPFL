@@ -130,9 +130,12 @@ void Accelerateur::initialiser_particules() {
 		f->initialiser_particules(elements_.front());
 	}
   }
+  initialiser_longueur();
   if (cases_.size()!=0) {
 	  for (auto& f : faisceaux_) {
-		  f->initialiser_particules(cases_.front());
+		  for (auto& p : f->particules()) {
+			  p->ajouter_dans_case_courante(*this);
+		  }
 	  }
   }
 }
@@ -142,7 +145,7 @@ void Accelerateur::initialiser_cases() {
 	if (longueur_!=0) {
 		for (size_t i(0); i<NB_CASES; ++i) {
 			double j=i;
-			cases_.push_back(new Case(j/NB_CASES,(j+1)/NB_CASES, *this));
+			cases_.push_back(new Case(j/NB_CASES,(j+1)/NB_CASES, this));
 			if (i-1>=0) {
 				cases_[i-1]->case_suiv(cases_[i]);
 				cases_[i]->case_preced(cases_[i-1]);
@@ -195,14 +198,55 @@ Vecteur3D Accelerateur::abs_en_pos(double x) const {
   return elements_[i]->abs_en_pos(x / elements_[i]->longueur());
 }
 
+double Accelerateur::somme_longueur_elements(size_t i) const {
+	if (i<0) return 0;
+	double l;
+	for (size_t j(0); j<=i; ++j) {
+		l+=elements_[j]->longueur();
+	}
+	return l;
+}
+
+size_t Accelerateur::position_element(p_Element const& el) const {
+	for (size_t i(0); i<elements_.size(); ++i) {
+		if (elements_[i]->pos_e()==el->pos_e() and elements_[i]->pos_s()==el->pos_s()) {return i;}
+	}
+}
+
+Abs Accelerateur::pos_en_abs_element(p_Element const& el) const {
+	Abs x(0.0);
+	size_t i(0);
+	while (x<=somme_longueur_elements(position_element(el)-1)) {
+		x+=elements_[i]->longueur();
+		++i;
+	}
+	return x/longueur_;
+}
+
+Abs Accelerateur::pos_en_abs(Particule const& p) const {
+	if (not (p.element_courant()==nullptr)) {
+		return (pos_en_abs_element(p.element_courant())+p.element_courant()->pos_en_abs(p));
+	}
+}
+
+void Accelerateur::initialiser_longueur() {
+	double l(0.0);
+	for (auto el : elements_) {
+		l+=el->longueur();
+	}
+	longueur_=l;
+}
+
 //=======================================================================
 
 //EVOLUTION
 
 void Accelerateur::evolue(double dt) {
-  for (auto& f : faisceaux_) {
-	f->evolue(dt);  
-  }
+  if (!faisceaux_.empty() and !cases_.empty()) {
+	  for (auto& f : faisceaux_) {
+		  f->evolue(dt, *this);
+	  }
+  }	
 }
 
 //=======================================================================

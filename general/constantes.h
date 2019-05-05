@@ -33,6 +33,7 @@ typedef Particule* p_Particule;	//On a choisi de mettre des pointeurs afin d'opt
 typedef Element* p_Element;		//On a choisi de mettre des pointeurs a la C a la place de unique_ptr car les elements sont pointe par d'autres pointeurs (pointeur sur l'element courant et suivant par les Particules et les Elements respectivement cf. definition de la classe Element et Particule)
 typedef Faisceau* p_Faisceau;
 typedef Case* p_Case;
+typedef double Abs;
 
 typedef std::vector<p_Element> Collection_E;
 typedef std::vector<p_Faisceau> Collection_F;

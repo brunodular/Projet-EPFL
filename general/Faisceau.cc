@@ -239,29 +239,24 @@ void Faisceau::initialiser_particules(p_Element const& el) {
 	}
 }
 
-void Faisceau::initialiser_particules(Case* const& ca) {
-	for (auto& p : particules_) {
-		p->case_courante(ca);
-		while (p->case_courante()->passe_au_suivant(*p));
-		p->case_courante()->ajouter_par(p);
-	}
-}
-
 //=======================================================================
 
 //EVOLUTION
-void Faisceau::evolue(double dt) {
+void Faisceau::evolue(double dt, Accelerateur const& acc) {
   size_t i(0);
   while(i<nombre_particules()) {
-    if (not particules_[i]->est_sortie() and particules_[i]->case_courante()!=nullptr) { //vérifie si la particule est toujours dans l'accélérateur
-      for (auto const& p : particules_[i]->case_courante()->particules()) {
-		  particules_[i]->ajouter_force_inter_particulaire(*p); //On ajoute à la particule les interactions électromagnétiques entre les différentes d'une meme case
+    if ((not particules_[i]->est_sortie())) { //vérifie si la particule est toujours dans l'accélérateur
+	  
+	  for (auto & p: particules_[i]->case_courante()->particules()) {
+		  particules_[i]->ajouter_force_inter_particulaire(*p);
 	  }
 	  
       particules_[i]->ajouter_f_magn((particules_[i]->element_courant())->B(*particules_[i]),dt); //On ajoute à la particule p le champ magnétique produit par l'élément dans lequel elle se trouve.
 
       particules_[i]->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
-
+      
+      particules_[i]->case_courante()->passe_au_suivant(*particules_[i]);
+      
       particules_[i]->element_courant()->passe_au_suivant(*particules_[i]); //Mise à jour de l'élément courant de la particule p.
       
       ++i;

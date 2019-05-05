@@ -42,13 +42,17 @@ public:
   virtual bool passe_au_suivant(Particule& p) const;
 
   virtual Vecteur3D B(Particule const&) const; //champ magnétique
-
+	
+	//Affiche
   virtual void affiche(std::ostream&) const;
 
+	//Coordonees orthogonales
   virtual double coord_orthogonale_position(Particule*) const = 0;
   virtual double coord_orthogonale_vitesse(Particule*) const = 0;
   
+	//Abscisse curviligne
   virtual Vecteur3D abs_en_pos(double x) const = 0;
+  virtual Abs pos_en_abs(Particule const&) const = 0;
 
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }
@@ -73,6 +77,7 @@ public:
   virtual double coord_orthogonale_vitesse(Particule*) const override;
   
   virtual Vecteur3D abs_en_pos(double x) const override;
+  virtual Abs pos_en_abs(Particule const&) const override;
 
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }
@@ -100,6 +105,7 @@ public:
   virtual double coord_orthogonale_vitesse(Particule*) const override;
   
   virtual Vecteur3D abs_en_pos(double x) const override;
+  virtual Abs pos_en_abs(Particule const&) const override;
 
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }

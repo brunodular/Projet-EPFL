@@ -71,12 +71,11 @@ class Faisceau : public Dessinable {
 		void supprimer_par();
 		void ajouter_par(p_Particule const&);
 		void initialiser_particules(p_Element const&);
-		void initialiser_particules(Case* const&);
 		
 		//DESSINER
 		virtual void dessine() override { support_->dessine(*this); }
 		virtual void dessine_particule() const;
 		
 		//EVOLUTION
-		void evolue(double);
+		void evolue(double, Accelerateur const&);
 };

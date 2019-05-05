@@ -96,6 +96,10 @@ Vecteur3D ElementDroit::abs_en_pos(double x) const {
   return pos_e_ + (x*longueur_)*dir_;
 }
 
+Abs ElementDroit::pos_en_abs(Particule const& p) const {
+	return (p.pos()-pos_e_)*dir_;
+}
+
 //=======================================================================
 
 //Class ElementCourbe
@@ -135,6 +139,11 @@ Vecteur3D ElementCourbe::abs_en_pos(double x) const {
   Vecteur3D u(pos_s_-centre_);
   Vecteur3D v(u^e3);
   return centre_ + cos(x*theta)*u+sin(x*theta)*v;
+}
+
+Abs ElementCourbe::pos_en_abs(Particule const& p) const {
+	Abs abs;
+	return 0.05;
 }
 
 //=======================================================================

@@ -15,7 +15,12 @@ class Accelerateur : public Dessinable {
 		
 		void initialiser_cases(); //Initialise la decomposition en case de l'accelerateur
 		void initialiser_elements(size_t); //Creer tous les liens entre les elements de l'accelerateur
-
+		void initialiser_longueur();
+		
+		size_t position_element(p_Element const& el) const;
+		double somme_longueur_elements(size_t i) const;
+		Abs pos_en_abs_element(p_Element const& el) const;
+		
 	public:
 		//Constructeurs
 		Accelerateur (Collection_F const&, Collection_E const&, SupportADessin* support); //pas besoin de mettre les vector par defaut car les vectors sont automatiquement initialisés au vector vide
@@ -58,10 +63,11 @@ class Accelerateur : public Dessinable {
 		//CONSTRUIRE
 		void souder_accelerateur(); //Cette méthode soude tous les éléments entre eux en settant l'élément suivant el_suiv_ de chaque élément comme pointeur vers l'élément qui le suit dans le vecteur elements_. Cette méthode suppose que les élément ont étés ajoutés dans l'ordre attendu.
 
-		void initialiser_particules(); //Initialise les élément_courant_ des Particules
+		void initialiser_particules(); //Initialise les élément_courant_ et els case_courante_ des Particules
 		
 			//Abscisse curviligne
 		Vecteur3D abs_en_pos(double x) const;
+		Abs pos_en_abs(Particule const&) const;
 
 			//Supprimer
 		void supprimer_faisceau(size_t i);

@@ -29,13 +29,28 @@ double Particule::m() const {return m_;}
 double Particule::q() const {return q_;}
 
 Element* Particule::element_courant() const {return element_courant_;}
+
 Case* Particule::case_courante() const {return case_courante_;}
 
 //setters
 
 void Particule::element_courant(Element* new_element) {element_courant_ = new_element;}
 
-void Particule::case_courante(Case* new_case) {case_courante_=new_case;}
+void Particule::ajouter_dans_case_courante(Accelerateur const& acc) {
+	Abs abs(acc.pos_en_abs(*this));
+	for (auto & cas : acc.cases()) {
+		if (abs >= cas->abs_e() and abs < cas->abs_s()) {
+			cas->ajouter_par(this);
+			case_courante_=cas;
+		}
+	}
+}
+
+void Particule::case_courante(Case* cas) {
+	case_courante_=cas;
+} 
+
+
 //=======================================================================
 
 //Méthodes
