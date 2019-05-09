@@ -232,7 +232,7 @@ void VueOpenGL::dessineCylindre(Vecteur3D const& base, Vecteur3D const& end, dou
   const double k(2*M_PI/slices);
 
   Vecteur3D u = ~(end-base);
-  Vecteur3D v = r*u.orthogonal();
+  Vecteur3D v = r*~(u.orthogonal());
   Vecteur3D w = u^v;
 
   prog.setUniformValue("vue_modele", matrice_vue * matrice);
@@ -277,7 +277,7 @@ void VueOpenGL::dessineTore(Vecteur3D const& centre, Vecteur3D const& base, Vect
   for (int i(0); i < slices; ++i) {
     glBegin(GL_QUAD_STRIP);
     prog.setAttributeValue(CouleurId, rouge, vert, bleu);
-    for (int j(0); j <= ceil(proportion*stacks); ++j) {
+    for (int j(0); j <= ceil(proportion*stacks); ++j) { // <= pour recouvrir
       for (int k(1); k >= 0; --k) {
         double s((i+k) % slices + 0.5);
         double t(j % stacks + stacks/2);

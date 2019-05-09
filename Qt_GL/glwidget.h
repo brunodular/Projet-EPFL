@@ -11,7 +11,7 @@ class GLWidget : public QOpenGLWidget
 public:
   GLWidget(QWidget* parent = nullptr, Accelerateur* a=nullptr)
     : QOpenGLWidget(parent)
-    , vitesse_temps(1.0), acc_(a)
+    , evo_par_affichage(1), acc_(a)
     {acc_->set_support(&vue);}
   virtual ~GLWidget() {}
 
@@ -22,6 +22,7 @@ public:
   void souder_accelerateur();
   void initialiser_particules();
   void ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl);
+  void construire_polygone(size_t n, double R);
 
 private:
   // Les 3 méthodes clés de la classe QOpenGLWidget à réimplémenter
@@ -45,7 +46,7 @@ private:
   int timerId;
   // pour faire évoluer les objets avec le bon "dt"
   QTime chronometre;
-  double vitesse_temps;
+  unsigned int evo_par_affichage; //nombre d'évolutions par affichage
 
   // objets à dessiner, faire évoluer
   Accelerateur* acc_;

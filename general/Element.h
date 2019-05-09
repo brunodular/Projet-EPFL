@@ -26,7 +26,7 @@ public:
   virtual ~Element() {};
 
   //Getters
-  //virtual Element* el_suiv() const;
+  virtual Element* el_suiv() const;
   virtual Vecteur3D pos_e() const;
   virtual Vecteur3D pos_s() const;
   virtual double r_section() const;

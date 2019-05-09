@@ -14,6 +14,7 @@ class Accelerateur : public Dessinable {
 		//Constructeurs
 		Accelerateur (Collection_F const&, Collection_E const&, SupportADessin* support); //pas besoin de mettre les vector par defaut car les vectors sont automatiquement initialisés au vector vide
 
+
 		Accelerateur(SupportADessin* support);
 
 		Accelerateur (Accelerateur const&)=delete;
@@ -47,6 +48,9 @@ class Accelerateur : public Dessinable {
 		void ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl);
 		void ajouter_el(p_Element const&);
 		void ajouter_faisceau_par(size_t i, p_Particule const&);
+
+    //MEGA-Constructeurs
+    void construire_polygone(size_t n, double R);
 
 		//CONSTRUIRE
 		void souder_accelerateur(); //Cette méthode soude tous les éléments entre eux en settant l'élément suivant/précédent de chaque élément comme pointeur vers l'élément qui le suit/précède dans le vecteur elements_. Cette méthode suppose que les élément ont étés ajoutés dans l'ordre attendu.

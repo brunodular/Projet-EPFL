@@ -24,10 +24,9 @@ Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin
   }
 
 //Getters
-//Element* Element::el_suiv() const {
-//  Element* el(el_suiv_);
-//  return el;
-//}
+Element* Element::el_suiv() const {
+  return el_suiv_;
+}
 Vecteur3D Element::pos_e() const {
   return pos_e_;
 }
@@ -246,7 +245,7 @@ Vecteur3D MailleFODO::B(Particule const& p) const {
     Vecteur3D Y(X-(X*dir_)*dir_); //calcul des coordonnées locales au premier quadrupôle
     return b_*((Y*(e3^dir_))*e3 + (X.z() * (e3^dir_))); //calcul du champ magnétique
   } else if (abscisse > longueur_quad_ + longueur_sect_ and abscisse < longueur_ - longueur_sect_) {
-    X += pos_e_ - (longueur_quad_+longueur_sect_)*dir_;
+    X = p.pos() - (pos_e_+dir_*(0.5*longueur_));
     Vecteur3D Y(X-(X*dir_)*dir_); //calcul des coordonnées locales au second quadrupôle
     return -b_*((Y*(e3^dir_))*e3 + (X.z() * (e3^dir_))); //calcul du champ magnétique
   } else return Vecteur3D();

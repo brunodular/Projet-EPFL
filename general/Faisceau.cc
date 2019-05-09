@@ -273,12 +273,13 @@ void Faisceau::evolue(Accelerateur const& acc, Cases& cases, double dt) {
       particules_[i]->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
 
 
-      if (particules_[i]->element_courant()->passe_au_suivant(*particules_[i]))
-      ; //Mise à jour de l'élément courant de la particule p.
+      particules_[i]->element_courant()->passe_au_suivant(*particules_[i]); //Mise à jour de l'élément courant de la particule p.
 
-      if (cases.case_de_abs(acc.pos_en_abs(particules_[i])) != j) {
-        cases.supprimer_p_de_case(particules_[i],j);
-        cases.ajouter_p_a_case(particules_[i],j+1);
+      if (not particules_[i]->est_sortie()) {
+        if (cases.case_de_abs(acc.pos_en_abs(particules_[i])) != j) {
+          cases.supprimer_p_de_case(particules_[i],j);
+          cases.ajouter_p_a_case(particules_[i],j+1);
+        }
       }
 
       ++i;

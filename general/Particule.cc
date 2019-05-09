@@ -68,7 +68,7 @@ void Particule::ajouter_force_inter_particulaire(Particule const& p) {
 	double d=r.norme();
 	if (d!=0) {
 		double g=gamma();
-		F_ -= q_*q_/(4*M_PI*e_0*d*d*d*g*g)*r*1e+10;
+		F_ -= q_*q_/(4*M_PI*e_0*d*d*d*g*g)*r*0;
 	}
 }
 

@@ -139,11 +139,11 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
 	break;
 
   case Qt::Key_P:
-    vitesse_temps *= 1.6162;
+    evo_par_affichage *= 2;
     break;
 
   case Qt::Key_O:
-    vitesse_temps /= 1.6162;
+    if (evo_par_affichage > 1) evo_par_affichage /= 2;
     break;
   };
 
@@ -155,10 +155,12 @@ void GLWidget::timerEvent(QTimerEvent* event)
 {
   Q_UNUSED(event);
 
-  //double dt = vitesse_temps * 1e-10;
-  double dt = chronometre.restart() * 1e-12 * vitesse_temps;
+  //double dt = 1e-10;
+  double dt = chronometre.restart() * 1e-12;
 
-  acc_->evolue(dt);
+  for (size_t i(0); i<evo_par_affichage; ++i) {
+    acc_->evolue(dt);
+  }
 
   update();
 }
@@ -181,9 +183,10 @@ void GLWidget::pause()
 //METHODES POUR CONSTRUIRE ACCELERATEUR
 
 void GLWidget::ajouter_mailleFODO(Vecteur3D const& entree, Vecteur3D const& sortie) {
+
   double d = (sortie-entree).norme();
   if (not est_zero(d)) {
-    acc_->ajouter_el(new MailleFODO(entree,sortie,0.3,1.2,0.15*d));
+    acc_->ajouter_el(new MailleFODO(entree,sortie,0.3,1.2,0.25*d));
   } else {Erreur err{"Entree=sortie", 6};
   throw err;}
   /*
@@ -214,6 +217,10 @@ void GLWidget::ajouter_structure_P10() {
 
 	ajouter_mailleFODO(Vecteur3D(-2,3,0),Vecteur3D(2,3,0));
 	ajouter_dipole(Vecteur3D(2,3,0),Vecteur3D(3,2,0));
+}
+
+void GLWidget::construire_polygone(size_t n, double R) {
+  acc_->construire_polygone(n,R);
 }
 
 void GLWidget::souder_accelerateur() {
