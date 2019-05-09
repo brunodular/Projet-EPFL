@@ -3,7 +3,6 @@
 #include "Dessinable.h"
 #include "cases.h"
 #include <vector>
-#include <memory>
 #include "Element.h"
 
 //=======================================================================

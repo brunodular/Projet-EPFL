@@ -1,9 +1,6 @@
 #pragma once
-#include <vector>
 #include <iostream>
-#include <memory>
 #include "Element.h"
-#include "Dessinable.h"
 #include "Faisceau.h"
 
 class Accelerateur : public Dessinable {
