@@ -8,9 +8,9 @@ using namespace std;
 
 //Constructeur
 Accelerateur::Accelerateur (Collection_F const& f, Collection_E const& e, SupportADessin* support)
-  : Dessinable(support), faisceaux_(f), elements_(e), longueur_(0.0) {}
+  : Dessinable(support), faisceaux_(f), elements_(e), longueur_(0.0), cases_(NB_CASES) {}
 
-Accelerateur::Accelerateur(SupportADessin* support) : Dessinable(support), longueur_(0.0) {}
+Accelerateur::Accelerateur(SupportADessin* support) : Dessinable(support), longueur_(0.0), cases_(NB_CASES) {}
 
 //Getters
 Collection_E Accelerateur::elements() const {
@@ -112,10 +112,21 @@ Vecteur3D Accelerateur::abs_en_pos(double x) const {
   return elements_[i]->abs_en_pos(x / elements_[i]->longueur());
 }
 
+Abs Accelerateur::pos_en_abs(p_Particule const& p) const {
+  size_t num_element(0);
+  while (elements_[num_element]->pos_e() != p->element_courant()->pos_e()) ++num_element;
+
+  double abs(0);
+  for (size_t i(0); i<num_element; ++i) abs += elements_[i]->longueur();
+  abs += p->element_courant()->pos_en_abs(p);
+  abs /= longueur_;
+  return abs;
+}
+
 void Accelerateur::initialiser_particules() {
   if (elements_.size() != 0) {
 	  for (auto& f : faisceaux_) {
-		  f->initialiser_particules(*this);
+		  f->initialiser_particules(*this,cases_);
     }
   }
 }
@@ -149,7 +160,7 @@ void Accelerateur::supprimer_faisceau_par(size_t i, size_t j) {
 
 void Accelerateur::evolue(double dt) {
   for (auto& f : faisceaux_) {
-	f->evolue(dt);
+    f->evolue(*this,cases_,dt);
   }
 }
 

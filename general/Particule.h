@@ -20,6 +20,7 @@ private:
   double q_;
   Vecteur3D F_;	//Vecteur force
   Element* element_courant_ = nullptr; //élément dans lequel se trouve la particule
+  size_t case_courante_ = 0;
 
 public:
   //Constructeur
@@ -35,11 +36,15 @@ public:
   Element* element_courant() const;
   double E() const;
   double gamma() const;
+  size_t case_courante() const;
 
   //setters
   void element_courant(Element* new_element);
+  void case_courante(size_t i);
 
   //Méthodes
+
+  void ajouter_force_inter_particulaire(Particule const&);
 
   void ajouter_f_magn(Vecteur3D const&,double);
 

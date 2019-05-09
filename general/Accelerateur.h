@@ -6,18 +6,12 @@
 #include "Dessinable.h"
 #include "Faisceau.h"
 
-typedef Particule* p_Particule;	//On a choisi de mettre des pointeurs afin d'optimiser la simulation et puis dans la cas ou l'on voudrait cree dans sous-classes de Particule afin d'utiliser le polymorphisme
-typedef Element* p_Element;		//On a choisi de mettre des pointeurs a la C a la place de unique_ptr car les elements sont pointe par d'autres pointeurs (pointeur sur l'element courant et suivant par les Particules et les Elements respectivement cf. definition de la classe Element et Particule)
-typedef Faisceau* p_Faisceau;		//pour faciliter la comprehension du code et pour que ce soit plus clair
-
-typedef std::vector<p_Element> Collection_E;
-typedef std::vector<p_Faisceau> Collection_F;
-
 class Accelerateur : public Dessinable {
 	private:
 		Collection_F faisceaux_;		//Pointeurs pour le polymorphisme et c'est moins risque d'utliser des unique_ptr lors d'oubli
 		Collection_E elements_;
     double longueur_;
+    Cases cases_;
 
 	public:
 		//Constructeurs
@@ -63,6 +57,7 @@ class Accelerateur : public Dessinable {
 
     //Abscisse curviligne
     Vecteur3D abs_en_pos(double x) const;
+    Abs pos_en_abs(p_Particule const&) const;
 
 		void initialiser_particules(); //Initialise les élément_courant_ des Particules
 

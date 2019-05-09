@@ -1,15 +1,10 @@
 #pragma once
 
 #include "Dessinable.h"
-#include "Particule.h"
+#include "cases.h"
 #include <vector>
 #include <memory>
 #include "Element.h"
-
-typedef Particule* p_Particule;
-typedef Element* p_Element;
-
-typedef std::vector<p_Particule> Collection_P;
 
 //=======================================================================
 
@@ -73,12 +68,12 @@ class Faisceau : public Dessinable {
 		void supprimer_par(size_t i);		//supprime i-eme particules du faisceau
 		void supprimer_par();
 		void ajouter_par(p_Particule const&);
-		void initialiser_particules(Accelerateur const& acc);
+		void initialiser_particules(Accelerateur const& acc, Cases& cases);
 
 		//DESSINER
 		virtual void dessine() override { support_->dessine(*this); }
 		virtual void dessine_particule() const;
 
 		//EVOLUTION
-		void evolue(double);
+		void evolue(Accelerateur const&, Cases&, double);
 };

@@ -5,8 +5,6 @@
 #include <iomanip>
 using namespace std;
 
-constexpr uint MARGE(25);
-
 //========================================================================
 
 //Constructeur
@@ -32,9 +30,13 @@ double Particule::q() const {return q_;}
 
 Element* Particule::element_courant() const {return element_courant_;}
 
+size_t Particule::case_courante() const {return case_courante_;}
+
 //setters
 
 void Particule::element_courant(Element* new_element) {element_courant_ = new_element;}
+
+void Particule::case_courante(size_t i) {case_courante_ = i;}
 
 //=======================================================================
 
@@ -61,6 +63,16 @@ void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
 
   }
 }
+
+void Particule::ajouter_force_inter_particulaire(Particule const& p) {
+	Vecteur3D r(pos_-p.pos());
+	double d=r.norme();
+	if (d!=0) {
+		double g=gamma();
+		F_ -= q_*q_/(4*M_PI*e_0*d*d*d*g*g)*r;
+	}
+}
+
 
 void Particule::bouger(double dt) {
   Vecteur3D a = (1/(gamma()*m_kg_))*F_;

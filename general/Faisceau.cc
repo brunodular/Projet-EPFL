@@ -1,5 +1,6 @@
 #include "Accelerateur.h"
 #include "Faisceau.h"
+#include "cases.h"
 #include <cmath>
 #include <vector>
 using namespace std;
@@ -233,34 +234,53 @@ void Faisceau::ajouter_par(p_Particule const& par) {
 	particules_.push_back(par);
 }
 
-void Faisceau::initialiser_particules(Accelerateur const& acc) {
+void Faisceau::initialiser_particules(Accelerateur const& acc, Cases& cases) {
   size_t n((acc.elements()).size());
   for (auto& p : particules_) {
     size_t i(0);
     while(i< n and not acc.elements()[i]->est_dans(*p)) {
       ++i;
     }
-    if (i < n) p->element_courant(acc.elements()[i]);
+    if (i < n) {
+      p->element_courant(acc.elements()[i]);
+      cases.ajouter_p_a_case(p, cases.case_de_abs(acc.pos_en_abs(p)));
+    }
   }
 }
 
 //EVOLUTION
-void Faisceau::evolue(double dt) {
+void Faisceau::evolue(Accelerateur const& acc, Cases& cases, double dt) {
   size_t i(0);
   while(i<nombre_particules()) {
     if (not particules_[i]->est_sortie()) { //vérifie si la particule est toujours dans l'accélérateur
 
       particules_[i]->ajouter_f_magn((particules_[i]->element_courant())->B(*particules_[i]),dt); //On ajoute à la particule p le champ magnétique produit par l'élément dans lequel elle se trouve.
 
+      size_t j(particules_[i]->case_courante());
+
+      //Ajouter les forces inter-particulaires au moyen de la technique d'optimisation des plus proches voisins
+      size_t k(j-1); if (j == 0) k = cases.nombre();
+      for (auto const& p : cases.case_num(k)) particules_[i]->ajouter_force_inter_particulaire(*p);
+      for (auto const& p : cases.case_num(j)) {
+        if (p != particules_[i]) {
+          particules_[i]->ajouter_force_inter_particulaire(*p);
+        }
+      }
+      for (auto const& p : cases.case_num(j+1)) particules_[i]->ajouter_force_inter_particulaire(*p);
+      //fin de l'ajout des forces initialiser_particulaires
+
       particules_[i]->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
 
-      if (particules_[i]->element_courant()->passe_au_suivant(*particules_[i]))
-      {
-        cout << "Je suis passé dans :" << endl;
-        particules_[i]->element_courant()->affiche(cout); //Mise à jour de l'élément courant de la particule p.
-      }
-      ++i;
 
+      if (particules_[i]->element_courant()->passe_au_suivant(*particules_[i]))
+      ; //Mise à jour de l'élément courant de la particule p.
+
+      if (cases.case_de_abs(acc.pos_en_abs(particules_[i])) != j) {
+        cases.supprimer_p_de_case(particules_[i],j);
+        cases.ajouter_p_a_case(particules_[i],j+1);
+      }
+
+      ++i;
   } else {
 		supprimer_par(i);
 	}
