@@ -16,7 +16,7 @@ void VueOpenGL::dessine(Particule const& p) {
 	matrice.translate((p.pos()).x(), (p.pos()).y(), (p.pos()).z());
 	matrice.scale(0.02);
 
-	dessineSphere(matrice, 1.0, 1.0 ,0.0);
+	dessineSphere(matrice, 1.0, 1.0, 1e+11*p.F().norme());
 };
 
 void VueOpenGL::dessine(Accelerateur const& acc) {
@@ -30,6 +30,17 @@ void VueOpenGL::dessine(SectionDroite const& el) {
 
 void VueOpenGL::dessine(Quadrupole const& el) {
   dessineCylindre(el.pos_e(),el.pos_s(),el.r_section(),0.27,0.86,1.0);
+}
+
+void VueOpenGL::dessine(MailleFODO const& ma) {
+  //1er quadrupole
+  dessineCylindre(ma.pos_e(),ma.pos_e_sect_1(),ma.r_section(),0.27,0.86,1.0);
+  //1ere section droite
+  dessineCylindre(ma.pos_e_sect_1(),ma.pos_e_quad_2(),ma.r_section(),1.0,0.56,0.27);
+  //second quadrupole
+  dessineCylindre(ma.pos_e_quad_2(),ma.pos_e_sect_2(),ma.r_section(),0.27,0.86,1.0);
+  //seconde section droite
+  dessineCylindre(ma.pos_e_sect_2(),ma.pos_s(),ma.r_section(),1.0,0.56,0.27);
 }
 
 void VueOpenGL::dessine(Faisceau const& f) {
@@ -221,7 +232,7 @@ void VueOpenGL::dessineCylindre(Vecteur3D const& base, Vecteur3D const& end, dou
   const double k(2*M_PI/slices);
 
   Vecteur3D u = ~(end-base);
-  Vecteur3D v = r*u.orthogonal();
+  Vecteur3D v = r*~(u.orthogonal());
   Vecteur3D w = u^v;
 
   prog.setUniformValue("vue_modele", matrice_vue * matrice);
@@ -266,7 +277,7 @@ void VueOpenGL::dessineTore(Vecteur3D const& centre, Vecteur3D const& base, Vect
   for (int i(0); i < slices; ++i) {
     glBegin(GL_QUAD_STRIP);
     prog.setAttributeValue(CouleurId, rouge, vert, bleu);
-    for (int j(0); j <= ceil(proportion*stacks); ++j) {
+    for (int j(0); j <= ceil(proportion*stacks); ++j) { // <= pour recouvrir
       for (int k(1); k >= 0; --k) {
         double s((i+k) % slices + 0.5);
         double t(j % stacks + stacks/2);

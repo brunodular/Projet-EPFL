@@ -44,6 +44,8 @@ public:
 
   //Méthodes
 
+  void supprimer_forces();
+
   void ajouter_force_inter_particulaire(Particule const&);
 
   void ajouter_f_magn(Vecteur3D const&,double);

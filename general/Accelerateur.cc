@@ -2,6 +2,7 @@
 #include "Support_a_dessin.h"
 #include <string>
 #include <vector>
+#include <cmath>
 using namespace std;
 
 //=======================================================================
@@ -98,6 +99,8 @@ void Accelerateur::souder_accelerateur() {
       longueur_ += elements_[i]->longueur();
     }
     elements_[0]->el_prec(elements_[n-1]);
+    elements_[0]->el_suiv(elements_[1]);
+    longueur_ += elements_[0]->longueur();
   }
 }
 
@@ -123,12 +126,30 @@ Abs Accelerateur::pos_en_abs(p_Particule const& p) const {
   return abs;
 }
 
+
 void Accelerateur::initialiser_particules() {
   if (elements_.size() != 0) {
 	  for (auto& f : faisceaux_) {
 		  f->initialiser_particules(*this,cases_);
     }
   }
+}
+
+//MEGA-Constructeurs
+void Accelerateur::construire_polygone(size_t n, double R) {
+  double theta(2*M_PI/n); //angle au centre(de courbure) intercepte par un dipole
+  double rho(M_PI/10); //angle au centre(origine) intercepte par un dipole
+  double d(2*R*sin(rho/2)); //distance entre les entrees et sorties des dipoles
+  double k(2*sin(theta/2)/d); //courbure des dipoles
+
+  for (size_t i(0); i<n; ++i) {
+    double angle_e(i*theta - theta/2 - 0.5*rho), angle_s(i*theta - theta/2 + 0.5*rho), angle_e2((i+1)*theta - theta/2 - 0.5*rho);
+    Vecteur3D pos_e(cos(angle_e),-sin(angle_e),0); Vecteur3D pos_s(cos(angle_s),-sin(angle_s),0); Vecteur3D pos_e2(cos(angle_e2),-sin(angle_e2),0);
+    ajouter_el(new Dipole(R*pos_e,R*pos_s,0.3,k,5.89158));
+    ajouter_el(new MailleFODO(R*pos_s,R*pos_e2,0.3,1.2,0.9));
+    //ajouter_el(new SectionDroite(R*Vecteur3D(cos(angle_s),sin(angle_s),0),R*Vecteur3D(cos(angle_e2),sin(angle_e2),0),0.3));
+  }
+  souder_accelerateur();
 }
 
 //Supprimer

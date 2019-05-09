@@ -24,10 +24,9 @@ Element::Element(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,SupportADessin
   }
 
 //Getters
-//Element* Element::el_suiv() const {
-//  Element* el(el_suiv_);
-//  return el;
-//}
+Element* Element::el_suiv() const {
+  return el_suiv_;
+}
 Vecteur3D Element::pos_e() const {
   return pos_e_;
 }
@@ -221,3 +220,33 @@ Vecteur3D Quadrupole::B(Particule const& p) const {
 }
 
 //=======================================================================
+
+//Class MailleFODO
+
+MailleFODO::MailleFODO(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double b,double l,SupportADessin* support) : ElementDroit(pos_e,pos_s,r_section,support), b_(b), longueur_quad_(l), longueur_sect_(0.5*longueur_-l) {}
+
+double MailleFODO::longueur_sect() const {return longueur_sect_;}
+double MailleFODO::longueur_quad() const {return longueur_quad_;}
+Vecteur3D MailleFODO::pos_e_sect_1() const {return pos_e_ + longueur_quad_*dir_;}
+Vecteur3D MailleFODO::pos_e_quad_2() const {return pos_e_ + (longueur_quad_+longueur_sect_)*dir_;}
+Vecteur3D MailleFODO::pos_e_sect_2() const {return pos_e_ + (2*longueur_quad_+longueur_sect_)*dir_;}
+
+void MailleFODO::affiche(std::ostream& sortie) const {
+  sortie << "Maille FODO" << endl;
+  ElementDroit::affiche(sortie);
+  sortie << setw(MARGE) << "  longueur des quadrupôles : " << longueur_quad_ << endl;
+  sortie << setw(MARGE) << "  intensité des aimants : " << b_ << endl;
+}
+
+Vecteur3D MailleFODO::B(Particule const& p) const {
+  Vecteur3D X(p.pos() - pos_e_);
+  double abscisse(X*dir_);
+  if (abscisse < longueur_quad_) {
+    Vecteur3D Y(X-(X*dir_)*dir_); //calcul des coordonnées locales au premier quadrupôle
+    return b_*((Y*(e3^dir_))*e3 + (X.z() * (e3^dir_))); //calcul du champ magnétique
+  } else if (abscisse > longueur_quad_ + longueur_sect_ and abscisse < longueur_ - longueur_sect_) {
+    X = p.pos() - (pos_e_+dir_*(0.5*longueur_));
+    Vecteur3D Y(X-(X*dir_)*dir_); //calcul des coordonnées locales au second quadrupôle
+    return -b_*((Y*(e3^dir_))*e3 + (X.z() * (e3^dir_))); //calcul du champ magnétique
+  } else return Vecteur3D();
+}
