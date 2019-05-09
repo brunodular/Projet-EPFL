@@ -23,7 +23,6 @@ private:
   double q_;
   Vecteur3D F_;	//Vecteur force
   p_Element element_courant_; //élément dans lequel se trouve la particule
-  Case* case_courante_;
 
 public:
   //Constructeur
@@ -37,14 +36,12 @@ public:
   double m() const;
   double q() const;
   Element* element_courant() const;
-  Case* case_courante() const;
   double E() const;
   double gamma() const;
 
   //setters
   void element_courant(p_Element new_element);
   void ajouter_dans_case_courante(Accelerateur const&);
-  void case_courante(p_Case cas);
   
   //Méthodes
 

@@ -131,13 +131,6 @@ void Accelerateur::initialiser_particules() {
 	}
   }
   initialiser_longueur();
-  if (cases_.size()!=0) {
-	  for (auto& f : faisceaux_) {
-		  for (auto& p : f->particules()) {
-			  p->ajouter_dans_case_courante(*this);
-		  }
-	  }
-  }
 }
 
 
@@ -145,15 +138,9 @@ void Accelerateur::initialiser_cases() {
 	if (longueur_!=0) {
 		for (size_t i(0); i<NB_CASES; ++i) {
 			double j=i;
-			cases_.push_back(new Case(j/NB_CASES,(j+1)/NB_CASES, this));
-			if (i-1>=0) {
-				cases_[i-1]->case_suiv(cases_[i]);
-				cases_[i]->case_preced(cases_[i-1]);
-			}
+			cases_.push_back(new Case(j/NB_CASES,(j+1)/NB_CASES));
 			cases_[i]->set_support(support_);
 		}
-		cases_.front()->case_preced(cases_.back());
-		cases_.back()->case_suiv(cases_.front());
 	}
 }
 
@@ -220,12 +207,12 @@ Abs Accelerateur::pos_en_abs_element(p_Element const& el) const {
 		x+=elements_[i]->longueur();
 		++i;
 	}
-	return x/longueur_;
+	return x;
 }
 
-Abs Accelerateur::pos_en_abs(Particule const& p) const {
-	if (not (p.element_courant()==nullptr)) {
-		return (pos_en_abs_element(p.element_courant())+p.element_courant()->pos_en_abs(p));
+Abs Accelerateur::pos_en_abs(p_Particule const& p) const {
+	if (not (p.element_courant()==nullptr) and longueur_!=0) {
+		return ((pos_en_abs_element(p->element_courant())+p->element_courant()->pos_en_abs(p))/longueur_);
 	}
 }
 
@@ -243,10 +230,25 @@ void Accelerateur::initialiser_longueur() {
 
 void Accelerateur::evolue(double dt) {
   if (!faisceaux_.empty() and !cases_.empty()) {
+	  evolue_inter_particulaire();
 	  for (auto& f : faisceaux_) {
-		  f->evolue(dt, *this);
+		  f->evolue(dt, this);
 	  }
   }	
+}
+
+void Accelerateur::evolue_inter_particulaire() {
+	for (auto const& cas: cases_) {
+		  for (auto const& f : faisceaux_) {
+			  for (auto const& p1 : f->particules()) {
+				  for (auto const& p : f->particules()) {
+					  if((not p->est_sortie()) and pos_en_abs(p->pos())>cas->abs_e() and pos_en_abs(p->pos())<cas->abs_s()) {
+						  p1->ajouter_force_inter_particulaire(*p);
+					   }
+				  }
+			  }
+		  }
+	  }
 }
 
 //=======================================================================

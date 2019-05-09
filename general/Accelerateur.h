@@ -63,11 +63,11 @@ class Accelerateur : public Dessinable {
 		//CONSTRUIRE
 		void souder_accelerateur(); //Cette méthode soude tous les éléments entre eux en settant l'élément suivant el_suiv_ de chaque élément comme pointeur vers l'élément qui le suit dans le vecteur elements_. Cette méthode suppose que les élément ont étés ajoutés dans l'ordre attendu.
 
-		void initialiser_particules(); //Initialise les élément_courant_ et els case_courante_ des Particules
+		void initialiser_particules(); //Initialise les élément_courant_
 		
 			//Abscisse curviligne
 		Vecteur3D abs_en_pos(double x) const;
-		Abs pos_en_abs(Particule const&) const;
+		Abs pos_en_abs(p_Particule const&) const;
 
 			//Supprimer
 		void supprimer_faisceau(size_t i);
@@ -80,6 +80,7 @@ class Accelerateur : public Dessinable {
 
 		//EVOLUTION
 		void evolue(double dt);
+		void evolue_inter_particulaire();
 
 		//DESSINER
 		virtual void dessine() override { if(support_!=nullptr) support_->dessine(*this); }

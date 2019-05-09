@@ -77,5 +77,5 @@ class Faisceau : public Dessinable {
 		virtual void dessine_particule() const;
 		
 		//EVOLUTION
-		void evolue(double, Accelerateur const&);
+		void evolue(double, Accelerateur* const&);
 };

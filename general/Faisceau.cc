@@ -242,20 +242,14 @@ void Faisceau::initialiser_particules(p_Element const& el) {
 //=======================================================================
 
 //EVOLUTION
-void Faisceau::evolue(double dt, Accelerateur const& acc) {
+void Faisceau::evolue(double dt, Accelerateur* const& acc) {
   size_t i(0);
   while(i<nombre_particules()) {
     if ((not particules_[i]->est_sortie())) { //vérifie si la particule est toujours dans l'accélérateur
 	  
-	  for (auto & p: particules_[i]->case_courante()->particules()) {
-		  particules_[i]->ajouter_force_inter_particulaire(*p);
-	  }
-	  
       particules_[i]->ajouter_f_magn((particules_[i]->element_courant())->B(*particules_[i]),dt); //On ajoute à la particule p le champ magnétique produit par l'élément dans lequel elle se trouve.
 
       particules_[i]->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
-      
-      particules_[i]->case_courante()->passe_au_suivant(*particules_[i]);
       
       particules_[i]->element_courant()->passe_au_suivant(*particules_[i]); //Mise à jour de l'élément courant de la particule p.
       
@@ -269,6 +263,14 @@ void Faisceau::evolue(double dt, Accelerateur const& acc) {
 		//cout << nombre_particules() << endl;
 	}
   }
+}
+
+void Faisceau::force_inter_particulaire(double a, double b) {
+	for (auto const& p : particules_) {
+		if (acc->pos_en_abs(*p)>a and acc->pos_en_abs(*p)<=b) {
+			  particules[i]->ajouter_force_inter_particulaire(*p);
+		}
+	}
 }
 
 //=======================================================================

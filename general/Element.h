@@ -77,7 +77,7 @@ public:
   virtual double coord_orthogonale_vitesse(Particule*) const override;
   
   virtual Vecteur3D abs_en_pos(double x) const override;
-  virtual Abs pos_en_abs(Particule const&) const override;
+  virtual Abs pos_en_abs(p_Particule const&) const override;
 
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }
@@ -105,7 +105,7 @@ public:
   virtual double coord_orthogonale_vitesse(Particule*) const override;
   
   virtual Vecteur3D abs_en_pos(double x) const override;
-  virtual Abs pos_en_abs(Particule const&) const override;
+  virtual Abs pos_en_abs(p_Particule const&) const override;
 
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }
