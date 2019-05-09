@@ -103,3 +103,13 @@
 
 - Probleme: * mauvaise initialisation du pointeur vers la case courante dans la classe Particule a regle
 * pas vraiment d'optimisation en fait ^^
+
+-- 31/04 --
+
+- Implémentation de la fonction pos_en_abs qui prend un pointeur vers une particule et retourne son abscisse curviligne en fonction de la géométrie de l'accélérateur.
+
+- Mise en place de la circulation des faisceaux dans les deux sens: c'est-à-dire dans le sens de la montre et dans l'autre.
+
+-- 8/04 --
+
+- Nouvelle conception des cases: ils ne correspondent pas à une division concrete de l'accélérateur en lamelle circulaire, mais la classe case est une collection d'ensemble de pointeurs vers des particules, et qui possède 
