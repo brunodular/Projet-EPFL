@@ -181,7 +181,13 @@ void GLWidget::pause()
 //METHODES POUR CONSTRUIRE ACCELERATEUR
 
 void GLWidget::ajouter_mailleFODO(Vecteur3D const& entree, Vecteur3D const& sortie) {
-	Vecteur3D v=~(sortie-entree);
+  double d = (sortie-entree).norme();
+  if (not est_zero(d)) {
+    acc_->ajouter_el(new MailleFODO(entree,sortie,0.3,1.2,0.15*d));
+  } else {Erreur err{"Entree=sortie", 6};
+  throw err;}
+  /*
+  Vecteur3D v=~(sortie-entree);
 	if (!est_zero(v.norme2())) {
 		acc_->ajouter_el(new Quadrupole(entree,Vecteur3D(entree.x()+v.x(),entree.y()+v.y(),0),0.3,1.2));
 		acc_->ajouter_el(new SectionDroite(Vecteur3D(entree.x()+v.x(),entree.y()+v.y(),0),Vecteur3D(entree.x()+2*v.x(),entree.y()+2*v.y(),0),0.3));
@@ -189,6 +195,7 @@ void GLWidget::ajouter_mailleFODO(Vecteur3D const& entree, Vecteur3D const& sort
 		acc_->ajouter_el(new SectionDroite(Vecteur3D(entree.x()+3*v.x(),entree.y()+3*v.y(),0),sortie,0.3));
 	} else {Erreur err{"Entree=sortie", 6};
 		throw err;}
+    */
 }
 
 void GLWidget::ajouter_dipole(Vecteur3D const& entree, Vecteur3D const& sortie) {

@@ -36,3 +36,7 @@ void Vue_Texte::dessine(Quadrupole const& el) {
 void Vue_Texte::dessine(Faisceau const& f) {
 	f.affiche(flot_);
 }
+
+void Vue_Texte::dessine(MailleFODO const& m) {
+  m.affiche(flot_);
+}

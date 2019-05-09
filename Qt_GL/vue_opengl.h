@@ -23,6 +23,7 @@ class VueOpenGL : public SupportADessin {
   virtual void dessine(ElementDroit const&) override {}
   virtual void dessine(Quadrupole const&) override;
   virtual void dessine(Faisceau const&) override;
+  virtual void dessine(MailleFODO const&) override;
 
   // méthodes de (ré-)initialisation
   void init();
@@ -35,7 +36,7 @@ class VueOpenGL : public SupportADessin {
   // Méthodes set
   void translate(double x, double y, double z);
   void rotate(double angle, double dir_x, double dir_y, double dir_z);
-  
+
   // méthode utilitaire offerte pour simplifier
   void dessineAxes(QMatrix4x4 const& point_de_vue, bool en_couleur = true);
   void dessineCube(QMatrix4x4 const& point_de_vue = QMatrix4x4() );

@@ -159,3 +159,25 @@ public:
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }
 };
+
+class MailleFODO : public ElementDroit {
+private:
+  const double b_; //intensité des aimants des quadrupôles
+  const double longueur_sect_; //longueurs des sections droites
+  const double longueur_quad_; //longueurs des quadrupôles
+
+public:
+  MailleFODO(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double b,double l,SupportADessin* support = nullptr);
+
+  double longueur_sect() const;
+  double longueur_quad() const;
+  Vecteur3D pos_e_sect_1() const;
+  Vecteur3D pos_e_quad_2() const;
+  Vecteur3D pos_e_sect_2() const;
+
+  virtual void affiche(std::ostream& sortie) const override;
+  virtual Vecteur3D B(Particule const&) const override;
+
+  //DESSINER
+  virtual void dessine() override {support_->dessine(*this);}
+};

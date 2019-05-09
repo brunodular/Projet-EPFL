@@ -50,7 +50,6 @@ double Particule::gamma() const {
   return 1/sqrt(1-(v_.norme2()/(c*c)));
 }
 
-//Etrange : la ligne de correction de la force fait une erreur de type char const*...
 void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
   if (!est_zero(dt) and !(est_zero(B.norme2()))) {
     //cout << "AJOUT DE LA FORCE MAGNETIQUE : " << endl;
@@ -69,22 +68,22 @@ void Particule::ajouter_force_inter_particulaire(Particule const& p) {
 	double d=r.norme();
 	if (d!=0) {
 		double g=gamma();
-		F_ -= q_*q_/(4*M_PI*e_0*d*d*d*g*g)*r*1e+13;
+		F_ -= q_*q_/(4*M_PI*e_0*d*d*d*g*g)*r*1e+10;
 	}
 }
 
+void Particule::supprimer_forces() {
+  F_ = Vecteur3D();
+}
 
 void Particule::bouger(double dt) {
   Vecteur3D a = (1/(gamma()*m_kg_))*F_;
   v_ = v_ + dt*a;
   pos_ += dt*v_;
-  F_ = Vecteur3D();
 }
 
 bool Particule::est_sortie() {
   if (element_courant_ == nullptr or element_courant_->heurte_bord(*this)) {
-    if (element_courant_ == nullptr) cout << "Je n'ai pas d'élément..." << endl;
-    else cout << "J'ai heurté le bord" << endl;
     element_courant_ = nullptr;
     return true;
   } else return false;
