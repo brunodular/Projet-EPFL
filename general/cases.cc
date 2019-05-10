@@ -4,6 +4,16 @@ using namespace std;
 
 Cases::Cases(uint nombre) : cases_(vector<Set_P> (nombre)), eps_(1 / nombre), nombre_(nombre) {}
 
+Cases::~Cases() {
+	for (auto& cas : cases_) {
+		for (auto& p : cas) {
+			delete p;
+		}
+		cas.clear();
+	}
+	cases_.clear();
+}
+
 void Cases::ajouter_p_a_case(p_Particule const& p, size_t i) {
   if (i == cases_.size()) i = 0;
   cases_[i].insert(p);

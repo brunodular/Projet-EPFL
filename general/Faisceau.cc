@@ -148,7 +148,8 @@ ostream& Faisceau::affiche_part(std::ostream& sortie) const {
 		sortie << " :" << endl;
 
 		for (auto const& par : particules_) {
-			par->dessine();
+			if (not (par==nullptr))par->dessine();
+			if (not(par->element_courant()==nullptr))par->element_courant()->dessine();
 		}
 
 	} else {sortie << "Le faisceau ne contient pas de particules." << endl;}

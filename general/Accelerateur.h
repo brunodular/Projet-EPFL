@@ -7,31 +7,20 @@ class Accelerateur : public Dessinable {
 	private:
 		Collection_F faisceaux_;		//Pointeurs pour le polymorphisme et c'est moins risque d'utliser des unique_ptr lors d'oubli
 		Collection_E elements_;
-    double longueur_;
-    Cases cases_;
+		double longueur_;
+		Cases cases_;
 
 	public:
 		//Constructeurs
 		Accelerateur (Collection_F const&, Collection_E const&, SupportADessin* support); //pas besoin de mettre les vector par defaut car les vectors sont automatiquement initialisés au vector vide
-
-
 		Accelerateur(SupportADessin* support);
-
+		
 		Accelerateur (Accelerateur const&)=delete;
 		Accelerateur& operator=(Accelerateur)=delete;
 
 		//Destructeur
-
-		~Accelerateur () {
-			for (auto el : elements_) {
-				delete el;
-			}
-			elements_.clear();
-			for (auto f : faisceaux_) {
-				delete f;
-			}
-			faisceaux_.clear();
-		}
+		
+		~Accelerateur ();
 
 		//Getters
 		Collection_E elements() const;
@@ -51,6 +40,8 @@ class Accelerateur : public Dessinable {
 
     //MEGA-Constructeurs
     void construire_polygone(size_t n, double R);
+    void construire_structure_P10();
+    void ajouter_mailleFODO(Vecteur3D const& entree, Vecteur3D const& sortie);
 
 		//CONSTRUIRE
 		void souder_accelerateur(); //Cette méthode soude tous les éléments entre eux en settant l'élément suivant/précédent de chaque élément comme pointeur vers l'élément qui le suit/précède dans le vecteur elements_. Cette méthode suppose que les élément ont étés ajoutés dans l'ordre attendu.

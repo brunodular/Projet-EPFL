@@ -16,11 +16,7 @@ public:
   virtual ~GLWidget() {}
 
 	// Methodes qui construit l'accelerateur
-  void ajouter_mailleFODO(Vecteur3D const& entree, Vecteur3D const& sortie);
-  void ajouter_dipole(Vecteur3D const& entree, Vecteur3D const& sortie);
   void ajouter_structure_P10();
-  void souder_accelerateur();
-  void initialiser_particules();
   void ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl);
   void construire_polygone(size_t n, double R);
 

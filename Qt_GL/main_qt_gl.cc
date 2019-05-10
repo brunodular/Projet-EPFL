@@ -10,15 +10,11 @@ int main(int argc, char* argv[])
 
     GLWidget w(nullptr, new Accelerateur (nullptr));
 
-    w.construire_polygone(4,4.5);
+    w.construire_polygone(13,2.2);
 
   	//w.ajouter_structure_P10();		//construit la structure de l'exercice P10
 
-    //w.souder_accelerateur();
-
     w.ajouter_faisceau(p_Particule (new Particule(Vecteur3D(0, 0, 0), Vecteur3D(0,-1,0), 2, 0.938272, e)), 0.1, 1000, 10, 0.15);
-
-  	w.initialiser_particules();
 
   	w.show();
 

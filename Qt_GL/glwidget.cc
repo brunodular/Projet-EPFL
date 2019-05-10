@@ -182,55 +182,15 @@ void GLWidget::pause()
 
 //METHODES POUR CONSTRUIRE ACCELERATEUR
 
-void GLWidget::ajouter_mailleFODO(Vecteur3D const& entree, Vecteur3D const& sortie) {
-
-  double d = (sortie-entree).norme();
-  if (not est_zero(d)) {
-    acc_->ajouter_el(new MailleFODO(entree,sortie,0.3,1.2,0.25*d));
-  } else {Erreur err{"Entree=sortie", 6};
-  throw err;}
-  /*
-  Vecteur3D v=~(sortie-entree);
-	if (!est_zero(v.norme2())) {
-		acc_->ajouter_el(new Quadrupole(entree,Vecteur3D(entree.x()+v.x(),entree.y()+v.y(),0),0.3,1.2));
-		acc_->ajouter_el(new SectionDroite(Vecteur3D(entree.x()+v.x(),entree.y()+v.y(),0),Vecteur3D(entree.x()+2*v.x(),entree.y()+2*v.y(),0),0.3));
-		acc_->ajouter_el(new Quadrupole(Vecteur3D(entree.x()+2*v.x(),entree.y()+2*v.y(),0),Vecteur3D(entree.x()+3*v.x(),entree.y()+3*v.y(),0),0.3,-1.2));
-		acc_->ajouter_el(new SectionDroite(Vecteur3D(entree.x()+3*v.x(),entree.y()+3*v.y(),0),sortie,0.3));
-	} else {Erreur err{"Entree=sortie", 6};
-		throw err;}
-    */
-}
-
-void GLWidget::ajouter_dipole(Vecteur3D const& entree, Vecteur3D const& sortie) {
-	acc_->ajouter_el(new Dipole(entree,sortie,0.3,1,5.89158));
-}
-
 void GLWidget::ajouter_structure_P10() {
-	ajouter_mailleFODO(Vecteur3D(3,2,0),Vecteur3D(3,-2,0));
-	ajouter_dipole(Vecteur3D(3,-2,0),Vecteur3D(2,-3,0));
-
-	ajouter_mailleFODO(Vecteur3D(2,-3,0),Vecteur3D(-2,-3,0));
-	ajouter_dipole(Vecteur3D(-2,-3,0),Vecteur3D(-3,-2,0));
-
-	ajouter_mailleFODO(Vecteur3D(-3,-2,0),Vecteur3D(-3,2,0));
-	ajouter_dipole(Vecteur3D(-3,2,0),Vecteur3D(-2,3,0));
-
-	ajouter_mailleFODO(Vecteur3D(-2,3,0),Vecteur3D(2,3,0));
-	ajouter_dipole(Vecteur3D(2,3,0),Vecteur3D(3,2,0));
+	acc_->construire_structure_P10();
 }
 
 void GLWidget::construire_polygone(size_t n, double R) {
   acc_->construire_polygone(n,R);
 }
 
-void GLWidget::souder_accelerateur() {
-	acc_->souder_accelerateur();
-}
-
-void GLWidget::initialiser_particules() {
-	acc_->initialiser_particules();
-}
-
 void GLWidget::ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl) {
 	acc_->ajouter_faisceau(p, x,  nombre, lambda, dl);
+	acc_->initialiser_particules();
 }

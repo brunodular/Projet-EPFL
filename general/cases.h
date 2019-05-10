@@ -14,6 +14,7 @@ private:
 
 public:
   Cases(uint nombre);
+  ~Cases();
   Cases(Cases const&) = delete;
   Cases& operator=(Cases const&) = delete;
 

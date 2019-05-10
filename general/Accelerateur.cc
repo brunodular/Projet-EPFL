@@ -13,6 +13,17 @@ Accelerateur::Accelerateur (Collection_F const& f, Collection_E const& e, Suppor
 
 Accelerateur::Accelerateur(SupportADessin* support) : Dessinable(support), longueur_(0.0), cases_(NB_CASES) {}
 
+Accelerateur::~Accelerateur() {
+	for (auto el : elements_) {
+		delete el;
+	}
+	elements_.clear();
+	for (auto f : faisceaux_) {
+		delete f;
+	}
+	faisceaux_.clear();
+}
+
 //Getters
 Collection_E Accelerateur::elements() const {
   return elements_;
@@ -138,7 +149,7 @@ void Accelerateur::initialiser_particules() {
 //MEGA-Constructeurs
 void Accelerateur::construire_polygone(size_t n, double R) {
   double theta(2*M_PI/n); //angle au centre(de courbure) intercepte par un dipole
-  double rho(M_PI/10); //angle au centre(origine) intercepte par un dipole
+  double rho(M_PI/30); //angle au centre(origine) intercepte par un dipole
   double d(2*R*sin(rho/2)); //distance entre les entrees et sorties des dipoles
   double k(2*sin(theta/2)/d); //courbure des dipoles
 
@@ -146,10 +157,44 @@ void Accelerateur::construire_polygone(size_t n, double R) {
     double angle_e(i*theta - theta/2 - 0.5*rho), angle_s(i*theta - theta/2 + 0.5*rho), angle_e2((i+1)*theta - theta/2 - 0.5*rho);
     Vecteur3D pos_e(cos(angle_e),-sin(angle_e),0); Vecteur3D pos_s(cos(angle_s),-sin(angle_s),0); Vecteur3D pos_e2(cos(angle_e2),-sin(angle_e2),0);
     ajouter_el(new Dipole(R*pos_e,R*pos_s,0.3,k,5.89158));
-    ajouter_el(new MailleFODO(R*pos_s,R*pos_e2,0.3,1.2,0.9));
+    ajouter_el(new MailleFODO(R*pos_s,R*pos_e2,0.3,0.8,0.9));
     //ajouter_el(new SectionDroite(R*Vecteur3D(cos(angle_s),sin(angle_s),0),R*Vecteur3D(cos(angle_e2),sin(angle_e2),0),0.3));
   }
   souder_accelerateur();
+}
+
+void Accelerateur::construire_structure_P10() {
+	ajouter_mailleFODO(Vecteur3D(3,2,0),Vecteur3D(3,-2,0));
+	ajouter_el(new Dipole(Vecteur3D(3,-2,0),Vecteur3D(2,-3,0),0.3,1,5.89158));
+
+	ajouter_mailleFODO(Vecteur3D(2,-3,0),Vecteur3D(-2,-3,0));
+	ajouter_el(new Dipole(Vecteur3D(-2,-3,0),Vecteur3D(-3,-2,0),0.3,1,5.89158));
+
+	ajouter_mailleFODO(Vecteur3D(-3,-2,0),Vecteur3D(-3,2,0));
+	ajouter_el(new Dipole(Vecteur3D(-3,2,0),Vecteur3D(-2,3,0),0.3,1,5.89158));
+
+	ajouter_mailleFODO(Vecteur3D(-2,3,0),Vecteur3D(2,3,0));
+	ajouter_el(new Dipole(Vecteur3D(2,3,0),Vecteur3D(3,2,0),0.3,1,5.89158));
+	
+	souder_accelerateur();
+}
+
+void Accelerateur::ajouter_mailleFODO(Vecteur3D const& entree, Vecteur3D const& sortie) {
+	double d = (sortie-entree).norme();
+	if (not est_zero(d)) {
+		ajouter_el(new MailleFODO(entree,sortie,0.3,1.2,0.25*d));
+	} else {Erreur err{"Entree=sortie", 6};
+	throw err;}
+	/*
+	Vecteur3D v=~(sortie-entree);
+	if (!est_zero(v.norme2())) {
+		acc_->ajouter_el(new Quadrupole(entree,Vecteur3D(entree.x()+v.x(),entree.y()+v.y(),0),0.3,1.2));
+		acc_->ajouter_el(new SectionDroite(Vecteur3D(entree.x()+v.x(),entree.y()+v.y(),0),Vecteur3D(entree.x()+2*v.x(),entree.y()+2*v.y(),0),0.3));
+		acc_->ajouter_el(new Quadrupole(Vecteur3D(entree.x()+2*v.x(),entree.y()+2*v.y(),0),Vecteur3D(entree.x()+3*v.x(),entree.y()+3*v.y(),0),0.3,-1.2));
+		acc_->ajouter_el(new SectionDroite(Vecteur3D(entree.x()+3*v.x(),entree.y()+3*v.y(),0),sortie,0.3));
+	} else {Erreur err{"Entree=sortie", 6};
+		throw err;}
+    */
 }
 
 //Supprimer
@@ -180,8 +225,9 @@ void Accelerateur::supprimer_faisceau_par(size_t i, size_t j) {
 //EVOLUTION
 
 void Accelerateur::evolue(double dt) {
-  for (auto& f : faisceaux_) {
-    f->evolue(*this,cases_,dt);
+  for (size_t i(0); i<faisceaux_.size(); ++i) {
+    faisceaux_[i]->evolue(*this,cases_,dt);
+    if (faisceaux_[i]->particules().empty()) supprimer_faisceau(i);
   }
 }
 
