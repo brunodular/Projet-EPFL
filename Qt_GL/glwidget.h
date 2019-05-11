@@ -17,7 +17,7 @@ public:
 
 	// Methodes qui construit l'accelerateur
   void ajouter_structure_P10();
-  void ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl);
+  void ajouter_faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl);
   void construire_polygone(size_t n, double R);
 
 private:

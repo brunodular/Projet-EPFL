@@ -25,7 +25,7 @@ private:
 public:
   //Constructeur
   Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support = nullptr);
-  Particule(Accelerateur const& acc, double pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support = nullptr);
+  Particule(Accelerateur const& acc, double pos, bool sens_horaire, double E, Masse m, double q, SupportADessin* support = nullptr);
 
   //getters
   Vecteur3D pos() const;

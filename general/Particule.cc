@@ -11,8 +11,8 @@ using namespace std;
 Particule::Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support)
  : Dessinable(support), pos_(pos), v_((c*sqrt(1-pow(m/E,2)))*(~v_dir)), m_(m), m_kg_(e*1e+9*m_/(c*c)), q_(q) {}
 
-Particule::Particule(Accelerateur const& acc, double pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support)
- : Particule(acc.abs_en_pos(pos),v_dir,E,m,q,support) {}
+Particule::Particule(Accelerateur const& acc, double pos, bool sens_horaire, double E, Masse m, double q, SupportADessin* support)
+ : Particule(acc.abs_en_pos(pos), acc.tangente_en_abs(pos, sens_horaire),E,m,q,support) {}
 
 //=======================================================================
 

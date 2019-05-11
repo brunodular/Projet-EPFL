@@ -14,12 +14,12 @@ class Accelerateur : public Dessinable {
 		//Constructeurs
 		Accelerateur (Collection_F const&, Collection_E const&, SupportADessin* support); //pas besoin de mettre les vector par defaut car les vectors sont automatiquement initialisés au vector vide
 		Accelerateur(SupportADessin* support);
-		
+
 		Accelerateur (Accelerateur const&)=delete;
 		Accelerateur& operator=(Accelerateur)=delete;
 
 		//Destructeur
-		
+
 		~Accelerateur ();
 
 		//Getters
@@ -34,7 +34,7 @@ class Accelerateur : public Dessinable {
 			//Ajouter
 
 		//ces méthodes affectent le support de l'Accélérateur aux supports des particules et éléments ajoutés.
-		void ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl);
+		void ajouter_faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl);
 		void ajouter_el(p_Element const&);
 		void ajouter_faisceau_par(size_t i, p_Particule const&);
 
@@ -50,6 +50,7 @@ class Accelerateur : public Dessinable {
     //Abscisse curviligne
     Vecteur3D abs_en_pos(double x) const;
     Abs pos_en_abs(p_Particule const&) const;
+    Vecteur3D tangente_en_abs(double x, bool sens_horaire) const;
 
 		void initialiser_particules(); //Initialise les élément_courant_ des Particules
 

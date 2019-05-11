@@ -27,7 +27,7 @@ class Faisceau : public Dessinable {
 	public:
 
 		//Constructeur + Destructeur
-		Faisceau (p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, SupportADessin* support_=nullptr); //x et dl sont des abscisses curvilignes, donc entre 0 et 1
+		Faisceau (p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, SupportADessin* support_=nullptr); //x et dl sont des abscisses curvilignes, donc entre 0 et 1
 
 		Faisceau(SupportADessin* support_);
 

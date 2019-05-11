@@ -8,8 +8,8 @@
 #include "Element.h"
 #include "glsphere.h"
 
-const double slices_height(0.02);
-const double stacks_length(0.02);
+const double slices_height(0.08);
+const double stacks_length(0.025);
 
 class VueOpenGL : public SupportADessin {
  public:

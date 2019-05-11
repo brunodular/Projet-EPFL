@@ -118,6 +118,10 @@ Abs ElementDroit::pos_en_abs(p_Particule const& p) const {
 	return (p->pos()-pos_e_)*dir_;
 }
 
+Vecteur3D ElementDroit::tangente_en_abs(double x, bool sens_horaire) const {
+  if (sens_horaire) return dir_;
+  else return -dir_;
+}
 
 //=======================================================================
 
@@ -155,7 +159,7 @@ double ElementCourbe::coord_orthogonale_vitesse(Particule* p) const {
 
 Vecteur3D ElementCourbe::abs_en_pos(double x) const {
   double theta(2*asin(longueur_*courbure_/2)); //angle au centre de courbure
-  Vecteur3D u(pos_s_-centre_);
+  Vecteur3D u(pos_e_-centre_);
   Vecteur3D v(u^e3);
   return centre_ + cos(x*theta)*u+sin(x*theta)*v;
 }
@@ -163,6 +167,12 @@ Vecteur3D ElementCourbe::abs_en_pos(double x) const {
 Abs ElementCourbe::pos_en_abs(p_Particule const& p) const {
 	Vecteur3D x=p->pos()-(e3*p->pos())*e3;
 	return acos((pos_e_*x)*courbure_/x.norme())/courbure_;
+}
+
+Vecteur3D ElementCourbe::tangente_en_abs(double x, bool sens_horaire) const {
+  Vecteur3D pos = abs_en_pos(x) - centre_;
+  if (sens_horaire) return pos ^ e3;
+  else return -(pos ^ e3);
 }
 
 //=======================================================================
@@ -223,7 +233,7 @@ Vecteur3D Quadrupole::B(Particule const& p) const {
 
 //Class MailleFODO
 
-MailleFODO::MailleFODO(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double b,double l,SupportADessin* support) : ElementDroit(pos_e,pos_s,r_section,support), b_(b), longueur_quad_(l), longueur_sect_(0.5*longueur_-l) {}
+MailleFODO::MailleFODO(Vecteur3D pos_e,Vecteur3D pos_s,double r_section,double b,double l,SupportADessin* support) : ElementDroit(pos_e,pos_s,r_section,support), b_(b), longueur_quad_(l*longueur_), longueur_sect_((0.5-l)*longueur_) {}
 
 double MailleFODO::longueur_sect() const {return longueur_sect_;}
 double MailleFODO::longueur_quad() const {return longueur_quad_;}

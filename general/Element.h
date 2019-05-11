@@ -51,6 +51,7 @@ public:
 
   virtual Vecteur3D abs_en_pos(double x) const = 0;
   virtual Abs pos_en_abs(p_Particule const&) const = 0;
+  virtual Vecteur3D tangente_en_abs(double x, bool sens_horaire) const = 0;
 
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }
@@ -76,6 +77,7 @@ public:
 
   virtual Vecteur3D abs_en_pos(double x) const override;
   virtual Abs pos_en_abs(p_Particule const&) const override;
+  virtual Vecteur3D tangente_en_abs(double x, bool sens_horaire) const override;
 
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }
@@ -104,6 +106,7 @@ public:
 
   virtual Vecteur3D abs_en_pos(double x) const override;
   virtual Abs pos_en_abs(p_Particule const&) const override;
+  virtual Vecteur3D tangente_en_abs(double x, bool sens_horaire) const override;
 
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }

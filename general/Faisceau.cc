@@ -97,14 +97,14 @@ double Faisceau::moyenne_pos_vit_r() const {
 
 //Constructeur
 
-Faisceau::Faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, SupportADessin* support_)
+Faisceau::Faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, SupportADessin* support_)
 	: Dessinable(support_), particule_typique_(p), lambda_(lambda)
 {
   unsigned int macro_nombre(nombre/lambda);
   double dx(dl/macro_nombre);
 
 	for (size_t i(0); i<macro_nombre; ++i) {
-		particules_.push_back(p_Particule (new Particule(acc, x - 0.5*dl + i*dx, p->v(), p->E()*lambda, p->m()*lambda, p->q()*lambda)));
+		particules_.push_back(p_Particule (new Particule(acc, x - 0.5*dl + i*dx, sens_horaire, p->E()*lambda, p->m()*lambda, p->q()*lambda)));
   }
 }
 
@@ -285,6 +285,7 @@ void Faisceau::evolue(Accelerateur const& acc, Cases& cases, double dt) {
 
       ++i;
   } else {
+    cout << "je suis sortie" << endl;
 		supprimer_par(i);
 	}
   }

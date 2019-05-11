@@ -184,13 +184,14 @@ void GLWidget::pause()
 
 void GLWidget::ajouter_structure_P10() {
 	acc_->construire_structure_P10();
+  acc_->souder_accelerateur();
 }
 
 void GLWidget::construire_polygone(size_t n, double R) {
   acc_->construire_polygone(n,R);
 }
 
-void GLWidget::ajouter_faisceau(p_Particule p, double x, unsigned int nombre, const unsigned int lambda, double dl) {
-	acc_->ajouter_faisceau(p, x,  nombre, lambda, dl);
+void GLWidget::ajouter_faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl) {
+	acc_->ajouter_faisceau(p, sens_horaire, x, nombre, lambda, dl);
 	acc_->initialiser_particules();
 }
