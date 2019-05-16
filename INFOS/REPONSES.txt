@@ -81,3 +81,13 @@ Question 11.1
 - nombre de vraies particules: comme méthode car ce nombre change au cours du temps
 - coefficient lambda: comme attribut car celui ne change pas au cours du temps
 - l'énergie moyenne du faisceau, émittance et les coefficients des ellipses de phases ont été implémenté comme des méthodes 
+
+Question 13.1
+
+  Le premier algorithme boucle sur toutes les autres particules du faisceau non-encore considérés et ajoute la force qu'exerce cette particule sur la particule courante. En supposant que l'opération d'ajouter la force inter-particulaire est en O(1), on a qu'au pire cas, l'algorithme 1 est en O(n_1^2+n_2^2+...+n_k^2), où n_i est la nombre de particules dans le i-ème faisceau qui tourne dans l'accélérateur, et k est le nombre de faisceaux dans l'accélérateur.
+
+  Le deuxième algorithme boucle séparémment sur le calcul des forces et sur la méthode bouger. De ce fait, le deuxième algorithme est également en O(n_1^2+n_2^2+...+n_k^2), où n_i est la nombre de particules dans le i-ème faisceau qui tourne dans l'accélérateur, et k est le nombre de faisceaux dans l'accélérateur. En effet, la premi§ere boucle a une complexité temporelle en O(n_i^2) et la deuxième est en O(n_i), en supposant que la méthode bouger est en O(1). Et donc en bouclant sur les faisceaux de l'accélérateur on obtient le résultat précédent.
+  
+Question 14.1
+
+  
