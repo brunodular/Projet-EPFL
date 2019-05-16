@@ -1,10 +1,10 @@
 #include "Accelerateur.h"
-#include "vue_texte.h"
+#include "Vue_Texte.h"
 using namespace std;
 
 int main() {
   try {
-    Vue_Texte* p_Vue (new Vue_Texte(cout));
+    VueTexte* p_Vue (new VueTexte(cout));
     Accelerateur CERN(p_Vue);
 
     CERN.ajouter_el(new Quadrupole(Vecteur3D(3,2,0),Vecteur3D(3,1,0),0.1,1.2));

@@ -3,17 +3,17 @@
 #include "../general/Support_a_dessin.h"
 #include "../general/Accelerateur.h"
 
-class Vue_Texte : public SupportADessin {
+class VueTexte : public SupportADessin {
 	private:
 		std::ostream& flot_;
 
 	public:
 		//CONSTRUCTEUR + DESTRUCTEUR
-		Vue_Texte(std::ostream& flot) : flot_(flot) {}
+		VueTexte(std::ostream& flot) : flot_(flot) {}
 
-		virtual ~Vue_Texte() {}
+		virtual ~VueTexte() {}
 
-		Vue_Texte(Vue_Texte const&) = delete;
+		Vue_Texte(VueTexte const&) = delete;
 
 		//METHODES DESSINE
 		virtual void dessine(Dipole const&) override;

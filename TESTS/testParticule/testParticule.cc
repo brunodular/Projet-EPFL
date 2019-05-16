@@ -1,7 +1,7 @@
 #include <cmath>
 
 #include "Accelerateur.h"
-#include "vue_texte.h"
+#include "Vue_Texte.h"
 #include <iostream>
 #include <iomanip>
 
@@ -11,7 +11,7 @@ int main () {
 cout.setf(ios::scientific);
 cout << setprecision(10);
 
-SupportADessin* p_Vue(new Vue_Texte(cout));
+SupportADessin* p_Vue(new VueTexte(cout));
 
 Particule p1(Vecteur3D (3.00984,-0.391837,0),Vecteur3D (-210200.0,-2.64754e+08,0), 2, 0.938272, e, p_Vue);
 Particule p2(Vecteur3D (2.99016,-0.391837,0),Vecteur3D (210200.0,-2.64754e+08,0), 2, 0.938272, e, p_Vue);

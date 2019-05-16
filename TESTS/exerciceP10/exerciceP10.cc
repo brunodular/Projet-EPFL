@@ -1,12 +1,12 @@
 #include "Accelerateur.h"
-#include "vue_texte.h"
+#include "Vue_Texte.h"
 using namespace std;
 
 int main() {
   try {
     constexpr double dt(1e-11);
 
-    Vue_Texte* p_Vue (new Vue_Texte(cout));
+    VueTexte* p_Vue (new VueTexte(cout));
     Accelerateur CERN(p_Vue);
 
     CERN.ajouter_el(new Quadrupole(Vecteur3D(3,2,0),Vecteur3D(3,1,0),0.1,1.2));
@@ -34,14 +34,14 @@ int main() {
     CERN.ajouter_el(new Dipole(Vecteur3D(2,3,0),Vecteur3D(3,2,0),0.1,1,5.89158));
 
     CERN.souder_accelerateur();
-    
+
     Faisceau f(p_Vue);
 
     f.ajouter_par(new Particule(Vecteur3D(3.01, 0, 0), Vecteur3D(0, -1, 0), 2, 0.938272, e));
     //CERN.ajouter_par(new Particule(Vecteur3D(2.99, 0, 0), Vecteur3D(0, -1, 0), 2, 0.938272, e));
-    
+
     CERN.ajouter_faisceau(p_Faisceau (new Faisceau(f)));
-    
+
     CERN.initialiser_particules();
 
     CERN.dessine();

@@ -1,5 +1,5 @@
 #include "Accelerateur.h"
-#include "vue_texte.h"
+#include "Vue_Texte.h"
 using namespace std;
 
 //EXERCICE P9
@@ -7,8 +7,8 @@ using namespace std;
 int main() {
 try {
 
-  Vue_Texte Vue(cout);
-	SupportADessin* p_Vue(new Vue_Texte(cout));
+  VueTexte Vue(cout);
+	SupportADessin* p_Vue(new VueTexte(cout));
 
 	Accelerateur acc1(p_Vue);
 
@@ -21,7 +21,7 @@ try {
 
 	cout << "Accelerateur 1 : " << endl;
 	Vue.dessine(acc1);
-	
+
 	/*Ancienne version du test:
 	cout << "Accelerateur 1 : " << endl;
 
