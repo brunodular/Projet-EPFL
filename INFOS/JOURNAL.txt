@@ -92,3 +92,40 @@
 -- 07/04 --
 
 - Affichage d'un accélérateur constitué de faisceaux.
+
+-- 18/04 --
+
+- Implémentation de l'abscisse curviligne qui depend de l'accelerateur: ceci correspond a la methode abs_en_pos de la classe Accelerateur, qui prend un double entre 0 et 1 et retourne un Vecteur3D. Idee d'egalement cree une methode qui fait la conversion inverse qui pourrait avoir son utilite dans la classe Case. Modification du constructeur de la classe Faisceau avec cette methode.
+
+- Implementation des interactions interparticulaires avec la methode de la classe particule correspondante qui est utilisee dans la methode evolue de Faisceau
+
+- Debut de l'implementation de la classe Case qui correspond a une lamelle circulaire de l'espace qui est une collection heterogene de particules et de la modification de la classe Accelerateur pour pouvoir initialiser ces cases qui en quelque sorte "decoupent" l'accelerateur en lamelle circulaire. Decision de mettre des pointeurs vers des Cases dans Particule. 
+
+- Probleme: * mauvaise initialisation du pointeur vers la case courante dans la classe Particule a regle
+* pas vraiment d'optimisation en fait ^^
+
+-- 02/05 --
+
+- Amélioration de l'abscisse curviligne pour les éléments courbes et test pour cette méthode
+
+- Modification du constructeur de faisceau: on peut maitenant efficacement faire une répartition uniforme des particules du faisceau le long de la trajectoire idéale
+
+- On a adapté la conception de la classe élément qui permet de faire tourner des particules dans les deux sens de l'accélérateur
+
+-- 09/05 --
+
+- Implémentation de la classe MailleFODO: cette classe est un élément_droit qui possède des éléments (Quadrupole et SectionDroite)
+
+- Reconception de la classe Case: on a reécrit tout le code pour la classe Case pour une meilleure optimisation: la classe Case n'est pas une collection hétérogène de particules, mais un vecteur d'ensemble de pointeur vers des particules, possèdant également en attribut un double qui correspond à la longueur d'une case par rapport à la longueur totale, et un entier qui correspond au nombre de "case" dans la classe Cases. Avec cette conception, nous avons réussi à mieux gérer les problèmes rencontrés précédemment: il y a maintenant véritablement une optimisation dans l'évaluation des interactions entre particules.
+
+- Implémentation de la méthode qui permet d'orienter le vecteur vitesse de la particule dans le sens de la trajectoire idéale (ou dans le sens-contraire, pour les faire tourner dans le sens opposé)
+
+- Implémentation de la méthode qui construit un accélérateur en un polygone régulier de n côtés et de rayon de circonférence R donnés en paramètre dans le main_qt_gl
+
+-- 10/05 --
+
+- Test polygone qui étudie l'influence des paramètres de départ (le nombre de côtés et le rayon du cercle circonscrit) sur le temps que les particules restent dans l'accélérateur (c'est à dire tant que les particules du faisceau ne heurte pas le bord).
+
+-- 16/05 --
+
+- Finalisation du projet: début d'écriture du fichier conception et du read-me, et finalisation du fichier réponses.
