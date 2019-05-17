@@ -47,28 +47,22 @@ double Particule::E() const {
 }
 
 double Particule::gamma() const {
-  return 1/sqrt(1-(v_.norme2()/(c*c)));
+  return 1/sqrt(1-(v_.norme2()/(c*c)));		//pas besoin de mettre des exceptions car la vitesse ne peut pas depasse la vitesse de la lumiere
 }
 
 void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
   if (!est_zero(dt) and !(est_zero(B.norme2()))) {
-    //cout << "AJOUT DE LA FORCE MAGNETIQUE : " << endl;
-
     F_ += q_*(v_^B);
-    //cout << F_ << endl;  //ICI
-    //cout << "Angle : " << asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))) << endl;
     F_ = F_.rotation((v_^F_),asin(dt*(F_.norme())/(2*gamma()*m_kg_*(v_.norme()))));
-    //cout << F_ << endl; //ICI
-
   }
 }
 
 void Particule::ajouter_force_inter_particulaire(Particule const& p) {
 	Vecteur3D r(pos_-p.pos());
 	double d=r.norme();
-	if (d!=0) {
+	if (!est_zero(d)) {
 		double g=gamma();
-		F_ -= q_*q_/(4*M_PI*e_0*d*d*d*g*g)*r*0;
+		F_ -= q_*q_/(4*M_PI*e_0*d*d*d*g*g)*r*1e+13;
 	}
 }
 
@@ -77,8 +71,7 @@ void Particule::supprimer_forces() {
 }
 
 void Particule::bouger(double dt) {
-  Vecteur3D a = (1/(gamma()*m_kg_))*F_;
-  v_ = v_ + dt*a;
+  v_ += dt*((1/(gamma()*m_kg_))*F_);
   pos_ += dt*v_;
 }
 

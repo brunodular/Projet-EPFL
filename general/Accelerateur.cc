@@ -65,7 +65,6 @@ ostream& Accelerateur::affiche(ostream& sortie) const {
 		sortie << " : " << endl;
 
 		for (auto const& f : faisceaux_) {
-			//f->dessine();  MARCHE PAS?????
 			f->affiche(sortie);
 		}
 	} else {sortie << "L'accelerateur ne contient pas de faisceaux." << endl;}
@@ -79,7 +78,6 @@ std::ostream& Accelerateur::affiche_part(std::ostream& sortie) const {
 		f->affiche_part(sortie);
 	}
   }
-
   return sortie;
 }
 
@@ -87,8 +85,6 @@ void Accelerateur::ajouter_faisceau(p_Particule p, bool sens_horaire, double x, 
   faisceaux_.push_back(p_Faisceau(new Faisceau(p,sens_horaire,x,nombre,lambda,dl,*this)));
   faisceaux_.back()->set_support(support_);
 }
-
-//J'ai modifié cette méthode car 'new Element(*el)' créait un pointeur vers un Element, et donc si on donnait un pointeur vers un Dipole par exemple, le Dipole était mis dans un Element et perdait donc ses attributs caractéristiques
 
 void Accelerateur::ajouter_el(p_Element const& el) {
   el->set_support(support_);
@@ -115,15 +111,28 @@ void Accelerateur::souder_accelerateur() {
   }
 }
 
+	//Abscisse curviligne
+
+No_name Accelerateur::abs_element (double x) const {
+	x *= longueur_;
+	if (x < 0) x += longueur_;
+	size_t i(0);
+	while (x > elements_[i]->longueur()) {
+		x -= elements_[i]->longueur();
+		i = (i+1)%elements_.size();
+	}
+	return (No_name {i, x});
+}
+
 Vecteur3D Accelerateur::abs_en_pos(double x) const {
-  x *= longueur_;
-  if (x < 0) x += longueur_;
-  size_t i(0);
-  while (x > elements_[i]->longueur()) {
-    x -= elements_[i]->longueur();
-    i = (i+1)%elements_.size();
-  }
-  return elements_[i]->abs_en_pos(x / elements_[i]->longueur());
+  No_name n(abs_element(x));
+  return elements_[n.i_]->abs_en_pos(n.x_ / elements_[n.i_]->longueur());
+}
+
+
+Vecteur3D Accelerateur::tangente_en_abs(double x, bool sens_horaire) const {
+  No_name n(abs_element(x));
+  return elements_[n.i_]->tangente_en_abs(n.x_ / elements_[n.i_]->longueur(), sens_horaire);
 }
 
 Abs Accelerateur::pos_en_abs(p_Particule const& p) const {
@@ -135,17 +144,6 @@ Abs Accelerateur::pos_en_abs(p_Particule const& p) const {
   abs += p->element_courant()->pos_en_abs(p);
   abs /= longueur_;
   return abs;
-}
-
-Vecteur3D Accelerateur::tangente_en_abs(double x, bool sens_horaire) const {
-  x *= longueur_;
-  if (x < 0) x += longueur_;
-  size_t i(0);
-  while (x > elements_[i]->longueur()) {
-    x -= elements_[i]->longueur();
-    i = (i+1)%elements_.size();
-  }
-  return elements_[i]->tangente_en_abs(x / elements_[i]->longueur(), sens_horaire);
 }
 
 
@@ -195,16 +193,6 @@ void Accelerateur::ajouter_mailleFODO(Vecteur3D const& entree, Vecteur3D const& 
 		ajouter_el(new MailleFODO(entree,sortie,0.3,1.2,0.25));
 	} else {Erreur err{"Entree=sortie", 6};
 	throw err;}
-	/*
-	Vecteur3D v=~(sortie-entree);
-	if (!est_zero(v.norme2())) {
-		acc_->ajouter_el(new Quadrupole(entree,Vecteur3D(entree.x()+v.x(),entree.y()+v.y(),0),0.3,1.2));
-		acc_->ajouter_el(new SectionDroite(Vecteur3D(entree.x()+v.x(),entree.y()+v.y(),0),Vecteur3D(entree.x()+2*v.x(),entree.y()+2*v.y(),0),0.3));
-		acc_->ajouter_el(new Quadrupole(Vecteur3D(entree.x()+2*v.x(),entree.y()+2*v.y(),0),Vecteur3D(entree.x()+3*v.x(),entree.y()+3*v.y(),0),0.3,-1.2));
-		acc_->ajouter_el(new SectionDroite(Vecteur3D(entree.x()+3*v.x(),entree.y()+3*v.y(),0),sortie,0.3));
-	} else {Erreur err{"Entree=sortie", 6};
-		throw err;}
-    */
 }
 
 //Supprimer
@@ -241,23 +229,14 @@ void Accelerateur::evolue(double dt) {
   }
 }
 
+bool Accelerateur::encore_des_particules() const {
+	for (auto const& f : faisceaux_) {
+		if (f->nombre_particules()!=0) return false;
+	}
+	return true;
+}
+
 //DESSINER
-void Accelerateur::dessine_faisceau() const {
-	if (faisceaux_.size()!=0 and support_!=nullptr) {
-		for (auto const& f : faisceaux_) {
-			f->dessine();
-		}
-	}
-}
-
-void Accelerateur::dessine_element() const {
-	if (elements_.size()!=0) {
-		for (auto const& el : elements_) {
-			el->dessine();
-		}
-	}
-}
-
 void Accelerateur::set_support(SupportADessin* sup) {
 	support_=sup;
 	if (faisceaux_.size()!=0 and sup!=nullptr) {

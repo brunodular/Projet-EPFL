@@ -37,10 +37,10 @@ public:
   void el_prec(Element*);
 
   //Méthodes
-  virtual bool heurte_bord(Particule const& p) const = 0;
+  virtual bool heurte_bord(Particule const& p) const = 0; //methode virtuelle pure qui renvoie vrai si la particule a heurte le bord et faux dans le cas contraire
 
-  bool passe_au_suivant(Particule& p) const;
-  bool est_dans(Particule const& p) const;
+  bool passe_au_suivant(Particule& p) const; //methode qui renvoie vrai si la particule est passee dans l'element suivant et faux dans le cas contraire
+  bool est_dans(Particule const& p) const; //methode qui renvoie vrai si la particule est dans l'element et faux sinon
 
   virtual Vecteur3D B(Particule const&) const; //champ magnétique
 
@@ -49,9 +49,9 @@ public:
   virtual double coord_orthogonale_position(Particule*) const = 0;
   virtual double coord_orthogonale_vitesse(Particule*) const = 0;
 
-  virtual Vecteur3D abs_en_pos(double x) const = 0;
-  virtual Abs pos_en_abs(p_Particule const&) const = 0;
-  virtual Vecteur3D tangente_en_abs(double x, bool sens_horaire) const = 0;
+  virtual Vecteur3D abs_en_pos(double x) const = 0;	//methode qui renvoie un vecteur position, lorsqu'on lui donne en parametre une abscisse curviligne
+  virtual Abs pos_en_abs(p_Particule const&) const = 0; //methode qui retourne l'abscisse curviligne de la particule p dans l'element
+  virtual Vecteur3D tangente_en_abs(double x, bool sens_horaire) const = 0; //methode qui renvoie la direction de la trajectoire ideale dans l'element dans le sens mis en parametre en fonction de l'abscisse curviligne x
 
   //DESSINER
   virtual void dessine() override { support_->dessine(*this); }
@@ -175,7 +175,7 @@ public:
   double longueur_sect() const;
   double longueur_quad() const;
   Vecteur3D pos_e_sect_1() const;
-  Vecteur3D pos_e_quad_2() const;
+  Vecteur3D pos_e_quad_2() const;		//renvoie les positions d'entrees des differents elements composants la maille FODO
   Vecteur3D pos_e_sect_2() const;
 
   virtual void affiche(std::ostream& sortie) const override;

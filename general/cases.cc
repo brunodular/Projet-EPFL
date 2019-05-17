@@ -6,10 +6,7 @@ Cases::Cases(uint nombre) : cases_(vector<Set_P> (nombre)), eps_(1 / nombre), no
 
 Cases::~Cases() {
 	for (auto& cas : cases_) {
-		for (auto& p : cas) {
-			delete p;
-		}
-		cas.clear();
+		cas.clear();		//on n'a pas besoin de supprimer les particules des cases car elles sont deja supprimees par l'accelerateur lors de la destruction des faisceaux qui precede celle des cases
 	}
 	cases_.clear();
 }

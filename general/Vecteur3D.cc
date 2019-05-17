@@ -21,7 +21,7 @@ Vecteur3D const Vecteur3D::unitaire() const {
   if (!est_zero(norme(),EPS)) {
     return (*this * (1/norme()));
   } else {
-	  Erreur err={"Division par zero, unitaire()", 4};
+	  Erreur err={"Division par zero", 1};
     throw err;
   }
 }
@@ -43,7 +43,7 @@ Vecteur3D const Vecteur3D::rotation(Vecteur3D const& v, double t) const {
 
 //=======================================================================
 
-//OPERATEUR INTERNE
+//OPERATEURs INTERNEs
 
 bool Vecteur3D::operator==(Vecteur3D const& v) const {
   return (est_zero(x_ - v.x_, EPS) and est_zero(y_ - v.y_, EPS), est_zero(z_ - v.z_, EPS));
@@ -101,7 +101,7 @@ double Vecteur3D::operator*(Vecteur3D const& v) const {
 
 
 Vecteur3D const Vecteur3D::operator^(Vecteur3D v) const {
-  return -(v ^= *this);
+  return -(v ^= *this);			//il y a un signe moins devant car le produit vectoriel est anti-commutatif
 }
 
 Vecteur3D const Vecteur3D::operator~() const {

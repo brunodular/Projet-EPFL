@@ -9,7 +9,7 @@ SOURCES += \
 	Element.cc \
 	Vecteur3D.cc \
 	constantes.cc \
-  cases.cc
+	cases.cc
 
 HEADERS += \
     Accelerateur.h \

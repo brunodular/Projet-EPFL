@@ -13,7 +13,7 @@ class VueTexte : public SupportADessin {
 
 		virtual ~VueTexte() {}
 
-		Vue_Texte(VueTexte const&) = delete;
+		VueTexte(VueTexte const&) = delete;
 
 		//METHODES DESSINE
 		virtual void dessine(Dipole const&) override;
@@ -25,6 +25,5 @@ class VueTexte : public SupportADessin {
 		virtual void dessine(ElementDroit const&) override;
 		virtual void dessine(Quadrupole const&) override;
 		virtual void dessine(Faisceau const&) override;
-    virtual void dessine(MailleFODO const&) override;
-
+		virtual void dessine(MailleFODO const&) override;
 };

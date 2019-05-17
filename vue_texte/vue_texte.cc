@@ -1,4 +1,4 @@
-#include "Vue_Texte.h"
+#include "vue_texte.h"
 
 //=======================================================================
 void VueTexte::dessine(Dipole const& d) {

@@ -7,86 +7,42 @@ using namespace std;
 
 //=======================================================================
 
-//méthodes privées, utilisées dans les autres méthodes
-  //paramètres verticaux
-double Faisceau::moyenne_pos_2_z() const {
-  if (nombre_particules() == 0) return 0.0;
-  else {
-    double moyenne(0.0);
-    for (auto& p : particules_) {
-      if (p->element_courant() != nullptr) {
-        double pos(p->pos().z());
-        moyenne += pos*pos;
-      }
-    }
-    return (moyenne / nombre_particules());
-  }
-}
-double Faisceau::moyenne_vit_2_z() const {
-  if (nombre_particules() == 0) return 0.0;
-  else {
-    double moyenne(0.0);
-    for (auto& p : particules_) {
-      if (p->element_courant() != nullptr) {
-        double vit(p->v().z());
-        moyenne += vit*vit;
-      }
-    }
-    return (moyenne / nombre_particules());
-  }
-}
-double Faisceau::moyenne_pos_vit_z() const {
-  if (nombre_particules() == 0) return 0.0;
-  else {
-    double moyenne(0.0);
-    for (auto& p : particules_) {
-      if (p->element_courant() != nullptr) {
-        double pos(p->pos().z());
-        double vit(p->v().z());
-        moyenne += pos*vit;
-      }
-    }
-    return (moyenne / nombre_particules());
-  }
-}
+//Méthode privée
 
-//paramètres radiaux
-double Faisceau::moyenne_pos_2_r() const {
+double Faisceau::moyenne_ellipse(ELLIPSE e) const {
   if (nombre_particules() == 0) return 0.0;
   else {
     double moyenne(0.0);
     for (auto& p : particules_) {
       if (p->element_courant() != nullptr) {
-        double pos(p->element_courant()->coord_orthogonale_position(p));
-        moyenne += pos*pos;
-      }
-    }
-    return (moyenne / nombre_particules());
-  }
-}
-double Faisceau::moyenne_vit_2_r() const {
-  if (nombre_particules() == 0) return 0.0;
-  else {
-    double moyenne(0.0);
-    for (auto& p : particules_) {
-      if (p->element_courant() != nullptr) {
-        double vit(p->element_courant()->coord_orthogonale_vitesse(p));
-        moyenne += vit*vit;
-      }
-    }
-    return (moyenne / nombre_particules());
-  }
-}
-
-double Faisceau::moyenne_pos_vit_r() const {
-  if (nombre_particules() == 0) return 0.0;
-  else {
-    double moyenne(0.0);
-    for (auto& p : particules_) {
-      if (p->element_courant() != nullptr) {
-        double pos(p->element_courant()->coord_orthogonale_position(p));
-        double vit(p->element_courant()->coord_orthogonale_vitesse(p));
-        moyenne += pos*vit;
+        switch (e) {
+			case POS_Z:
+				{double pos1(p->pos().z());
+				moyenne += pos1*pos1;}
+				break;
+			case VIT_Z:
+				{double vit2(p->v().z());
+				moyenne += vit2*vit2;}
+				break;
+			case POS_VIT_Z:
+				{double pos3(p->pos().z());
+				double vit3(p->v().z());
+				moyenne += pos3*vit3;}
+				break;
+			case POS_R:
+				{double pos4(p->element_courant()->coord_orthogonale_position(p));
+				moyenne += pos4*pos4;}
+				break;
+			case VIT_R:
+				{double vit5(p->element_courant()->coord_orthogonale_vitesse(p));
+				moyenne += vit5*vit5;}
+				break;
+			case POS_VIT_R:
+				{double pos6(p->element_courant()->coord_orthogonale_position(p));
+				double vit6(p->element_courant()->coord_orthogonale_vitesse(p));
+				moyenne += pos6*vit6;}
+				break;
+		}
       }
     }
     return (moyenne / nombre_particules());
@@ -95,10 +51,10 @@ double Faisceau::moyenne_pos_vit_r() const {
 
 //=======================================================================
 
-//Constructeur
+//Constructeurs
 
 Faisceau::Faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, SupportADessin* support_)
-	: Dessinable(support_), particule_typique_(p), lambda_(lambda)
+	: Dessinable(support_), lambda_(lambda)
 {
   unsigned int macro_nombre(nombre/lambda);
   double dx(dl/macro_nombre);
@@ -106,15 +62,6 @@ Faisceau::Faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nomb
 	for (size_t i(0); i<macro_nombre; ++i) {
 		particules_.push_back(p_Particule (new Particule(acc, x - 0.5*dl + i*dx, sens_horaire, p->E()*lambda, p->m()*lambda, p->q()*lambda)));
   }
-}
-
-Faisceau::Faisceau (SupportADessin* support) : Dessinable(support) {}
-
-Faisceau::Faisceau (Faisceau const& autre) {
-	this->supprimer_par();
-	for (auto const& par : autre.particules()) {
-		particules_.push_back(new Particule(*par));
-	}
 }
 
 //=======================================================================
@@ -165,8 +112,6 @@ Collection_P Faisceau::particules() const{return particules_;}
 
 double Faisceau::E_moyenne() const {
 	double moyenne(0.0);
-	cout << "Nombre de particules " << nombre_particules() << endl;
-
   if (nombre_particules() != 0) {
     for (auto& p : particules_) {
       moyenne += p->E();
@@ -177,35 +122,35 @@ double Faisceau::E_moyenne() const {
 }
 
 double Faisceau::emittance_z() const {
-  return sqrt(moyenne_pos_2_z()*moyenne_vit_2_z() - moyenne_pos_vit_z()*moyenne_pos_vit_z());
+  return sqrt(moyenne_ellipse(POS_Z)*moyenne_ellipse(VIT_Z) - moyenne_ellipse(POS_VIT_Z)*moyenne_ellipse(POS_VIT_Z));
 }
 
 double Faisceau::emittance_r() const {
-  return sqrt(moyenne_pos_2_r()*moyenne_vit_2_r() - moyenne_pos_vit_r()*moyenne_pos_vit_r());
+  return sqrt(moyenne_ellipse(POS_R)*moyenne_ellipse(VIT_R) - moyenne_ellipse(POS_VIT_R)*moyenne_ellipse(POS_VIT_R));
 }
 
 
 double Faisceau::A_11_r() const {
-  return (moyenne_vit_2_r()/emittance_r());
+  return (moyenne_ellipse(VIT_R)/emittance_r());
 }
 
 double Faisceau::A_12_r() const {
-  return (- moyenne_pos_vit_r()/emittance_r());
+  return (- moyenne_ellipse(POS_VIT_R)/emittance_r());
 }
 
 double Faisceau::A_22_r() const {
-  return (moyenne_pos_2_r()/emittance_r());
+  return (moyenne_ellipse(POS_R)/emittance_r());
 }
 
 double Faisceau::A_11_z() const {
-  return (moyenne_vit_2_z()/emittance_z());
+  return (moyenne_ellipse(VIT_Z)/emittance_z());
 }
 
 double Faisceau::A_12_z() const {
-  return (- moyenne_pos_vit_z()/emittance_z());
+  return (- moyenne_ellipse(POS_VIT_Z)/emittance_z());
 }
 double Faisceau::A_22_z() const {
-  return (moyenne_pos_2_z()/emittance_z());
+  return (moyenne_ellipse(POS_Z)/emittance_z());
 }
 
 unsigned int Faisceau::nombre_particules() const {
@@ -239,12 +184,12 @@ void Faisceau::initialiser_particules(Accelerateur const& acc, Cases& cases) {
   size_t n((acc.elements()).size());
   for (auto& p : particules_) {
     size_t i(0);
-    while(i< n and not acc.elements()[i]->est_dans(*p)) {
+    while(i< n and not acc.elements()[i]->est_dans(*p)) {		//boucle tant que l'element[i] n'est pas l'element courant de p
       ++i;
     }
     if (i < n) {
-      p->element_courant(acc.elements()[i]);
-      cases.ajouter_p_a_case(p, cases.case_de_abs(acc.pos_en_abs(p)));
+      p->element_courant(acc.elements()[i]);		//initialise l'element courant de p
+      cases.ajouter_p_a_case(p, cases.case_de_abs(acc.pos_en_abs(p)));	//ajoute p dans la case qui associee a la particule p qui depend de l'abscisse curviligne de p dans l'acclerateur (voir cases.cc)
     }
   }
 }
@@ -278,25 +223,14 @@ void Faisceau::evolue(Accelerateur const& acc, Cases& cases, double dt) {
 
       if (not particules_[i]->est_sortie()) {
         if (cases.case_de_abs(acc.pos_en_abs(particules_[i])) != j) {
-          cases.supprimer_p_de_case(particules_[i],j);
+          cases.supprimer_p_de_case(particules_[i],j);		//on supprime la particule de la case dans le cas ou la particule est sortie de celle-ci
           cases.ajouter_p_a_case(particules_[i],j+1);
         }
       }
 
       ++i;
   } else {
-    cout << "je suis sortie" << endl;
 		supprimer_par(i);
 	}
   }
-}
-
-//DESSINER
-
-void Faisceau::dessine_particule() const {
-	if(nombre_particules()!=0 and support_!=nullptr) {
-		for (auto const& p : particules_) {
-			support_->dessine(*p);
-		}
-	}
 }

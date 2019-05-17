@@ -10,17 +10,17 @@ class Vecteur3D {
 	public:
 		//Constructeurs
 		Vecteur3D(double x = 0.0, double y = 0.0, double z = 0.0) : x_(x), y_(y), z_(z) {}
-
-    //getteurs
-    double x() const;
-    double y() const;
-    double z() const;
+		
+		//getteurs
+		double x() const;
+		double y() const;
+		double z() const;
 
 		//méthodes
 		std::ostream& affiche(std::ostream&) const;
 		double norme() const;
 		double norme2() const;
-		Vecteur3D const rotation(Vecteur3D const&, double) const;
+		Vecteur3D const rotation(Vecteur3D const&, double) const; //methode qui effectuve une rotation dans l'axe du vecteur donne en parametre d'angle le double donne en parametre
 
 		//opérateurs internes
 		bool operator==(Vecteur3D const&) const;
@@ -28,8 +28,8 @@ class Vecteur3D {
 
 		Vecteur3D& operator+=(Vecteur3D const&);
 		Vecteur3D& operator-=(Vecteur3D const&);
-		Vecteur3D& operator*=(double);
-		Vecteur3D& operator^=(Vecteur3D const&);
+		Vecteur3D& operator*=(double); 				//produit scalaire
+		Vecteur3D& operator^=(Vecteur3D const&);	//produit vectoriel
 
 		Vecteur3D const operator-() const;			//opposé
 		Vecteur3D const operator+(Vecteur3D) const;
@@ -37,11 +37,10 @@ class Vecteur3D {
 		Vecteur3D const operator*(double) const;	//multiplication par un scalaire
 		Vecteur3D const operator~() const;			//vecteur unitaire
 
-		Vecteur3D const orthogonal() const;
+		Vecteur3D const orthogonal() const;			//retourne un vecteur unitaire orthogonal
 
 		double operator*(Vecteur3D const&) const;	//produit scalaire
 		Vecteur3D const operator^(Vecteur3D) const;	//produit vectoriel
-
 };
 
 //opérateurs externes

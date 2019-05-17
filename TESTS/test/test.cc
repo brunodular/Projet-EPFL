@@ -1,5 +1,5 @@
 #include "Accelerateur.h"
-#include "Vue_Texte.h"
+#include "vue_texte.h"
 using namespace std;
 
 int main() {
