@@ -129,3 +129,7 @@
 -- 16/05 --
 
 - Finalisation du projet: début d'écriture du fichier conception et du read-me, et finalisation du fichier réponses.
+
+-- 23/05 --
+
+- ENCORE le mème bug dans le programme: depuis notre implémentation des cases nous avons eu un problème qui apparaìt souvent lorsqu'on met trop de particules dans l'accélérateur et/ou quand on effectue trop de mouvement de caméra et/ou quand on augmente trop le pas de temps dt. Dans ces cas, toutes les particules disparaissent, sans toucher le bord des éléments (vérifié par des cout dans la méthode heurte-bord). On suppose que ce problème est peut-ètre du à la mémoire (cf. fichier conception pour plus de détails).
