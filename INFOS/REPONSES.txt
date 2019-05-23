@@ -79,14 +79,15 @@ Question 11.1
 - particule typique: comme pointeur sur une particule en attribut car cela assure que l'on garde en mémoire la position initiale de notre faisceau (//au final nous avons enlevé cet atribut car il ne sert à rien)
 - nombre de vraies particules: comme méthode car ce nombre change au cours du temps
 - coefficient lambda: comme attribut car celui ne change pas au cours du temps
-- l'énergie moyenne du faisceau, émittance et les coefficients des ellipses de phases ont été implémenté comme des méthodes 
+- l'énergie moyenne du faisceau, émittance et les coefficients des ellipses de phases ont été implémenté comme des méthodes car celles-ci varient au cours du temps et ce ne serait pas optimisé de les matre en attributs car on les modifierait très souvent
 
 Question 13.1
 
-  Le premier algorithme boucle sur toutes les autres particules du faisceau non-encore considérés et ajoute la force qu'exerce cette particule sur la particule courante. En supposant que l'opération d'ajouter la force inter-particulaire est en O(1), on a qu'au pire cas, l'algorithme 1 est en O(n_1^2+n_2^2+...+n_k^2), où n_i est la nombre de particules dans le i-ème faisceau qui tourne dans l'accélérateur, et k est le nombre de faisceaux dans l'accélérateur.
+  Le premier algorithme boucle sur toutes les autres particules du faisceau non-encore considérées et ajoute la force qu'exerce cette particule sur la particule courante. En supposant que l'opération d'ajouter la force inter-particulaire est en O(1), on a qu'au pire cas, l'algorithme 1 est en O(n_1^2+n_2^2+...+n_k^2), où n_i est la nombre de particules dans le i-ème faisceau qui tourne dans l'accélérateur, et k est le nombre de faisceaux dans l'accélérateur.
 
-  Le deuxième algorithme boucle séparémment sur le calcul des forces et sur la méthode bouger. De ce fait, le deuxième algorithme est également en O(n_1^2+n_2^2+...+n_k^2), où n_i est la nombre de particules dans le i-ème faisceau qui tourne dans l'accélérateur, et k est le nombre de faisceaux dans l'accélérateur. En effet, la premi§ere boucle a une complexité temporelle en O(n_i^2) et la deuxième est en O(n_i), en supposant que la méthode bouger est en O(1). Et donc en bouclant sur les faisceaux de l'accélérateur on obtient le résultat précédent.
+  Le deuxième algorithme boucle séparémment sur le calcul des forces et sur la méthode bouger. De ce fait, le deuxième algorithme est également en O(n_1^2+n_2^2+...+n_k^2), où n_i est la nombre de particules dans le i-ème faisceau qui tourne dans l'accélérateur, et k est le nombre de faisceaux dans l'accélérateur. En effet, la première boucle a une complexité temporelle en O(n_i^2) et la deuxième est en O(n_i), en supposant que la méthode bouger est en O(1). Et donc en bouclant sur les faisceaux de l'accélérateur on obtient le résultat précédent.
   
 Question 14.1
 
-  
+  On suppose que le nombre de particules dans une case est négligeable (en O(1)) et que l'ajout de forces inter-particulaires est également en O(1). De ce fait, étant donné qu'on boucle sur toutes les cases, on aura que les  
+  L'inconvénient que présente une telle optimisation est qu'il y a énormément de cases qui seront vides lors de l'évolution des particules dans l'accélérateur. De ce fait, lors du calcul des intéractions inter-particulaires, on bouclera sur toutes la cases qui seront vides, ce qui n'est pas vraiment très optimisé. De ce fait, cete optimisation est inéressante que quand le nombre de particules dans l'accélérateur est considérable.
