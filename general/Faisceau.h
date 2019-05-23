@@ -31,7 +31,8 @@ class Faisceau : public Dessinable {
 		Faisceau& operator=(Faisceau const&) = delete;
 
 		//Methodes
-		std::ostream& affiche(std::ostream&) const;
+		std::ostream& affiche_info_ellipse(std::ostream&) const;
+    std::ostream& affiche(std::ostream&) const;
 		std::ostream& affiche_part(std::ostream&) const;		//affiche seulement les informations sur les particules du faisceau
 		virtual void set_support(SupportADessin*) override;		//initialise le support a dessin de chaque particule du faisceau
 

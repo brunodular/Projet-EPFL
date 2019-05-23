@@ -135,8 +135,11 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     break;
 
   case Qt::Key_Space:
-	pause();
-	break;
+    pause();
+    if (toucheEspace) {acc_->affiche_info_ellipse(std::cout);
+      toucheEspace=false;
+    } else {toucheEspace=true;}
+    break;
 
   case Qt::Key_P:
     evo_par_affichage *= 2;

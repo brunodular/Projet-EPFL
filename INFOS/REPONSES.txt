@@ -89,5 +89,5 @@ Question 13.1
   
 Question 14.1
 
-  On suppose que le nombre de particules dans une case est négligeable (en O(1)) et que l'ajout de forces inter-particulaires est également en O(1). De ce fait, étant donné qu'on boucle sur toutes les paticules, on aura que l'algorihme sera en O(n_1+...+n_k) où n_i est le nombre de particules dans le i-ème faisceau de l'accélérateur et k le nombre de faissceaux de l'accélérateur.
+  On suppose que le nombre de particules dans une case est négligeable (en O(1)) et que l'ajout de forces inter-particulaires est également en O(1). De ce fait, étant donné qu'on boucle sur toutes les cases, on aura que les  
   L'inconvénient que présente une telle optimisation est qu'il y a énormément de cases qui seront vides lors de l'évolution des particules dans l'accélérateur. De ce fait, lors du calcul des intéractions inter-particulaires, on bouclera sur toutes la cases qui seront vides, ce qui n'est pas vraiment très optimisé. De ce fait, cete optimisation est inéressante que quand le nombre de particules dans l'accélérateur est considérable.

@@ -36,6 +36,7 @@ class Accelerateur : public Dessinable {
 			//Afficher
 		std::ostream& affiche(std::ostream&) const;
 		std::ostream& affiche_part(std::ostream&) const;
+    std::ostream& affiche_info_ellipse(std::ostream&) const;
 
 			//Ajouter
 

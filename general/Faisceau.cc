@@ -3,6 +3,7 @@
 #include "cases.h"
 #include <cmath>
 #include <vector>
+#include <iomanip>
 using namespace std;
 
 //=======================================================================
@@ -104,6 +105,10 @@ ostream& Faisceau::affiche_part(std::ostream& sortie) const {
 	return sortie;
 }
 
+ostream& Faisceau::affiche_info_ellipse(ostream& sortie) const {
+  return (sortie << setw(MARGE+3) << "Energie moyenne : " << E_moyenne() << endl << setw(MARGE+3) << "Emittance (verticale) : " << emittance_z() << endl << setw(MARGE+3) << "Emittance (horizontale) : " << emittance_r() << endl << setw(MARGE+3) << "Coefficients des ellipses de phases : " << endl << setw(MARGE+8)<< "A11 (vertical) : " << A_11_z() << endl << setw(MARGE+8) << "A11 (horizontal) : " << A_11_z() << endl << setw(MARGE+8) << "A22 (verical) : " << A_22_z() << endl << setw(MARGE+8) << "A22 (horizontal) : " << A_22_r() << endl << setw(MARGE+8) << "A12 (vertical) : " << A_12_z() << endl << setw(MARGE+8) << "A12 (horizontal) : " << A_12_r() << endl);
+}
+
 //========================================================================
 
 //GETTERS
@@ -131,26 +136,32 @@ double Faisceau::emittance_r() const {
 
 
 double Faisceau::A_11_r() const {
-  return (moyenne_ellipse(VIT_R)/emittance_r());
+  if (emittance_r()!=0) return (moyenne_ellipse(VIT_R)/emittance_r());
+  else return 0.0;
 }
 
 double Faisceau::A_12_r() const {
-  return (- moyenne_ellipse(POS_VIT_R)/emittance_r());
+  if(!est_zero(emittance_r())) return (- moyenne_ellipse(POS_VIT_R)/emittance_r());
+  else return 0.0;
 }
 
 double Faisceau::A_22_r() const {
-  return (moyenne_ellipse(POS_R)/emittance_r());
+  if (!est_zero(emittance_r())) return (moyenne_ellipse(POS_R)/emittance_r());
+  else return 0.0;
 }
 
 double Faisceau::A_11_z() const {
-  return (moyenne_ellipse(VIT_Z)/emittance_z());
+  if (!est_zero(emittance_z())) return (moyenne_ellipse(VIT_Z)/emittance_z());
+  else return 0.0;
 }
 
 double Faisceau::A_12_z() const {
-  return (- moyenne_ellipse(POS_VIT_Z)/emittance_z());
+  if (!est_zero(emittance_z())) return (- moyenne_ellipse(POS_VIT_Z)/emittance_z());
+  else return 0.0;
 }
 double Faisceau::A_22_z() const {
-  return (moyenne_ellipse(POS_Z)/emittance_z());
+  if (!est_zero(emittance_z())) return (moyenne_ellipse(POS_Z)/emittance_z());
+  else return 0.0;
 }
 
 unsigned int Faisceau::nombre_particules() const {

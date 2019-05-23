@@ -72,12 +72,21 @@ ostream& Accelerateur::affiche(ostream& sortie) const {
 	return sortie;
 }
 
-std::ostream& Accelerateur::affiche_part(std::ostream& sortie) const {
+ostream& Accelerateur::affiche_part(std::ostream& sortie) const {
   if (!(faisceaux_.empty())) {
 	  for (auto const& f : faisceaux_) {
 		f->affiche_part(sortie);
 	}
   }
+  return sortie;
+}
+
+ostream& Accelerateur::affiche_info_ellipse(ostream& sortie) const {
+  for (size_t i(0); i<faisceaux_.size(); ++i) {
+    sortie << "Faisceau " << i+1 << " : " << endl;
+    faisceaux_[i]->affiche_info_ellipse(sortie);
+  }
+  sortie << endl;
   return sortie;
 }
 

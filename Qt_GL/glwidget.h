@@ -49,6 +49,9 @@ private:
 
   //Position de la souris
   QPoint lastMousePosition;
+  
+  //Indique si a appuye sur space precedemment
+  bool toucheEspace=true;
 };
 
 #endif // GLWIDGET_H
