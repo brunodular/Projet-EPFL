@@ -13,8 +13,8 @@ class Accelerateur : public Dessinable {
 
 		//Methodes privees
 		void ajouter_mailleFODO(Vecteur3D const& entree, Vecteur3D const& sortie); //methode qui ajoute une MailleFODO utilisee dans les "mega-constructeurs" de l'accelerateur
-		
-		No_name abs_element (double x) const; //renvoie un size_t indiquant l'indice de l'element tel que l'abscisse curviligne x correspond a un vecteur dans cet element, et retourne x soustrait par les longueurs des elements precedents
+
+		PositionEtElement abs_element (double x) const; //renvoie un size_t indiquant l'indice de l'element tel que l'abscisse curviligne x correspond a un vecteur dans cet element, et retourne x soustrait par les longueurs des elements precedents
 
 	public:
 		//Constructeurs
@@ -43,7 +43,7 @@ class Accelerateur : public Dessinable {
 		void ajouter_faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl);
 		void ajouter_el(p_Element const&);
 		void ajouter_faisceau_par(size_t i, p_Particule const&);
-		
+
 		bool encore_des_particules() const; //renvoie vrai s'il y a encore des particules dans l'accelerateur, faux sinon
 
 		//MEGA-Constructeurs
@@ -52,7 +52,7 @@ class Accelerateur : public Dessinable {
 
 		//CONSTRUIRE
 		void souder_accelerateur(); //Cette méthode soude tous les éléments entre eux en settant l'élément suivant/précédent de chaque élément comme pointeur vers l'élément qui le suit/précède dans le vecteur elements_. Cette méthode suppose que les élément ont étés ajoutés dans l'ordre attendu.
-		
+
 		//Abscisse curviligne
 		Vecteur3D abs_en_pos(double x) const; //methode qui prend une abscisse curviligne (entre 0 et 1) et renvoie une position en fonction de la geometrie de l'accelerateur
 		Abs pos_en_abs(p_Particule const&) const; //methode qui renvoie l'abscissse curviligne d'une particule dans l'accelerateur
@@ -74,7 +74,7 @@ class Accelerateur : public Dessinable {
 
 		//DESSINER
 		virtual void dessine() override { if(support_!=nullptr) support_->dessine(*this); }
-		
+
 		virtual void set_support(SupportADessin*) override;
 
 };

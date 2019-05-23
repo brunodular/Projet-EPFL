@@ -43,7 +43,7 @@ typedef std::vector<p_Particule> Collection_P;
 //=======================================================================
 
 //STRUCTURE POUR MODULARISER QUELQUES METHODES DANS ACCELERATEUR
-struct No_name {
+struct PositionEtElement {
 	size_t i_;
 	double x_;
 };

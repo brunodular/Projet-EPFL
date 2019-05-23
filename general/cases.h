@@ -1,10 +1,10 @@
 #pragma once
 
 #include <vector>
-#include <set>
+#include <unordered_set>
 #include "Particule.h"
 
-typedef std::set<p_Particule> Set_P;
+typedef std::unordered_set<p_Particule> Set_P;
 
 class Cases {
 private:
@@ -24,8 +24,8 @@ public:
   void supprimer_p_de_case(p_Particule const& p, size_t i);
   bool p_est_dans_case(p_Particule const& p, size_t i) const; //renvoie vrai si la particule est dans la case, faux sinon
   size_t case_de_abs(double abs) const; //renvoie le numéro de la case contenant une particule d'abscisse curviligne abs donnée
-  
-  
+
+
   //Getters
   uint nombre() const;
   Set_P& case_num(size_t i); //renvoie la "case" d'indice i

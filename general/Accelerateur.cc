@@ -113,7 +113,7 @@ void Accelerateur::souder_accelerateur() {
 
 	//Abscisse curviligne
 
-No_name Accelerateur::abs_element (double x) const {
+PositionEtElement Accelerateur::abs_element (double x) const {
 	x *= longueur_;
 	if (x < 0) x += longueur_;
 	size_t i(0);
@@ -121,17 +121,17 @@ No_name Accelerateur::abs_element (double x) const {
 		x -= elements_[i]->longueur();
 		i = (i+1)%elements_.size();
 	}
-	return (No_name {i, x});
+	return (PositionEtElement {i, x});
 }
 
 Vecteur3D Accelerateur::abs_en_pos(double x) const {
-  No_name n(abs_element(x));
+  PositionEtElement n(abs_element(x));
   return elements_[n.i_]->abs_en_pos(n.x_ / elements_[n.i_]->longueur());
 }
 
 
 Vecteur3D Accelerateur::tangente_en_abs(double x, bool sens_horaire) const {
-  No_name n(abs_element(x));
+  PositionEtElement n(abs_element(x));
   return elements_[n.i_]->tangente_en_abs(n.x_ / elements_[n.i_]->longueur(), sens_horaire);
 }
 
