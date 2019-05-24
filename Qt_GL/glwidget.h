@@ -9,11 +9,12 @@
 class GLWidget : public QOpenGLWidget
 {
 public:
-  GLWidget(QWidget* parent = nullptr, Accelerateur* a=nullptr)
+  GLWidget(QWidget* parent = nullptr, Accelerateur* a=nullptr, bool autreFenetre=false)
     : QOpenGLWidget(parent)
-    , evo_par_affichage(1), acc_(a)
-    {acc_->set_support(&vue);}
-  virtual ~GLWidget() {}
+    , evo_par_affichage(1), acc_(a), autreFenetre_(autreFenetre)
+    {if(!autreFenetre) acc_->set_support(&vue);}
+  
+  Accelerateur* acc() const {return acc_;}
 
 	// Methodes qui construit l'accelerateur
   void ajouter_structure_P10();
@@ -34,7 +35,7 @@ private:
 
   // Méthodes de gestion interne
   void pause();
-
+  
   // Vue : ce qu'il faut donner au contenu pour qu'il puisse se dessiner sur la vue
   VueOpenGL vue;
 
@@ -52,6 +53,9 @@ private:
   
   //Indique si a appuye sur space precedemment
   bool toucheEspace=true;
+  
+  //Indique si repose sur un autre GLWidget
+  bool autreFenetre_;
 };
 
 #endif // GLWIDGET_H

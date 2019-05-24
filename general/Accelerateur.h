@@ -31,6 +31,15 @@ class Accelerateur : public Dessinable {
 		//Getters
 		Collection_E elements() const;
 		Collection_F faisceaux() const;
+    
+    double emittance_r() const;
+		double emittance_z() const;
+
+		double A_11_r() const;
+		double A_12_r() const;		//renvoie les coefficients elliptiques demandees selon les coordonnees orthogonales
+		double A_22_r() const;
+    
+    double moyenne_ellipse(ELLIPSE) const;
 
 		//Methodes
 			//Afficher

@@ -14,12 +14,8 @@ class Faisceau : public Dessinable {
 		const unsigned int lambda_; 		//coefficient pour determiner le nb de macro-particules voulant etre simulees
 		Collection_P particules_;	//(voir constantes.h pour le typedef de Collection_P)
 
-		//méthodes privées, utilisées dans les autres méthodes et notamment dans les methodes pour determiner les coefficients elliptiques
-		double moyenne_ellipse(ELLIPSE) const;
-
 	public:
-
-		//Constructeurs + Destructeur
+    //Constructeurs + Destructeur
 		Faisceau (p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, SupportADessin* support_=nullptr); //x et dl sont des abscisses curvilignes, donc entre 0 et 1
 
 		Faisceau () = default;
@@ -51,6 +47,8 @@ class Faisceau : public Dessinable {
 		double A_11_z() const;
 		double A_12_z() const;		//renvoie selon les coordonnees verticales
 		double A_22_z() const;
+    
+    double moyenne_ellipse(ELLIPSE) const; //méthodes utilisées dans les autres méthodes pour determiner les coefficients elliptiques
 
 		unsigned int nombre_particules() const;	//renvoie le nombre de macro-particules
 		unsigned int nombre_particules_simulees() const; //renvoie le nombre de particules hypothétique

@@ -295,3 +295,105 @@ void VueOpenGL::dessineTore(Vecteur3D const& centre, Vecteur3D const& base, Vect
     glEnd();
   }
 }
+
+void VueOpenGL::dessineSinus(double dt) {
+  QMatrix4x4 matrice;
+  prog.setUniformValue("vue_modele", matrice);              // On met la matrice identité dans vue_modele
+ 
+  /* Dessine le cadre blanc */
+  matrice.setToIdentity();
+  matrice.ortho(-1.0, 1.0, -1.0, 1.0, -10.0, 10.0);         // matrice simple pour faire le cadre
+  prog.setUniformValue("projection", matrice);
+ 
+  prog.setAttributeValue(CouleurId, 1.0, 1.0, 1.0);
+  glBegin(GL_LINE_LOOP);                                    // la primitive LINE_LOOP referme le tracé avec une ligne (n lignes)
+  prog.setAttributeValue(SommetId, -1.0, -1.0, 2.0);        // le 2.0 dans la composante z permet de mettre le cadre par dessus tout
+  prog.setAttributeValue(SommetId, +1.0, -1.0, 2.0);        // ceci fonctionne grace à l'option GL_DEPTH_TEST
+  prog.setAttributeValue(SommetId, +1.0, +1.0, 2.0);
+  prog.setAttributeValue(SommetId, -1.0, +1.0, 2.0);
+  glEnd();
+ 
+  /* Change de matrice de projection adpatée aux zoom du graph */
+  matrice.setToIdentity();
+  double xmin(-2.0 * M_PI);
+  double xmax(+2.0 * M_PI);
+  double ymin(-1.2);
+  double ymax(+1.2);
+  matrice.ortho(xmin, xmax, ymin, ymax, -10.0, 10.0);
+  prog.setUniformValue("projection", matrice);
+ 
+  /* Dessine les axes */
+  prog.setAttributeValue(CouleurId, 0.0, 0.0, 1.0);
+  glBegin(GL_LINES);                                        // la primitive LINES dessine une ligne par paire de points (n/2 lignes)
+  prog.setAttributeValue(SommetId, xmin, 0.0, -1.0);        // le -1.0 dans la composante z met les axes en arrière plan
+  prog.setAttributeValue(SommetId, xmax, 0.0, -1.0);
+  prog.setAttributeValue(SommetId, 0.0, ymin, -1.0);
+  prog.setAttributeValue(SommetId, 0.0, ymax, -1.0);
+  glEnd();
+ 
+  /* Dessine la fonction sinus */
+  prog.setAttributeValue(CouleurId, 0.0, 1.0, 0.0);
+  glBegin(GL_LINE_STRIP);                                   // la primitive LINE_STRIP ne referme par le tracé (n-1 lignes)
+  double xpas((xmax - xmin) / 128.0);
+  for (double x(xmin); x <= xmax; x += xpas) {
+    double y = std::sin(dt*x);
+    prog.setAttributeValue(SommetId, x, y, 0.0);
+  }
+  glEnd();
+}
+
+
+void VueOpenGL::dessineEllipse (double A_11, double A_12, double A_22, double emittance) {
+  QMatrix4x4 matrice;
+  prog.setUniformValue("vue_modele", matrice);              // On met la matrice identité dans vue_modele
+ 
+  /* Dessine le cadre blanc */
+  matrice.setToIdentity();
+  matrice.ortho(-1.0, 1.0, -1.0, 1.0, -10.0, 10.0);         // matrice simple pour faire le cadre
+  prog.setUniformValue("projection", matrice);
+ 
+  prog.setAttributeValue(CouleurId, 1.0, 1.0, 1.0);
+  glBegin(GL_LINE_LOOP);                                    // la primitive LINE_LOOP referme le tracé avec une ligne (n lignes)
+  prog.setAttributeValue(SommetId, -1.0, -1.0, 2.0);        // le 2.0 dans la composante z permet de mettre le cadre par dessus tout
+  prog.setAttributeValue(SommetId, +1.0, -1.0, 2.0);        // ceci fonctionne grace à l'option GL_DEPTH_TEST
+  prog.setAttributeValue(SommetId, +1.0, +1.0, 2.0);
+  prog.setAttributeValue(SommetId, -1.0, +1.0, 2.0);
+  glEnd();
+ 
+  /* Change de matrice de projection adpatée aux zoom du graph */
+  matrice.setToIdentity();
+  double xmin(-5.0);
+  double xmax(+5.0);
+  double ymin(-5.0);
+  double ymax(+5.0);
+  matrice.ortho(xmin, xmax, ymin, ymax, -10.0, 10.0);
+  prog.setUniformValue("projection", matrice);
+ 
+  /* Dessine les axes */
+  prog.setAttributeValue(CouleurId, 0.0, 0.0, 1.0);
+  glBegin(GL_LINES);                                        // la primitive LINES dessine une ligne par paire de points (n/2 lignes)
+  prog.setAttributeValue(SommetId, xmin, 0.0, -1.0);        // le -1.0 dans la composante z met les axes en arrière plan
+  prog.setAttributeValue(SommetId, xmax, 0.0, -1.0);
+  prog.setAttributeValue(SommetId, 0.0, ymin, -1.0);
+  prog.setAttributeValue(SommetId, 0.0, ymax, -1.0);
+  glEnd();
+  
+  
+  prog.setAttributeValue(CouleurId, 0.0, 1.0, 0.0);
+  glBegin(GL_LINE_STRIP);      
+  double xpas((xmax-xmin)/120.0);
+  for (double x(xmin); x<=xmax; x+=xpas) {
+    double y = (-2*A_12*x+std::sqrt((4*(A_12*A_12-A_22*(A_11*x*x-emittance)))))/(2*A_22)*1e-7;
+    //std::cout << '(' << x << ", " << y << ')' <<  std::endl;
+    prog.setAttributeValue(SommetId, x, y, 0.0);
+  }
+  for (double x(xmin); x<=xmax; x+=xpas) {
+    double y = (-2*A_12*x-std::sqrt((4*(A_12*A_12-A_22*(A_11*x*x-emittance)))))/(2*A_22)*1e-7;
+    //std::cout << '(' << x << ", " << y << ')' <<  std::endl;
+    prog.setAttributeValue(SommetId, x, y, 0.0);
+  }
+  glEnd();
+
+}
+
+

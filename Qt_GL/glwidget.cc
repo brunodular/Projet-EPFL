@@ -68,7 +68,8 @@ void GLWidget::resizeGL(int width, int height)
 void GLWidget::paintGL()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  acc_->dessine();
+  if (!autreFenetre_) acc_->dessine(); 
+  else vue.dessineEllipse(acc_->A_11_r(), acc_->A_12_r(), acc_->A_22_r(), acc_->emittance_r()); //vue.dessineSinus(acc_->emittance_r()*1e+8);
 }
 
 

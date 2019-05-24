@@ -44,6 +44,8 @@ class VueOpenGL : public SupportADessin {
                      double rouge = 1.0, double vert = 1.0, double bleu = 1.0);
   void dessineCylindre(Vecteur3D const& base, Vecteur3D const& end, double r,double rouge = 1.0, double vert = 1.0, double bleu = 1.0);
   void dessineTore(Vecteur3D const& centre, Vecteur3D const& base, Vecteur3D const& end, double minor_radius, double rouge = 1.0, double vert = 1.0, double bleu = 1.0);
+  void dessineSinus(double=1.0);
+  void dessineEllipse(double A_11, double A_12, double A_22, double emittance);
 
  private:
   // Un shader OpenGL encapsulé dans une classe Qt
