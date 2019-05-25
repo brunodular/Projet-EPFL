@@ -2,6 +2,7 @@
 #include <QTimerEvent>
 #include <QMatrix4x4>
 #include <iostream>
+#include <limits>
 #include "glwidget.h"
 using namespace std;
 
@@ -206,11 +207,19 @@ void GLWidget::ajouter_faisceau(p_Particule p, bool sens_horaire, double x, unsi
 
 //Interface utilisateur
 
+void liberer_cin(istream& in) {
+  if (in.fail()) {
+      in.clear();
+      in.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+}
+
 unsigned int demande_uint(string const& question, unsigned int min) {
   cout << question << " ( ≥ " << min << " ) ";
   unsigned int n;
   do {
     cin >> n;
+    liberer_cin(cin);
   } while (n<min);
   return n;
 }
@@ -220,6 +229,7 @@ double demande_double(string const& question, double min) {
   double x;
   do {
     cin >> x;
+    liberer_cin(cin);
   } while (x<min);
   return x;
 }
@@ -229,6 +239,7 @@ bool demande(string const& question) {
   char c(' ');
   do {
     cin >> c;
+    liberer_cin(cin);
   } while (c != 'o' and c != 'n');
   return (c == 'o');
 }
