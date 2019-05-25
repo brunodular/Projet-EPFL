@@ -67,7 +67,7 @@ void Particule::ajouter_force_inter_particulaire(Particule const& p) {
 	if (!est_zero(d*d*d)) {
 		double g=gamma();
 		double F = (q_*p.q()/(4*M_PI*e_0*d*d*d*g*g)); //force a ajouter
-    if (F != F) { //verifie si F est un NaN (not a number), car les NaN ont la particularite que toute expression logique qui en contient est false
+    if (F != F) { //verifie si F est un NaN (not a number), car les NaN ont la particularite que toute expression logique qui en contient est false.
       F_ += F*r;
     }
 	}

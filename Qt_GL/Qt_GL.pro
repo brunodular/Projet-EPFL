@@ -4,7 +4,7 @@ CONFIG -= app_bundle
 
 win32:LIBS += -lopengl32
 
-TARGET = ex_gl
+TARGET = accelerator
 
 LIBS += -L../general -lgeneral
 PRE_TARGETDEPS += ../general/libgeneral.a

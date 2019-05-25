@@ -38,14 +38,14 @@ Collection_F Accelerateur::faisceaux() const {
   return faisceaux_;
 }
 
-double Accelerateur::emittance_r() const {return faisceaux_[0]->emittance_r();}
-double Accelerateur::emittance_z() const {return faisceaux_[0]->emittance_z();}
+double Accelerateur::emittance_r(size_t i) const {return faisceaux_[i]->emittance_r();}
+double Accelerateur::emittance_z(size_t i) const {return faisceaux_[i]->emittance_z();}
 
-double Accelerateur::A_11_r() const {return faisceaux_[0]->A_11_r();}
-double Accelerateur::A_12_r() const {return faisceaux_[0]->A_12_r();}		//renvoie les coefficients elliptiques demandees selon les coordonnees orthogonale
-double Accelerateur::A_22_r() const {return faisceaux_[0]->A_22_r();}
+double Accelerateur::A_11_r(size_t i) const {return faisceaux_[i]->A_11_r();}
+double Accelerateur::A_12_r(size_t i) const {return faisceaux_[i]->A_12_r();}		//renvoie les coefficients elliptiques demandees selon les coordonnees orthogonale
+double Accelerateur::A_22_r(size_t i) const {return faisceaux_[i]->A_22_r();}
 
-double Accelerateur::moyenne_ellipse(ELLIPSE e) const {return faisceaux_[0]->moyenne_ellipse(e);}
+double Accelerateur::moyenne_ellipse(ELLIPSE e, size_t i) const {return faisceaux_[i]->moyenne_ellipse(e);}
 
 //Methodes
 

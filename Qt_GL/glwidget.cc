@@ -3,6 +3,7 @@
 #include <QMatrix4x4>
 #include <iostream>
 #include "glwidget.h"
+using namespace std;
 
 //=======================================================================
 void GLWidget::mousePressEvent(QMouseEvent* event)
@@ -68,8 +69,8 @@ void GLWidget::resizeGL(int width, int height)
 void GLWidget::paintGL()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  if (!autreFenetre_) acc_->dessine();
-  else vue.dessineEllipse(acc_->A_11_r(), acc_->A_12_r(), acc_->A_22_r(), acc_->emittance_r()); //vue.dessineSinus(acc_->emittance_r()*1e+8);
+  if (numero_ == 0) acc_->dessine();
+  else vue.dessineEllipse(acc_->A_11_r(numero_-1), acc_->A_12_r(numero_-1), acc_->A_22_r(numero_-1), acc_->emittance_r(numero_-1)); //vue.dessineSinus(acc_->emittance_r()*1e+8);
 }
 
 
@@ -162,7 +163,7 @@ void GLWidget::timerEvent(QTimerEvent* event)
   //double dt = 1e-10;
   double dt = chronometre.restart() * 1e-12;
 
-  if (!autreFenetre_) {
+  if (numero_ == 0) {
     for (size_t i(0); i<evo_par_affichage; ++i) {
       acc_->evolue(dt);
     }
@@ -174,7 +175,7 @@ void GLWidget::timerEvent(QTimerEvent* event)
 // ======================================================================
 void GLWidget::pause()
 {
-  if (autreFenetre_) return;
+  if (numero_ > 0) return;
   if (timerId == 0) {
 	// dans ce cas le timer ne tourne pas alors on le lance
 	timerId = startTimer(20);
@@ -201,4 +202,53 @@ void GLWidget::construire_polygone(size_t n, double R) {
 void GLWidget::ajouter_faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, bool distribution_normale) {
 	acc_->ajouter_faisceau(p, sens_horaire, x, nombre, lambda, dl, distribution_normale);
 	acc_->initialiser_particules();
+}
+
+//Interface utilisateur
+
+unsigned int demande_uint(string const& question, unsigned int min) {
+  cout << question << " ( ≥ " << min << " ) ";
+  unsigned int n;
+  do {
+    cin >> n;
+  } while (n<min);
+  return n;
+}
+
+double demande_double(string const& question, double min) {
+  cout << question << " ( ≥ " << min << " ) ";
+  double x;
+  do {
+    cin >> x;
+  } while (x<min);
+  return x;
+}
+
+bool demande(string const& question) {
+  cout << question << " o pour OUI, n pour NON ";
+  char c(' ');
+  do {
+    cin >> c;
+  } while (c != 'o' and c != 'n');
+  return (c == 'o');
+}
+
+
+void GLWidget::construire_polygone() {
+  construire_polygone(demande_uint("Nombre de côtés :",3),demande_double("Rayon de l'accélérateur :",1));
+}
+
+void GLWidget::ajouter_faisceau(vector<unique_ptr<GLWidget>>& v) {
+  ajouter_faisceau(new Particule(Vecteur3D(0, 0, 0), Vecteur3D(0,-1,0), 2, 0.938272, e),demande("Sens horaire ?"), demande_double("Faisceau centré en :",0.0), demande_uint("Nombre de particules :",1), demande_uint("Facteur de macro-particules :",1),demande_double("Etendue du faisceau :",0.05),demande("Distribution normale (OUI) ou linéaire (NON) :"));
+
+  v.push_back(unique_ptr<GLWidget>(new GLWidget(nullptr, acc(), v.size() + 1)));
+}
+
+void GLWidget::bienvenue(vector<unique_ptr<GLWidget>>& v) {
+  cout << "Bienvenue dans ce simulateur d'accélérateur de particules !" << endl;
+  cout << "Pour commencer, construisons un accélérateur." << endl;
+  construire_polygone();
+  while (demande("Ajouter un faisceau de particules ?")) {
+    ajouter_faisceau(v);
+  }
 }

@@ -1,6 +1,7 @@
 #include <QApplication>
 #include "glwidget.h"
 #include <iostream>
+#include <memory>
 using namespace std;
 
 int main(int argc, char* argv[])
@@ -10,17 +11,13 @@ int main(int argc, char* argv[])
 
     GLWidget w(nullptr, new Accelerateur (nullptr));
 
-    w.construire_polygone(7,2.5);
+    vector<unique_ptr<GLWidget>> affichage_ellipses;
 
-  	//w.ajouter_structure_P10();		//construit la structure de l'exercice P10
+    w.bienvenue(affichage_ellipses);
 
-    w.ajouter_faisceau(p_Particule (new Particule(Vecteur3D(0, 0, 0), Vecteur3D(0,-1,0), 2, 0.938272, e)), true, 0.1, 150, 1, 0.3, true);
-
-    GLWidget h(nullptr, w.acc(), true);
-
-  	w.show();
-    h.show();
+    for (auto& h : affichage_ellipses) h->show();
+    w.show();
 
   	return a.exec();
-  } catch (Erreur err){cout<<err.message<<endl;}
+  } catch (Erreur err){cout << err.message << endl;}
 }
