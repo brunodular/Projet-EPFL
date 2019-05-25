@@ -239,7 +239,11 @@ void GLWidget::construire_polygone() {
 }
 
 void GLWidget::ajouter_faisceau(vector<unique_ptr<GLWidget>>& v) {
-  ajouter_faisceau(new Particule(Vecteur3D(0, 0, 0), Vecteur3D(0,-1,0), 2, 0.938272, e),demande("Sens horaire ?"), demande_double("Faisceau centré en :",0.0), demande_uint("Nombre de particules :",1), demande_uint("Facteur de macro-particules :",1),demande_double("Etendue du faisceau :",0.05),demande("Distribution normale (OUI) ou linéaire (NON) :"));
+  bool sens_horaire(demande("Sens horaire ?"));
+  double q(0.0);
+  if (sens_horaire) q=e;
+  else q=-e;
+  ajouter_faisceau(new Particule(Vecteur3D(0, 0, 0), Vecteur3D(0,-1,0), 2, 0.938272, q),sens_horaire, demande_double("Faisceau centré en :",0.0), demande_uint("Nombre de particules :",1), demande_uint("Facteur de macro-particules :",1),demande_double("Etendue du faisceau :",0.05),demande("Distribution normale (OUI) ou linéaire (NON) :"));
 
   v.push_back(unique_ptr<GLWidget>(new GLWidget(nullptr, acc(), v.size() + 1)));
 }
