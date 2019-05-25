@@ -16,7 +16,7 @@ class Faisceau : public Dessinable {
 
 	public:
     //Constructeurs + Destructeur
-		Faisceau (p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, SupportADessin* support_=nullptr); //x et dl sont des abscisses curvilignes, donc entre 0 et 1
+		Faisceau (p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, bool distribution_normale = false, SupportADessin* support_=nullptr); //x et dl sont des abscisses curvilignes, donc entre 0 et 1
 
 		Faisceau () = default;
 
@@ -47,7 +47,7 @@ class Faisceau : public Dessinable {
 		double A_11_z() const;
 		double A_12_z() const;		//renvoie selon les coordonnees verticales
 		double A_22_z() const;
-    
+
     double moyenne_ellipse(ELLIPSE) const; //méthodes utilisées dans les autres méthodes pour determiner les coefficients elliptiques
 
 		unsigned int nombre_particules() const;	//renvoie le nombre de macro-particules

@@ -14,6 +14,9 @@ Particule::Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q
 Particule::Particule(Accelerateur const& acc, double pos, bool sens_horaire, double E, Masse m, double q, SupportADessin* support)
  : Particule(acc.abs_en_pos(pos), acc.tangente_en_abs(pos, sens_horaire),E,m,q,support) {}
 
+Particule::Particule(Accelerateur const& acc, double pos_longi, double pos_vert, double pos_transv, bool sens_horaire, double E, Masse m, double q, SupportADessin* support)
+  : Particule(acc.abs_en_pos(pos_longi, pos_transv, pos_vert), acc.tangente_en_abs(pos_longi, sens_horaire),E,m,q,support) {}
+
 //=======================================================================
 
 //getters
@@ -58,12 +61,17 @@ void Particule::ajouter_f_magn(Vecteur3D const& B,double dt) {
 }
 
 void Particule::ajouter_force_inter_particulaire(Particule const& p) {
-	Vecteur3D r(pos_-p.pos());
+
+  Vecteur3D r(p.pos()-pos_);
 	double d=r.norme();
-	if (!est_zero(d)) {
+	if (!est_zero(d*d*d)) {
 		double g=gamma();
-		F_ -= q_*q_/(4*M_PI*e_0*d*d*d*g*g)*r*1e+13;
+		double F = (q_*p.q()/(4*M_PI*e_0*d*d*d*g*g)); //force a ajouter
+    if (F != F) { //verifie si F est un NaN (not a number), car les NaN ont la particularite que toute expression logique qui en contient est false
+      F_ += F*r;
+    }
 	}
+
 }
 
 void Particule::supprimer_forces() {

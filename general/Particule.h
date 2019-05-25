@@ -25,7 +25,10 @@ private:
 public:
   //Constructeur
   Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support = nullptr);	//Constructeur "classique" de Particule
+
   Particule(Accelerateur const& acc, double pos, bool sens_horaire, double E, Masse m, double q, SupportADessin* support = nullptr); //Constructeur de Particule utilise pour mettre le vecteur vitesse de la particule dans le sens de la trajectoire ideale de l'accelerateur et de direction le sens-horaire (ou pas selon le booleen)
+
+  Particule(Accelerateur const& acc, double pos_longi, double pos_vert, double pos_transv, bool sens_horaire, double E, Masse m, double q, SupportADessin* support = nullptr);
 
   //getters
   Vecteur3D pos() const;
@@ -47,7 +50,7 @@ public:
   void supprimer_forces();
   void ajouter_force_inter_particulaire(Particule const&);
   void ajouter_f_magn(Vecteur3D const&,double);
-		
+
 		//Evolution
   void bouger(double);
 

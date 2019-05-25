@@ -170,7 +170,7 @@ Abs ElementCourbe::pos_en_abs(p_Particule const& p) const {
 }
 
 Vecteur3D ElementCourbe::tangente_en_abs(double x, bool sens_horaire) const {
-  Vecteur3D pos = abs_en_pos(x) - centre_;
+  Vecteur3D pos = ~(abs_en_pos(x) - centre_);
   if (sens_horaire) return pos ^ e3;
   else return -(pos ^ e3);
 }

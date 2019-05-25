@@ -28,6 +28,12 @@ Accelerateur::~Accelerateur() {
 Collection_E Accelerateur::elements() const {
   return elements_;
 }
+
+double Accelerateur::r_section() const {
+  if (elements_.size() == 0) return 0.0;
+  else return elements_[0]->r_section();
+}
+
 Collection_F Accelerateur::faisceaux() const {
   return faisceaux_;
 }
@@ -38,7 +44,7 @@ double Accelerateur::emittance_z() const {return faisceaux_[0]->emittance_z();}
 double Accelerateur::A_11_r() const {return faisceaux_[0]->A_11_r();}
 double Accelerateur::A_12_r() const {return faisceaux_[0]->A_12_r();}		//renvoie les coefficients elliptiques demandees selon les coordonnees orthogonale
 double Accelerateur::A_22_r() const {return faisceaux_[0]->A_22_r();}
-    
+
 double Accelerateur::moyenne_ellipse(ELLIPSE e) const {return faisceaux_[0]->moyenne_ellipse(e);}
 
 //Methodes
@@ -99,8 +105,8 @@ ostream& Accelerateur::affiche_info_ellipse(ostream& sortie) const {
   return sortie;
 }
 
-void Accelerateur::ajouter_faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl) {
-  faisceaux_.push_back(p_Faisceau(new Faisceau(p,sens_horaire,x,nombre,lambda,dl,*this)));
+void Accelerateur::ajouter_faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, bool distribution_normale) {
+  faisceaux_.push_back(p_Faisceau(new Faisceau(p,sens_horaire,x,nombre,lambda,dl,*this,distribution_normale)));
   faisceaux_.back()->set_support(support_);
 }
 
@@ -162,6 +168,15 @@ Abs Accelerateur::pos_en_abs(p_Particule const& p) const {
   abs += p->element_courant()->pos_en_abs(p);
   abs /= longueur_;
   return abs;
+}
+
+Vecteur3D Accelerateur::abs_en_pos(double x, double y, double z) const {
+  Vecteur3D pos(abs_en_pos(x));
+  Vecteur3D tang(tangente_en_abs(x,true));
+
+  Vecteur3D transv(tang ^ e3);
+
+  return (pos + r_section() * (z*e3 + y*transv));
 }
 
 

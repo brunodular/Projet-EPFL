@@ -4,6 +4,8 @@
 #include <cmath>
 #include <vector>
 #include <iomanip>
+#include <random>
+#include <functional>
 using namespace std;
 
 //=======================================================================
@@ -54,14 +56,35 @@ double Faisceau::moyenne_ellipse(ELLIPSE e) const {
 
 //Constructeurs
 
-Faisceau::Faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, SupportADessin* support_)
+Faisceau::Faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, bool distribution_normale, SupportADessin* support_)
 	: Dessinable(support_), lambda_(lambda)
 {
-  unsigned int macro_nombre(nombre/lambda);
-  double dx(dl/macro_nombre);
+  unsigned int n(nombre/lambda);
 
-	for (size_t i(0); i<macro_nombre; ++i) {
-		particules_.push_back(p_Particule (new Particule(acc, x - 0.5*dl + i*dx, sens_horaire, p->E()*lambda, p->m()*lambda, p->q()*lambda)));
+  if (distribution_normale) {
+
+    random_device rd; //pour la graine
+    mt19937 gen(rd());
+
+    //default_random_engine generateur(graine);
+    normal_distribution<double> distribution(0.0,0.1);
+    auto tirage(bind(distribution,gen));
+
+    double longi;
+
+    for (size_t i(0); i < n; ++i) {
+      longi = tirage();
+      double vert = tirage();
+      double transv = tirage();
+
+      particules_.push_back(p_Particule (new Particule(acc, x + longi * dl, vert, transv, sens_horaire, p->E()*lambda, p->m()*lambda, p->q()*lambda)));
+    }
+
+  } else {
+    double dx(dl/n);
+  	for (size_t i(0); i<n; ++i) {
+  		particules_.push_back(p_Particule (new Particule(acc, x - 0.5*dl + i*dx, sens_horaire, p->E()*lambda, p->m()*lambda, p->q()*lambda)));
+    }
   }
 }
 
@@ -216,6 +239,7 @@ void Faisceau::evolue(Accelerateur const& acc, Cases& cases, double dt) {
 
       size_t j(particules_[i]->case_courante());
 
+
       //Ajouter les forces inter-particulaires au moyen de la technique d'optimisation des plus proches voisins
       size_t k(j-1); if (j == 0) k = cases.nombre();
       for (auto const& p : cases.case_num(k)) particules_[i]->ajouter_force_inter_particulaire(*p);
@@ -227,10 +251,12 @@ void Faisceau::evolue(Accelerateur const& acc, Cases& cases, double dt) {
       for (auto const& p : cases.case_num(j+1)) particules_[i]->ajouter_force_inter_particulaire(*p);
       //fin de l'ajout des forces initialiser_particulaires
 
+
       particules_[i]->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
 
 
       particules_[i]->element_courant()->passe_au_suivant(*particules_[i]); //Mise à jour de l'élément courant de la particule p.
+
 
       if (not particules_[i]->est_sortie()) {
         if (cases.case_de_abs(acc.pos_en_abs(particules_[i])) != j) {
@@ -238,6 +264,7 @@ void Faisceau::evolue(Accelerateur const& acc, Cases& cases, double dt) {
           cases.ajouter_p_a_case(particules_[i],j+1);
         }
       }
+
 
       ++i;
   } else {

@@ -68,7 +68,7 @@ void GLWidget::resizeGL(int width, int height)
 void GLWidget::paintGL()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  if (!autreFenetre_) acc_->dessine(); 
+  if (!autreFenetre_) acc_->dessine();
   else vue.dessineEllipse(acc_->A_11_r(), acc_->A_12_r(), acc_->A_22_r(), acc_->emittance_r()); //vue.dessineSinus(acc_->emittance_r()*1e+8);
 }
 
@@ -162,8 +162,10 @@ void GLWidget::timerEvent(QTimerEvent* event)
   //double dt = 1e-10;
   double dt = chronometre.restart() * 1e-12;
 
-  for (size_t i(0); i<evo_par_affichage; ++i) {
-    acc_->evolue(dt);
+  if (!autreFenetre_) {
+    for (size_t i(0); i<evo_par_affichage; ++i) {
+      acc_->evolue(dt);
+    }
   }
 
   update();
@@ -172,6 +174,7 @@ void GLWidget::timerEvent(QTimerEvent* event)
 // ======================================================================
 void GLWidget::pause()
 {
+  if (autreFenetre_) return;
   if (timerId == 0) {
 	// dans ce cas le timer ne tourne pas alors on le lance
 	timerId = startTimer(20);
@@ -195,7 +198,7 @@ void GLWidget::construire_polygone(size_t n, double R) {
   acc_->construire_polygone(n,R);
 }
 
-void GLWidget::ajouter_faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl) {
-	acc_->ajouter_faisceau(p, sens_horaire, x, nombre, lambda, dl);
+void GLWidget::ajouter_faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, bool distribution_normale) {
+	acc_->ajouter_faisceau(p, sens_horaire, x, nombre, lambda, dl, distribution_normale);
 	acc_->initialiser_particules();
 }

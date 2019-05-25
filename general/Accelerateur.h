@@ -30,15 +30,16 @@ class Accelerateur : public Dessinable {
 
 		//Getters
 		Collection_E elements() const;
+    double r_section() const;
 		Collection_F faisceaux() const;
-    
+
     double emittance_r() const;
 		double emittance_z() const;
 
 		double A_11_r() const;
 		double A_12_r() const;		//renvoie les coefficients elliptiques demandees selon les coordonnees orthogonales
 		double A_22_r() const;
-    
+
     double moyenne_ellipse(ELLIPSE) const;
 
 		//Methodes
@@ -50,7 +51,7 @@ class Accelerateur : public Dessinable {
 			//Ajouter
 
 		//ces méthodes affectent le support de l'Accélérateur aux supports des particules et éléments ajoutés.
-		void ajouter_faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl);
+		void ajouter_faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, bool distribution_normale = false);
 		void ajouter_el(p_Element const&);
 		void ajouter_faisceau_par(size_t i, p_Particule const&);
 
@@ -67,6 +68,7 @@ class Accelerateur : public Dessinable {
 		Vecteur3D abs_en_pos(double x) const; //methode qui prend une abscisse curviligne (entre 0 et 1) et renvoie une position en fonction de la geometrie de l'accelerateur
 		Abs pos_en_abs(p_Particule const&) const; //methode qui renvoie l'abscissse curviligne d'une particule dans l'accelerateur
 		Vecteur3D tangente_en_abs(double x, bool sens_horaire) const; //methode qui revoie un Vecteur3D dans la direction de la trajectoire ideale et dans le sens donne en parametre
+    Vecteur3D abs_en_pos(double x, double y, double z) const; //méthode qui renvoie la position correspondant à l'abscisse curviligne x, et de position (y,z) dans le plan perpendiculaire à l'accelerateur en ce point. Permet de creer des faisceaux avec une distribution normale dans les trois dimensions.
 
 		void initialiser_particules(); //Initialise les élément_courant_ et les cases courantes des particules des faisceaux
 
