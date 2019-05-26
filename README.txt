@@ -3,7 +3,7 @@
 Le code de ce fichier Git simule un accélérateur de particules (de mani1ere simplifié) sous format texte mais également sous forme graphique 3D. 
 
 Pour aboutir à la réalisation de notre simulation, nous avons implémenté tout ce qui a été demandé dans les séries liés au projet. Nous avons donc implémenté toutes les classes demandées, et noous avons ajouté une autre classe (la classe Cases) qui nous semblait nécessaire pour l'optimisation meilleur voisin.
-Nous avons donc également implémenté une partie graphisme avec laquelle on peut visualisé en 3D la simulation du mouvement des particules dans l'accélérateur. La partie graphisme est effectuée au moyen de la bibliothèque Qt (la version qui se trouve sur les machines virtuelles). A cela, nous avons également ajouté l'affichage des eillipses qui réprésentent (comme indiqué dans le complément mathématiques) la répartition dans les faisceaux. 
+Nous avons donc également implémenté une partie graphisme avec laquelle on peut visualisé en 3D la simulation du mouvement des particules dans l'accélérateur. La partie graphisme est effectuée au moyen de la bibliothèque Qt (la version qui se trouve sur les machines virtuelles). A cela, nous avons également ajouté l'affichage des ellipses qui réprésentent (comme indiqué dans le complément mathématiques) la répartition des particules dans les faisceaux. 
 
 Afin de ne pas avoir eu à écrire tous les makefiles, nous avons utilisé des fichiers .pro, dans lesquelles nous avons indiqué les dépendances entre les différents fichiers du projet. Ceux-ci vont ensuite permettre de générer les makefiles, comme expliqué ci-dessous.
 
