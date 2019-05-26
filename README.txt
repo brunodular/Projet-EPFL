@@ -9,7 +9,7 @@ Afin de ne pas avoir eu à écrire tous les makefiles, nous avons utilisé des f
 
 Les fichiers sont répartis de la manière suivante:
   - les fichiers liés à l'affichage graphique sont dans le dossier Qt-GL
-  - les fichiers qui font l'abstraction des objets simulés dans le dossier general
+  - les fichiers qui font l'abstraction des objets simulés sont dans le dossier general
   - les fichiers tests (qui ne sont généralement plus compilable) se trouvent dans le dossier TESTS
   - le fichier réponse et le journal se trouvent dans le dossier INFO
   - le code lié à l'affichage format texte se trouve dans le dossier vue_texte
