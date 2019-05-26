@@ -5,7 +5,7 @@ TACHES A REALISER:
 [X] s'inscrire en binôme                                      	
 [X] fusionner les deux projets (y compris les fichiers JOURNAL)	
 [X] Makefile                                               	
-[X] Vecteur finis (pleinement opÃ©rationnels et testÃ©s)  	
+[X] Vecteur finis (pleinement opérationnels et testés)  	
 [X] fichier REPONSES                                        
 [X] Particules                                            	
 [X] Dipôles                                               	
@@ -16,13 +16,13 @@ TACHES A REALISER:
 [X] exerciceP10                                          
 [X] Faisceaux		                                     
 [X] graphisme: cadre général (reprise des exemples tuto)    	
-[X] graphisme: Particule (+ ...)                          	
+[X] graphisme: Particule (+ Elements)                          	
 [X] Forces inter-particules                              	
 [X] Voisinage (P14)                                     	
 [X] Extensions (Maille FODO, Faisceaux plus réalistes, affichage des ellipses de phases, interface utilisateur, construction de polygone régulier)
-[ ] fichier CONCEPTION                                    
+[X] fichier CONCEPTION                                    
 [X] fichier README                                        
-[ ] fichier NOMS                                        	
+[X] fichier NOMS                                        	
 
 -- 28/02 --
 
@@ -159,3 +159,13 @@ TACHES A REALISER:
 -- 23/05 --
 
 - ENCORE le mème bug dans le programme: depuis notre implémentation des cases nous avons eu un problème qui apparaìt souvent lorsqu'on met trop de particules dans l'accélérateur et/ou quand on effectue trop de mouvement de caméra et/ou quand on augmente trop le pas de temps dt. Dans ces cas, toutes les particules disparaissent, sans toucher le bord des éléments (vérifié par des cout dans la méthode heurte-bord). On suppose que ce problème est peut-ètre du à la mémoire (cf. fichier conception pour plus de détails).
+
+-- 25/05 --
+
+- Ajout de l'affichage des ellipses de phases dans une autre fenêtre
+
+- Implémentation de l'interface utilisateur
+
+-- 26/05 --
+
+- Finalisation du projet: finalisation du fichier conception, du README, du JOURNAL et du fichier REPONSES
