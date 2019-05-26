@@ -16,7 +16,7 @@ void VueOpenGL::dessine(Particule const& p) {
 	matrice.translate((p.pos()).x(), (p.pos()).y(), (p.pos()).z());
 	matrice.scale(0.02);
 
-	dessineSphere(matrice, 1.0, 1.0, 1e+11*p.F().norme());
+	dessineSphere(matrice, 1.0, 1.0, 1e+12*p.F().norme());
 };
 
 void VueOpenGL::dessine(Accelerateur const& acc) {
@@ -299,12 +299,12 @@ void VueOpenGL::dessineTore(Vecteur3D const& centre, Vecteur3D const& base, Vect
 void VueOpenGL::dessineEllipse (double A_11, double A_12, double A_22, double emittance) {
   QMatrix4x4 matrice;
   prog.setUniformValue("vue_modele", matrice);              // On met la matrice identité dans vue_modele
- 
+
   /* Dessine le cadre blanc */
   matrice.setToIdentity();
   matrice.ortho(-1.0, 1.0, -1.0, 1.0, -10.0, 10.0);         // matrice simple pour faire le cadre
   prog.setUniformValue("projection", matrice);
- 
+
   prog.setAttributeValue(CouleurId, 1.0, 1.0, 1.0);
   glBegin(GL_LINE_LOOP);                                    // la primitive LINE_LOOP referme le tracé avec une ligne (n lignes)
   prog.setAttributeValue(SommetId, -1.0, -1.0, 2.0);        // le 2.0 dans la composante z permet de mettre le cadre par dessus tout
@@ -312,7 +312,7 @@ void VueOpenGL::dessineEllipse (double A_11, double A_12, double A_22, double em
   prog.setAttributeValue(SommetId, +1.0, +1.0, 2.0);
   prog.setAttributeValue(SommetId, -1.0, +1.0, 2.0);
   glEnd();
- 
+
   /* Change de matrice de projection adpatée aux zoom du graph */
   matrice.setToIdentity();
   double xmin(-5.0);
@@ -321,7 +321,7 @@ void VueOpenGL::dessineEllipse (double A_11, double A_12, double A_22, double em
   double ymax(+5.0);
   matrice.ortho(xmin, xmax, ymin, ymax, -10.0, 10.0);
   prog.setUniformValue("projection", matrice);
- 
+
   /* Dessine les axes */
   prog.setAttributeValue(CouleurId, 0.0, 0.0, 1.0);
   glBegin(GL_LINES);                                        // la primitive LINES dessine une ligne par paire de points (n/2 lignes)
@@ -330,10 +330,10 @@ void VueOpenGL::dessineEllipse (double A_11, double A_12, double A_22, double em
   prog.setAttributeValue(SommetId, 0.0, ymin, -1.0);
   prog.setAttributeValue(SommetId, 0.0, ymax, -1.0);
   glEnd();
-  
-  
+
+
   prog.setAttributeValue(CouleurId, 0.0, 1.0, 0.0);
-  glBegin(GL_LINE_STRIP);      
+  glBegin(GL_LINE_STRIP);
   double xpas((xmax-xmin)/120.0);
   for (double x(xmin); x<=xmax; x+=xpas) {
     double y = (-2*A_12*x+std::sqrt((4*(A_12*A_12-A_22*(A_11*x*x-emittance)))))/(2*A_22)*1e-7;
@@ -348,5 +348,3 @@ void VueOpenGL::dessineEllipse (double A_11, double A_12, double A_22, double em
   glEnd();
 
 }
-
-

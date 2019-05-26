@@ -258,5 +258,7 @@ Vecteur3D MailleFODO::B(Particule const& p) const {
     X = p.pos() - (pos_e_+dir_*(0.5*longueur_));
     Vecteur3D Y(X-(X*dir_)*dir_); //calcul des coordonnées locales au second quadrupôle
     return -b_*((Y*(e3^dir_))*e3 + (X.z() * (e3^dir_))); //calcul du champ magnétique
-  } else return Vecteur3D();
+  } else {
+    return Vecteur3D();
+  }
 }

@@ -251,7 +251,6 @@ void Faisceau::evolue(Accelerateur const& acc, Cases& cases, double dt) {
       for (auto const& p : cases.case_num(j+1)) particules_[i]->ajouter_force_inter_particulaire(*p);
       //fin de l'ajout des forces initialiser_particulaires
 
-
       particules_[i]->bouger(dt); //On modifie la position et la vitesse de la particule en fonction de la force quis s'exerce dessus.
 
 
