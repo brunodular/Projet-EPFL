@@ -1,4 +1,4 @@
-TACHE A REALISER:
+TACHES A REALISER:
 
 [X] créer le JOURNAL                                    	 
 [X] lire complètement le descriptif général                  	
