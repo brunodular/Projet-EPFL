@@ -26,10 +26,10 @@ Ensuite, il faut compiler avec le mot-clé "make". Et enfin, pour démarrer le p
 Si vous désirez afficher la simulation sous format texte, il faudra suivre les deux premières étapes indiquées ci-dessus, pour ensuite écrire "./TESTS/exerciceP10/exerciceP10". Ceci lancera la simulation texte. Cependant, pour modifier les caractéristiques du faisceau et de l'accélérateur, il faudra les modifier directement sur le code source (cf. fichier conception pour avoir plus d'informations sur les méthodes à utiliser et constructeurs à appeller).
 
 Pour s'amuser un peu avec le programme, il est conseillé de faire varier le nombre de côtes de l'accélérateur, et de faire varier les autres paramètres de distribution des faisceaux (pour voir leurs effets sur la forme des ellipses).
-Dans la partie graphique, il est également conseillé de faire bouger le point de vue (avec les touches "W", "A", "S", "D", "UP", "DOWN", "LEFT", "RIGHT", "SPACE"), et de faire varier la vitesse des particules (avec les touches "P" et "O").
+Dans la partie graphique, il est également conseillé de faire bouger le point de vue (avec les touches "W", "A", "S", "D", "UP", "DOWN", "LEFT", "RIGHT", "SPACE", ou encore avec la souris), et de faire varier la vitesse des particules (avec les touches "P" et "O").
 
 Il est cependant conseillé de ne ni mettre trop de particules à la fois et ni de trop bouger la "caméra" lorsqu'il y a trop de particules qui sont en mouvement. En effet, ceci ferait très probablement disparaître toutes les particules de l'accélérateur (cf. fichier conception pour plus d'informations).
 
 3. Estimation travail
 
-En moyenne, nous avons chacun probablement travaillé autour trois heures par semaine sur ce projet.
+En moyenne, nous avons chacun probablement travaillé autour de trois heures par semaine sur ce projet.
