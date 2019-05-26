@@ -4,7 +4,7 @@ Le code de ce fichier Git simule un accélérateur de particules (de mani1ere si
 
 Pour aboutir à la réalisation de notre simulation, nous avons implémenté tout ce qui a été demandé dans les séries liés au projet. Nous avons donc implémenté toutes les classes demandées, et noous avons ajouté une autre classe (la classe Cases) qui nous semblait nécessaire pour l'optimisation meilleur voisin.
 Nous avons donc également implémenté une partie graphisme avec laquelle on peut visualisé en 3D la simulation du mouvement des particules dans l'accélérateur. La partie graphisme est effectuée au moyen de la bibliothèque Qt (la version qui se trouve sur les machines virtuelles). A cela, nous avons également ajouté l'affichage des ellipses qui réprésentent (comme indiqué dans le complément mathématiques) la répartition des particules dans les faisceaux.
-La partie d'affichage textuel étant, selon nous moins esthétique et intéressante à programmer, nous n'avons mis en place tout une interface pour cette partie.
+La partie d'affichage textuel étant, selon nous moins esthétique et intéressante à programmer, nous n'avons pas mis en place tout une interface pour cette partie.
 
 Afin de ne pas avoir eu à écrire tous les makefiles, nous avons utilisé des fichiers .pro, dans lesquelles nous avons indiqué les dépendances entre les différents fichiers du projet. Ceux-ci vont ensuite permettre de générer les makefiles, comme expliqué ci-dessous.
 
@@ -15,7 +15,8 @@ Les fichiers sont répartis de la manière suivante:
   - le fichier réponse et le journal se trouvent dans le dossier INFO
   - le code lié à l'affichage format texte se trouve dans le dossier vue_texte
   - le code qui a permis à la création du graphique (cf. fichier conception) se trouve dans TESTS/exerciceP13
- 
+
+Enfin, étant donné que les tests ont été crées à un moment donné dans notre projet, la plupart de ceux-ci ne compilent pas.
 
 2. Comment démarrer
 
