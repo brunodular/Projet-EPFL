@@ -256,16 +256,16 @@ void VueOpenGL::dessineCylindre(Vecteur3D const& base, Vecteur3D const& end, dou
 
 void VueOpenGL::dessineTore(Vecteur3D const& centre, Vecteur3D const& base, Vecteur3D const& end, double minor_radius, double rouge, double vert, double bleu) {
 
-  double slices_height_2(slices_height/2);
+  double stacks_length_2(stacks_length/3);
 
   const double major_radius((centre-base).norme());
   const double proportion(1/M_PI*asin((base-end).norme()/(2*major_radius)));
 
-  const double a(slices_height_2/minor_radius);
-  const double b(1/(proportion*major_radius/stacks_length));
+  const double a(slices_height/minor_radius);
+  const double b(1/(proportion*major_radius/stacks_length_2));
 
-  const int stacks(ceil(2*M_PI*major_radius*proportion/stacks_length));
-  const int slices(ceil(2*M_PI*minor_radius/slices_height_2));
+  const int stacks(ceil(2*M_PI*major_radius*proportion/stacks_length_2));
+  const int slices(ceil(2*M_PI*minor_radius/slices_height));
 
   //construction d'une base orthonormale placée au centre du tore
   Vecteur3D u = ~(centre - base);
