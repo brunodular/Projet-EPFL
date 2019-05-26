@@ -1,3 +1,29 @@
+TACHE A REALISER:
+
+[X] créer le JOURNAL                                    	 
+[X] lire complètement le descriptif général                  	
+[X] s'inscrire en binôme                                      	
+[X] fusionner les deux projets (y compris les fichiers JOURNAL)	
+[X] Makefile                                               	
+[X] Vecteur finis (pleinement opÃ©rationnels et testÃ©s)  	
+[X] fichier REPONSES                                        
+[X] Particules                                            	
+[X] Dipôles                                               	
+[X] Accélérateur                                          
+[X] Sections Droites                                        
+[X] Quadrupôles                                            
+[X] exerciceP9                                           
+[X] exerciceP10                                          
+[X] Faisceaux		                                     
+[X] graphisme: cadre général (reprise des exemples tuto)    	
+[X] graphisme: Particule (+ ...)                          	
+[X] Forces inter-particules                              	
+[X] Voisinage (P14)                                     	
+[X] Extensions (Maille FODO, Faisceaux plus réalistes, affichage des ellipses de phases, interface utilisateur, construction de polygone régulier)
+[ ] fichier CONCEPTION                                    
+[X] fichier README                                        
+[ ] fichier NOMS                                        	
+
 -- 28/02 --
 
 - Implémentation de la classe Vecteur3D, et surcharge des opérateurs afin d'avoir tous les outils nécessaires pour travailler avec ces vecteurs.
