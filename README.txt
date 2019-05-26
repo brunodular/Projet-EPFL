@@ -9,7 +9,7 @@ La partie d'affichage textuel étant, selon nous moins esthétique et intéressa
 Afin de ne pas avoir eu à écrire tous les makefiles, nous avons utilisé des fichiers .pro, dans lesquelles nous avons indiqué les dépendances entre les différents fichiers du projet. Ceux-ci vont ensuite permettre de générer les makefiles, comme expliqué ci-dessous.
 
 Les fichiers sont répartis de la manière suivante:
-  - les fichiers liés à l'affichage graphique sont dans le dossier Qt-GL
+  - les fichiers liés à l'affichage graphique sont dans le dossier Qt_GL
   - les fichiers qui font l'abstraction des objets simulés sont dans le dossier general
   - les fichiers tests (qui ne sont généralement plus compilable) se trouvent dans le dossier TESTS
   - le fichier réponse et le journal se trouvent dans le dossier INFO
@@ -28,7 +28,7 @@ Si vous désirez afficher la simulation sous format texte, il faudra suivre les 
 Pour s'amuser un peu avec le programme, il est conseillé de faire varier le nombre de côtes de l'accélérateur, et de faire varier les autres paramètres de distribution des faisceaux (pour voir leurs effets sur la forme des ellipses).
 Dans la partie graphique, il est également conseillé de faire bouger le point de vue (avec les touches "W", "A", "S", "D", "UP", "DOWN", "LEFT", "RIGHT", "SPACE", ou encore avec la souris), et de faire varier la vitesse des particules (avec les touches "P" et "O").
 
-Il est cependant conseillé de ne ni mettre trop de particules à la fois et ni de trop bouger la "caméra" lorsqu'il y a trop de particules qui sont en mouvement. En effet, ceci ferait très probablement disparaître toutes les particules de l'accélérateur (cf. fichier conception pour plus d'informations).
+Il est cependant conseillé de ne ni mettre trop de particules à la fois, ou ni de trop bouger la "caméra" lorsqu'il y a trop de particules en mouvement. En effet, ceci ferait très probablement disparaître toutes les particules de l'accélérateur (cf. fichier conception pour plus d'informations).
 
 3. Estimation travail
 
