@@ -9,13 +9,9 @@ Question P4.1
 
 Question P4.2
 
-  a) Si on choisit d'ajouter un constructeur par coordonnées sphériques, on n'aurait pas besoin de changer
-  les attributs de la classe. En effet, il suffirait d'ajouter un type énuméré dans la liste des paramètres
-  du constructeur qui indiquerait si on veut initialiser le Vecteur3D en coordonnées cartésiennes ou en
-  coordonnéees sphériques, et puis dans le corps du constructeur, on effectuerait les manipulations nécessaires
-  pour passer de coordonnées cartésiennes aux coordonnées sphériques de ce vecteur, ou vice-versa.
+  a) Si on choisit d'ajouter un constructeur par coordonnées sphériques, on n'aurait pas besoin de change les attributs de la classe. En effet, il suffirait d'ajouter un type énuméré dans la liste des paramètres du constructeur qui indiquerait si on veut initialiser le Vecteur3D en coordonnées cartésiennes ou en coordonnéees sphériques, et puis dans le corps du constructeur, on effectuerait les manipulations nécessaires pour passer de coordonnées cartésiennes aux coordonnées sphériques de ce vecteur, ou vice-versa.
 
-  b) La difficulté majeure du passage en coordonnées sphériques est que cela nous obligerait à 
+  b) La difficulté majeure du passage en coordonnées sphériques est que cela nous obligerait à redéfinir tous les calculs de produit vectoriel par exemple. Cela nous obligerait aussi à redéfinir un nouveau constructeur qui prendrait un type énuméré, comme expliqué ci-dessus. Tout ce travail ne servirait pas à grand chose au final.
 
 Question 4.3:
 
