@@ -1,7 +1,7 @@
 Question P1.1
 
   Les vecteurs sont représentés par trois attributs : les trois coordonnées x, y et z. Ce sont des attributs de type double.
-  Les attributs sont en private. Toutes les méthodes et opérateurs sont en public. Cela fait sens car les opérateurs ont tous le potentiel d'être utilisés dans la suite du projet.
+  Les attributs sont en private. Toutes les méthodes et opérateurs sont en public. Cela fait sens car les opérateurs ont tout le potentiel d'être utilisés dans la suite du projet.
 
 Question P4.1
 
@@ -9,25 +9,25 @@ Question P4.1
 
 Question P4.2
 
-  a) Si on choisit d'ajouter un constructeur par coordonnées sphériques, on n'aurait pas besoin de change les attributs de la classe. En effet, il suffirait d'ajouter un type énuméré dans la liste des paramètres du constructeur qui indiquerait si on veut initialiser le Vecteur3D en coordonnées cartésiennes ou en coordonnéees sphériques, et puis dans le corps du constructeur, on effectuerait les manipulations nécessaires pour passer de coordonnées cartésiennes aux coordonnées sphériques de ce vecteur, ou vice-versa.
+  a) Si on choisit d'ajouter un constructeur par coordonnées sphériques, on n'aurait pas besoin de changer les attributs de la classe. En effet, il suffirait d'ajouter un type énuméré dans la liste des paramètres du constructeur qui indiquerait si on veut initialiser le Vecteur3D en coordonnées cartésiennes ou en coordonnéees sphériques, et puis dans le corps du constructeur, on effectuerait les manipulations nécessaires pour passer de coordonnées cartésiennes aux coordonnées sphériques de ce vecteur, ou vice-versa.
 
   b) La difficulté majeure du passage en coordonnées sphériques est que cela nous obligerait à redéfinir tous les calculs de produit vectoriel par exemple. Cela nous obligerait aussi à redéfinir un nouveau constructeur qui prendrait un type énuméré, comme expliqué ci-dessus. Tout ce travail ne servirait pas à grand chose au final.
 
 Question 4.3:
 
   Les opérateurs que nous avons introduits sont les opérateurs: +=, + (addition), -=, - (soustraction), - (opposé),
-  * (produitt scalaire), ^=, ^ (produit vectoriel), *=, * (mulitplication par un scalaire), << (affichage de
-  vecteurs 3d) et enfin ~ (vecteur unitaire).
+  * (produitt scalaire), ^=, ^ (produit vectoriel), *=, * (mulitplication par un scalaire), << (affichage de vecteurs 3d) et enfin ~ (vecteur unitaire).
 
 Question 5.1:
 
-  Nous avons implémenté gamma et l'énergie en tant que méthodes. Ces quantités sont très dépendantes de la vitesse des particules, qui change très fréquemment. Ainsi, les implémenter sous la forme d'attributs nécessiterait de les actualiser dès que la vitesse est modifiée. Cela serait moins optimisé et plus compliqué. C'est pourquoi nous avons choisi de le faire en tant que méthodes.
+  Nous avons implémenté gamma et l'énergie en tant que méthodes. Ces quantités sont très dépendantes de la vitesse des particules, qui est susceptible de changer souvent. Ainsi, les implémenter sous la forme d'attributs nécessiterait de les actualiser dès que la vitesse est modifiée. Cela serait moins optimisé et plus compliqué. C'est pourquoi nous avons choisi de le faire en tant que méthodes.
 
 Question 6.1
 
-  Pour représenter les éléments, nous définissons une classe Element, qui contient les attributs pos_e_ (position d'entrée), pos_s_ (position de sortie) et le rayon de la chambre à vide (r_section_).
+  Pour représenter les éléments, nous définissons une classe abstraite Element, qui contient les attributs pos_e_ (position d'entrée), pos_s_ (position de sortie) et le rayon de la chambre à vide (r_section_).
+  Pour représenter les éléments droits, nous définissons une sous-classe ElementDroit de la classe Element.
   Pour représenter les éléments courbes, nous définissons une sous-classe ElementCourbe de la classe Element, qui possède en plus les attributs courbure_ (courbure de l'élément) et centre_ (centre de courbure).
-  Les différents types d'éléments seront des sous-classes d'Element ou de ElementCourbe, selon leurs caractéristiques.
+  Les différents types d'éléments seront des sous-classes d'ElementDroit ou de ElementCourbe, selon leurs caractéristiques.
 
 Question 6.2
 
@@ -43,11 +43,14 @@ Question 6.4
 
 Question 7.1
 
-  On a représenté la classe Accélérateur par deux attributs: une collection de pointeurs (vector de pointeurs) sur des Eléments afin de pouvoir utiliser le polymorphisme, et une collection de pointeurs sur des Particules. Nous avons choisi de mettre des pointeurs sur des Particules afin d'optimiser le programme, et pour faciliter le polymorphisme dans le cas où l'on voudrait crée ds sous-classes de Particule. D'autre part, pour l'interface nous avons implémenté des méhodes qui permettent d'ajouter et de supprimer des éléments et des particules, un contructeur qui prend un support en argument et crée un accélérateur, et un autre constructeur par défaut (Accelerateur()=default;).
+  On a représenté la classe Accélérateur par deux attributs: une collection de pointeurs (vector de pointeurs) sur des Eléments afin de pouvoir utiliser le polymorphisme, et une collection de pointeurs sur des Particules. Nous avons choisi de mettre des pointeurs sur des Particules afin d'optimiser le programme, et pour faciliter le polymorphisme dans le cas où l'on voudrait créer des sous-classes de Particule. D'autre part, pour l'interface nous avons implémenté des méhodes qui permettent d'ajouter et de supprimer des éléments et des particules, un contructeur qui prend un support en argument et crée un accélérateur, et un autre constructeur par défaut (Accelerateur()=default;).
+
+  -> Depuis l'ajout des classes SupportADessin et Dessinable, Accelerateur ne possède plus de constructeur pas défaut.
 
 Question 7.2
 
-  On qualifie ces deux methodes de delete car il est absurde de copier un acclerateur dans un autre accelerateur ou même d'affecter à un accélérateur les caractéristiques d'un autre accélérateur. En effet, un accélérateur est une entité qui est fixe pour une simulation donnée et ce serait bizarre de pouvoir copier cet accélérateur, et donc de créer uen autre simulation.
+  On qualifie ces deux méthodes de delete car il est absurde de copier un accélérateur dans un autre accelerateur ou même d'affecter à un accélérateur les caractéristiques d'un autre accélérateur. En effet, un accélérateur est une entité qui est fixe pour une simulation donnée et ce serait bizarre de pouvoir copier cet accélérateur, et donc de créer une autre simulation.
+  D'un point de vue pratique, un Accelerateur contenant des pointeurs vers des Element et Particule, une copie simple poserait problème. Il faudrait implémenter une copie profonde. Mais cela n'est pas nécessaire dans le cadre de notre projet.
 
 Question 8.1
 
@@ -59,35 +62,46 @@ Question 8.2
 
 Question 9.1
 
-  La méthode dessine() est une méthode virtuelle pure/abstraite. Elle est pure dans Dessinable et est redéfinie dans les sous-classes de Dessinable (Accelerateur, Particule, Element, etc.).
+  La méthode dessine() est une méthode virtuelle. Elle est pure dans Dessinable et est redéfinie dans les sous-classes de Dessinable (Accelerateur, Particule, Element, etc.).
 
 Question 9.2
 
-  Le bon moyen de le faire en POO est de le faire par polymorphisme, c'est a dire que dans chaque sous-classe de Elément et dans la classe Particule on redéfinit la méthde virtuelle affiche() qui perment d'afficher les attributs de la sous-classe ou de cette classe, et puis on utilise des pointeurs ou des reférences pour accéder par polymorphisme à ces méthodes spécifiques.
+  Le bon moyen de le faire en POO est de le faire par polymorphisme, c'est a dire que dans chaque sous-classe de Elément et dans la classe Particule on redéfinit la méthode virtuelle dessine() (qui dépend de affiche(), et donc définie différemment dans chaque classe) qui permet d'afficher les attributs de la sous-classe ou de cette classe, et puis on utilise des pointeurs ou des reférences pour accéder par polymorphisme à ces méthodes spécifiques.
 
 Question 9.3
 
-  Dans les classes contenant des pointeurs il faut faire attention à proposer des méthodes qui permettent de supprimer les pointeurs et leurs zones mémoires, il faut faire attention à ne pas prendre utiliser des variables locales dans les méthodes et il faut faire attention à bien allouer la mémoire. On peut envisager de prendre en argument des références constantes sur les classes au lieu de prendre des pointeurs à la C.
-  
+  Dans les classes contenant des pointeurs il faut faire attention à proposer des méthodes qui permettent de supprimer les pointeurs et leurs zones mémoires, il faut faire attention à ne pas utiliser des variables locales dans les méthodes et il faut faire attention à bien allouer la mémoire.
+  Il faut également supprimer les constructeurs de copie (et opérateur d'affectation) ou implémenter une copie profonde (car sinon, risque de corruption de la mémoire). Il faut aussi penser à redéfinir le destructeur si nécessaire, afin de correctement désallouer la mémoire qui a pu être allouée.
+  Comme solutions possibles, on peut, comme mentionné ci-dessus, implémenter de la copie profonde, ou supprimer constructeurs de copie et opérateurs d'affectation, et définir le destructeur correctement.
+
 Question 11.1
 
   Dans la classe Faisceau, nous avons implémenté les caractéristiques d'un faisceau de la manière suivante:
-- particule typique: comme pointeur sur une particule en attribut car cela assure que l'on garde en mémoire la position initiale de notre faisceau (//au final nous avons enlevé cet atribut car il ne sert à rien)
-- nombre de vraies particules: comme méthode car ce nombre change au cours du temps
-- coefficient lambda: comme attribut car celui ne change pas au cours du temps
-- l'énergie moyenne du faisceau, émittance et les coefficients des ellipses de phases ont été implémenté comme des méthodes car celles-ci varient au cours du temps et ce ne serait pas optimisé de les matre en attributs car on les modifierait très souvent
+  - particule typique: comme pointeur sur une particule en attribut car cela assure que l'on garde en mémoire la position initiale de notre faisceau .
+  -> finalement nous avons enlevé cet atribut car il ne sert à rien, il est juste nécessaire de donner la particule typique au constructeur.
+
+  - nombre de vraies particules: comme méthode car ce nombre change au cours du temps (si des particules sortent de l'accélérateur par exemple)
+  - coefficient lambda: comme attribut car celui-ci ne change pas au cours du temps
+
+  - l'énergie moyenne du faisceau, émittance et les coefficients des ellipses de phases ont été implémenté comme des méthodes car celles-ci varient au cours du temps et ce ne serait pas optimisé de les mettre en attributs car on les modifierait très souvent
 
 Question 13.1
 
-  Le premier algorithme boucle sur toutes les autres particules du faisceau non-encore considérées et ajoute la force qu'exerce cette particule sur la particule courante. En supposant que l'opération d'ajouter la force inter-particulaire est en O(1), on a qu'au pire cas, l'algorithme 1 est en O(n_1^2+n_2^2+...+n_k^2), où n_i est la nombre de particules dans le i-ème faisceau qui tourne dans l'accélérateur, et k est le nombre de faisceaux dans l'accélérateur.
+  Le premier algorithme boucle sur toutes les autres particules du faisceau non-encore considérées et ajoute la force qu'exerce cette particule sur la particule courante. En supposant que l'opération d'ajouter la force inter-particulaire est en O(1), on a qu'au pire cas, l'algorithme 1 est en O(n_1^2+n_2^2+...+n_k^2), où n_i est la nombre de particules dans le i-ème faisceau qui tourne dans l'accélérateur, et k est le nombre de faisceaux dans l'accélérateur. De manière équivalente, cet algorithme est en O(n^2) avec n le nombre de particules.
 
-  Le deuxième algorithme boucle séparémment sur le calcul des forces et sur la méthode bouger. De ce fait, le deuxième algorithme est également en O(n_1^2+n_2^2+...+n_k^2), où n_i est la nombre de particules dans le i-ème faisceau qui tourne dans l'accélérateur, et k est le nombre de faisceaux dans l'accélérateur. En effet, la première boucle a une complexité temporelle en O(n_i^2) et la deuxième est en O(n_i), en supposant que la méthode bouger est en O(1). Et donc en bouclant sur les faisceaux de l'accélérateur on obtient le résultat précédent.
+  Le deuxième algorithme boucle séparémment sur le calcul des forces et sur la méthode bouger. De ce fait, le deuxième algorithme est également en O(n_1^2+n_2^2+...+n_k^2), où n_i est la nombre de particules dans le i-ème faisceau qui tourne dans l'accélérateur, et k est le nombre de faisceaux dans l'accélérateur. En effet, la première boucle a une complexité temporelle en O(n_i^2) et la deuxième est en O(n_i), en supposant que la méthode bouger est en O(1). Et donc en bouclant sur les faisceaux de l'accélérateur on obtient le résultat précédent. Ici encore, de manière équivalente, cet algorithme est en O(n^2) avec n le nombre de particules.
 
 Question 14.1
 
-  On suppose que le nombre de particules dans une case est négligeable (en O(1)) et que l'ajout de forces inter-particulaires est également en O(1). De ce fait, étant donné qu'on boucle sur toutes les particules, on aura que l'algorithme sera en O(n_1+n_...+n_k) où n_i est la nombre de particules dans le i-ème faisceau qui tourne dans l'accélérateur, et k est le nombre de faisceaux dans l'accélérateur.
+  On suppose que le nombre de particules dans une case est constant (en O(1)) et que l'ajout de forces inter-particulaires est également en O(1). De ce fait, étant donné qu'on boucle sur toutes les particules, et que le nombre d'autres particules à considérer (les voisines : dans sa case et les deux cases voisines) est constant, i.e., en O(1), on aura que l'algorithme sera en O(n_1+n_...+n_k) où n_i est la nombre de particules dans le i-ème faisceau qui tourne dans l'accélérateur, et k est le nombre de faisceaux dans l'accélérateur. Ainsi, la complexité est en O(n), où n est le nombre de particules.
   L'inconvénient que présente une telle optimisation est que les effets de toutes les autres particules (non voisines) sont totalement négligés.
 
 Question 14.2
 
-  Nous avons implémenté cette optimisation à l'aide d'une nouvelle classe
+  Nous avons implémenté cette optimisation à l'aide d'une nouvelle classe : Cases. Cette classe modélise un découpage de l'accélérateur en "tranches"/"cases". Elle posède les attributs eps_ (taille d'une tranche), nombre_ (nombre de tranches) et cases_ (collection d'ensembles de pointeurs vers des Particule).
+
+  L’Accelerateur est douc découpé en nombre_ tranches de longueur eps_, comme illustré sur la figure section 1.7 du fichier conception.
+
+  Une tranche est en fait simplement un unordered_set de Particule* : un ensemble de poin- teurs vers les Particules qui se trouvent dans cette tranche.
+  Une Particule donnée, d’abscisse curviligne x, est dans la floor(x/eps_)-ème tranche (où floor(a) dénote la partie entière de a).
+  Lors du calcul des forces inter-particulaires, une Particule se trouvant dans la n-ème tranche ne prend en compte que les Particules se trouvant dans les tranches n − 1, n et n + 1.
