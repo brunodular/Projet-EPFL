@@ -6,6 +6,8 @@ using namespace std;
 
 int main() {
 try {
+	//Ce fichier ne compile plus depuis l'implémentation des faisceaux : 
+	//on n'ajoute plus les particules individuellement dans l'accélérateur
 
   VueTexte Vue(cout);
 	SupportADessin* p_Vue(new VueTexte(cout));
