@@ -1,5 +1,5 @@
 #include "Accelerateur.h"
-#include "Vue_Texte.h"
+#include "vue_texte.h"
 using namespace std;
 
 int main() {
@@ -35,12 +35,14 @@ int main() {
 
     CERN.souder_accelerateur();
 
-    Faisceau f(p_Vue);
+    //Faisceau f;
 
-    f.ajouter_par(new Particule(Vecteur3D(3.01, 0, 0), Vecteur3D(0, -1, 0), 2, 0.938272, e));
+    //f.ajouter_par(new Particule(Vecteur3D(3.01, 0, 0), Vecteur3D(0, -1, 0), 2, 0.938272, e));
     //CERN.ajouter_par(new Particule(Vecteur3D(2.99, 0, 0), Vecteur3D(0, -1, 0), 2, 0.938272, e));
 
-    CERN.ajouter_faisceau(p_Faisceau (new Faisceau(f)));
+    //CERN.ajouter_faisceau(p_Faisceau (new Faisceau(new Particule(Vecteur3D(3.01, 0, 0), Vecteur3D(0, -1, 0), 2, 0.938272, e), true, 0.01, 1, 1, 0.05, )));
+
+    CERN.ajouter_faisceau(new Particule(Vecteur3D(3.01, 0, 0), Vecteur3D(0, -1, 0), 2, 0.938272, e), true, 0, 1, 1, 0.05);
 
     CERN.initialiser_particules();
 

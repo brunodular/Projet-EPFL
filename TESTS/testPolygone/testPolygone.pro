@@ -1,7 +1,7 @@
 CONFIG += c++11
 CONFIG -= app_bundle
 
-TARGET = test
+TARGET = exerciceP13
 
 LIBS += \
 	-L../../general -lgeneral \
@@ -15,7 +15,7 @@ INCLUDEPATH += \
 	../../general \
 	../../vue_texte
 
-SOURCES = test.cc
+SOURCES = test_evolution_polygone_regulier.cc
 
 HEADERS += \
     ../../general/Accelerateur.h \

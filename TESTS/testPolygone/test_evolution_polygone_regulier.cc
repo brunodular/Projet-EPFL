@@ -8,12 +8,12 @@
 using namespace std;
 
 int main() {
-	ofstream sortie("TESTS/exerciceP13/data.txt", ios::out);
+	ofstream sortie("TESTS/testPolygone/data.txt", ios::out);
 	if (not (sortie.fail())) {
 		constexpr double dt=2e-10;
 		try {
 			sortie << setw(MARGE) << "Nombre de cotes" << " | " <<  setw(7) << "Rayon" << " | Nombre d'iterations" << endl;
-			for (size_t i(3); i<=11; ++i) {  
+			for (size_t i(3); i<=11; ++i) {
 				for (double k(1.2); k<=4; k+=0.1) {
 					sortie << setw(MARGE) << i << " | " << setw(7) << k << " | ";
 					Accelerateur acc(new VueTexte(sortie));
@@ -31,10 +31,10 @@ int main() {
 			}
 		}
 		catch (Erreur err) {
-			cerr << err.message<< endl;
+			cerr << err.message << endl;
 		}
 	}
 	sortie.close();
-	
+
 	return 0;
 }

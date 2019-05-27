@@ -10,13 +10,13 @@ class Cases {
 private:
   std::vector<Set_P> cases_; //cf. fichier conception pour voir une explication
   const double eps_; //proportion de la longueur d'une case par rapport à la longueur totale (entre 0 et 1)
-  const uint nombre_; //nombre d'ensemble de pointeurs vers des particules (nombre de "case")
+  const uint nombre_; //nombre d'ensemble de pointeurs vers des particules (nombre de "case", de "tranches", voir fichier conception)
 
 public:
   //Constructeur + destructeur
   Cases(uint nombre);
   ~Cases();
-  Cases(Cases const&) = delete; //dans notre conception une case ne peut pas etre copiee
+  Cases(Cases const&) = delete;
   Cases& operator=(Cases const&) = delete;
 
 	//Methodes

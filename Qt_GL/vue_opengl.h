@@ -13,7 +13,7 @@ const double stacks_length(0.025);
 
 class VueOpenGL : public SupportADessin {
  public:
-  // méthode(s) de dessin (héritée(s) de SupportADessin)
+  // méthode(s) de dessin (héritée(s) de SupportADessin), permettent de dessiner les differents objets
   virtual void dessine(Dipole const&) override;
   virtual void dessine(Particule const&) override;
   virtual void dessine(Accelerateur const&) override;
@@ -37,7 +37,7 @@ class VueOpenGL : public SupportADessin {
   void translate(double x, double y, double z);
   void rotate(double angle, double dir_x, double dir_y, double dir_z);
 
-  // méthode utilitaire offerte pour simplifier
+  // méthodes de dessin
   void dessineAxes(QMatrix4x4 const& point_de_vue, bool en_couleur = true);
   void dessineCube(QMatrix4x4 const& point_de_vue = QMatrix4x4() );
   void dessineSphere(QMatrix4x4 const& point_de_vue,

@@ -3,6 +3,8 @@
 
 int main(int argc, char* argv[])
 {
+  //Ce test n'est plus adapte au code et nous ne l'avons pas mis a jour
+
   QApplication a(argc, argv);
 
   VueOpenGL Vue;

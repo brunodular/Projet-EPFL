@@ -25,6 +25,7 @@ Accelerateur::~Accelerateur() {
 }
 
 //Getters
+
 Collection_E Accelerateur::elements() const {
   return elements_;
 }
@@ -38,6 +39,8 @@ Collection_F Accelerateur::faisceaux() const {
   return faisceaux_;
 }
 
+//Getters des paramètres des ellipses de phases
+
 double Accelerateur::emittance_r(size_t i) const {return faisceaux_[i]->emittance_r();}
 double Accelerateur::emittance_z(size_t i) const {return faisceaux_[i]->emittance_z();}
 
@@ -48,6 +51,8 @@ double Accelerateur::A_22_r(size_t i) const {return faisceaux_[i]->A_22_r();}
 double Accelerateur::moyenne_ellipse(ELLIPSE e, size_t i) const {return faisceaux_[i]->moyenne_ellipse(e);}
 
 //Methodes
+
+//Affichage
 
 ostream& Accelerateur::affiche(ostream& sortie) const {
 	if (elements_.empty() and faisceaux_.empty()) {
@@ -91,7 +96,7 @@ ostream& Accelerateur::affiche_part(std::ostream& sortie) const {
   if (!(faisceaux_.empty())) {
 	  for (auto const& f : faisceaux_) {
 		f->affiche_part(sortie);
-	}
+	  }
   }
   return sortie;
 }
@@ -104,6 +109,8 @@ ostream& Accelerateur::affiche_info_ellipse(ostream& sortie) const {
   sortie << endl;
   return sortie;
 }
+
+//ajouter faisceaux et elements a l'accelerateur
 
 void Accelerateur::ajouter_faisceau(p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, bool distribution_normale) {
   faisceaux_.push_back(p_Faisceau(new Faisceau(p,sens_horaire,x,nombre,lambda,dl,*this,distribution_normale)));
@@ -135,7 +142,55 @@ void Accelerateur::souder_accelerateur() {
   }
 }
 
-	//Abscisse curviligne
+void Accelerateur::construire_polygone(size_t n, double R) {
+  double theta(2*M_PI/n); //angle au centre(de courbure) intercepte par un dipole
+  double d(2*sin(theta/2)); //distance entre les entrees et sorties des dipoles
+  //double k(2*sin(theta/2)/d); //courbure des dipoles
+  double rho(2*asin(d/(2*R))); //angle au centre(origine) intercepte par un dipole
+
+  for (size_t i(0); i<n; ++i) {
+    double angle_e(i*theta - theta/2 - 0.5*rho), angle_s(i*theta - theta/2 + 0.5*rho), angle_e2((i+1)*theta - theta/2 - 0.5*rho);
+    Vecteur3D pos_e(cos(angle_e),-sin(angle_e),0); Vecteur3D pos_s(cos(angle_s),-sin(angle_s),0); Vecteur3D pos_e2(cos(angle_e2),-sin(angle_e2),0);
+    ajouter_el(new Dipole(R*pos_e,R*pos_s,0.3,1,5.89158));
+    ajouter_el(new MailleFODO(R*pos_s,R*pos_e2,0.3,0.8,0.24));
+  }
+  souder_accelerateur();
+}
+
+void Accelerateur::construire_structure_P10() {
+	ajouter_mailleFODO(Vecteur3D(3,2,0),Vecteur3D(3,-2,0));
+	ajouter_el(new Dipole(Vecteur3D(3,-2,0),Vecteur3D(2,-3,0),0.3,1,5.89158));
+
+	ajouter_mailleFODO(Vecteur3D(2,-3,0),Vecteur3D(-2,-3,0));
+	ajouter_el(new Dipole(Vecteur3D(-2,-3,0),Vecteur3D(-3,-2,0),0.3,1,5.89158));
+
+	ajouter_mailleFODO(Vecteur3D(-3,-2,0),Vecteur3D(-3,2,0));
+	ajouter_el(new Dipole(Vecteur3D(-3,2,0),Vecteur3D(-2,3,0),0.3,1,5.89158));
+
+	ajouter_mailleFODO(Vecteur3D(-2,3,0),Vecteur3D(2,3,0));
+	ajouter_el(new Dipole(Vecteur3D(2,3,0),Vecteur3D(3,2,0),0.3,1,5.89158));
+
+	souder_accelerateur();
+}
+
+void Accelerateur::ajouter_mailleFODO(Vecteur3D const& entree, Vecteur3D const& sortie) {
+	double d = (sortie-entree).norme();
+	if (not est_zero(d)) {
+		ajouter_el(new MailleFODO(entree,sortie,0.3,1.2,0.25));
+	} else {Erreur err{"Entree=sortie", 6};
+	throw err;}
+}
+
+void Accelerateur::initialiser_particules() {
+  if (elements_.size() != 0) {
+	  for (auto& f : faisceaux_) {
+		  f->initialiser_particules(*this,cases_);
+    }
+  }
+}
+
+
+//Abscisse curviligne
 
 PositionEtElement Accelerateur::abs_element (double x) const {
 	x *= longueur_;
@@ -177,55 +232,6 @@ Vecteur3D Accelerateur::abs_en_pos(double x, double y, double z) const {
   Vecteur3D transv(tang ^ e3);
 
   return (pos + r_section() * (z*e3 + y*transv));
-}
-
-
-void Accelerateur::initialiser_particules() {
-  if (elements_.size() != 0) {
-	  for (auto& f : faisceaux_) {
-		  f->initialiser_particules(*this,cases_);
-    }
-  }
-}
-
-//MEGA-Constructeurs
-void Accelerateur::construire_polygone(size_t n, double R) {
-  double theta(2*M_PI/n); //angle au centre(de courbure) intercepte par un dipole
-  double d(2*sin(theta/2)); //distance entre les entrees et sorties des dipoles
-  //double k(2*sin(theta/2)/d); //courbure des dipoles
-  double rho(2*asin(d/(2*R))); //angle au centre(origine) intercepte par un dipole
-
-  for (size_t i(0); i<n; ++i) {
-    double angle_e(i*theta - theta/2 - 0.5*rho), angle_s(i*theta - theta/2 + 0.5*rho), angle_e2((i+1)*theta - theta/2 - 0.5*rho);
-    Vecteur3D pos_e(cos(angle_e),-sin(angle_e),0); Vecteur3D pos_s(cos(angle_s),-sin(angle_s),0); Vecteur3D pos_e2(cos(angle_e2),-sin(angle_e2),0);
-    ajouter_el(new Dipole(R*pos_e,R*pos_s,0.3,1,5.89158));
-    ajouter_el(new MailleFODO(R*pos_s,R*pos_e2,0.3,0.8,0.24));
-  }
-  souder_accelerateur();
-}
-
-void Accelerateur::construire_structure_P10() {
-	ajouter_mailleFODO(Vecteur3D(3,2,0),Vecteur3D(3,-2,0));
-	ajouter_el(new Dipole(Vecteur3D(3,-2,0),Vecteur3D(2,-3,0),0.3,1,5.89158));
-
-	ajouter_mailleFODO(Vecteur3D(2,-3,0),Vecteur3D(-2,-3,0));
-	ajouter_el(new Dipole(Vecteur3D(-2,-3,0),Vecteur3D(-3,-2,0),0.3,1,5.89158));
-
-	ajouter_mailleFODO(Vecteur3D(-3,-2,0),Vecteur3D(-3,2,0));
-	ajouter_el(new Dipole(Vecteur3D(-3,2,0),Vecteur3D(-2,3,0),0.3,1,5.89158));
-
-	ajouter_mailleFODO(Vecteur3D(-2,3,0),Vecteur3D(2,3,0));
-	ajouter_el(new Dipole(Vecteur3D(2,3,0),Vecteur3D(3,2,0),0.3,1,5.89158));
-
-	souder_accelerateur();
-}
-
-void Accelerateur::ajouter_mailleFODO(Vecteur3D const& entree, Vecteur3D const& sortie) {
-	double d = (sortie-entree).norme();
-	if (not est_zero(d)) {
-		ajouter_el(new MailleFODO(entree,sortie,0.3,1.2,0.25));
-	} else {Erreur err{"Entree=sortie", 6};
-	throw err;}
 }
 
 //Supprimer

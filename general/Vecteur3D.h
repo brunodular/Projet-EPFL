@@ -10,7 +10,7 @@ class Vecteur3D {
 	public:
 		//Constructeurs
 		Vecteur3D(double x = 0.0, double y = 0.0, double z = 0.0) : x_(x), y_(y), z_(z) {}
-		
+
 		//getteurs
 		double x() const;
 		double y() const;
@@ -37,7 +37,7 @@ class Vecteur3D {
 		Vecteur3D const operator*(double) const;	//multiplication par un scalaire
 		Vecteur3D const operator~() const;			//vecteur unitaire
 
-		Vecteur3D const orthogonal() const;			//retourne un vecteur unitaire orthogonal
+		Vecteur3D const orthogonal() const;			//retourne un vecteur orthogonal
 
 		double operator*(Vecteur3D const&) const;	//produit scalaire
 		Vecteur3D const operator^(Vecteur3D) const;	//produit vectoriel

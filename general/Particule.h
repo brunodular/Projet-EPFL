@@ -13,22 +13,24 @@ typedef const double Masse;
 
 class Particule : public Dessinable {
 private:
-  Vecteur3D pos_;
+  Vecteur3D pos_; //position
   Vecteur3D v_; //Vecteur directeur de la vitesse
   Masse m_; //en GeV/c^2
   Masse m_kg_; //en kg
-  double q_;
+  double q_; //charge
   Vecteur3D F_;	//Vecteur force
   Element* element_courant_ = nullptr; //élément dans lequel se trouve la particule
   size_t case_courante_ = 0;			//indice de la "case_courante" de la particule dans le vector d'ensemble de pointeurs vers des particules, cases_, de l'accelerateur sur lequel on lance la simulation
 
 public:
-  //Constructeur
+  //Constructeurs
   Particule(Vecteur3D pos, Vecteur3D v_dir, double E, Masse m, double q, SupportADessin* support = nullptr);	//Constructeur "classique" de Particule
 
   Particule(Accelerateur const& acc, double pos, bool sens_horaire, double E, Masse m, double q, SupportADessin* support = nullptr); //Constructeur de Particule utilise pour mettre le vecteur vitesse de la particule dans le sens de la trajectoire ideale de l'accelerateur et de direction le sens-horaire (ou pas selon le booleen)
 
   Particule(Accelerateur const& acc, double pos_longi, double pos_vert, double pos_transv, bool sens_horaire, double E, Masse m, double q, SupportADessin* support = nullptr);
+
+  //On ne definit pas de destructeur car le destructeur par defaut suffit
 
   //getters
   Vecteur3D pos() const;

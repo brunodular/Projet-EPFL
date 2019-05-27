@@ -12,5 +12,5 @@ class Dessinable {
   virtual void set_support(SupportADessin* sup) {support_ = sup;}
 
  protected:
-  SupportADessin* support_; //on implémente un pointeur a la place d'une reference si jamais on aurait besoin de copier
+  SupportADessin* support_; //on utilise un pointeur a la place d'une reference si jamais on aurait besoin de copier
 };

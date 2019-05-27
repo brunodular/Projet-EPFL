@@ -2,6 +2,8 @@
 #include "cmath"
 using namespace std;
 
+//Constructeur + destructeur
+
 Cases::Cases(uint nombre) : cases_(vector<Set_P> (nombre)), eps_(1 / nombre), nombre_(nombre) {}
 
 Cases::~Cases() {
@@ -10,6 +12,8 @@ Cases::~Cases() {
 	}
 	cases_.clear();
 }
+
+//Methodes
 
 void Cases::ajouter_p_a_case(p_Particule const& p, size_t i) {
   if (i == cases_.size()) i = 0;
@@ -30,6 +34,8 @@ bool Cases::p_est_dans_case(p_Particule const& p, size_t i) const {
 size_t Cases::case_de_abs(double abs) const {
   return floor(abs/eps_);
 }
+
+//Getters
 
 Set_P& Cases::case_num(size_t i) {
   if (i == cases_.size()) i = 0;

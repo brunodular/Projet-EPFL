@@ -19,24 +19,25 @@ class Faisceau : public Dessinable {
 		Faisceau (p_Particule p, bool sens_horaire, double x, unsigned int nombre, const unsigned int lambda, double dl, Accelerateur const& acc, bool distribution_normale = false, SupportADessin* support_=nullptr); //x et dl sont des abscisses curvilignes, donc entre 0 et 1
 
 		Faisceau () = default;
-
 		~Faisceau () = default;
-
-		Faisceau (Faisceau const&) = delete; //nous avons decide de d'enlever la copie de faisceau car ceci ne fait aucun sens physiquement
-
+		Faisceau (Faisceau const&) = delete; //nous avons decide d'enlever la copie de faisceau car ceci ne fait aucun sens physiquement
 		Faisceau& operator=(Faisceau const&) = delete;
 
-		//Methodes
+		//Affichage
 		std::ostream& affiche_info_ellipse(std::ostream&) const;
     std::ostream& affiche(std::ostream&) const;
 		std::ostream& affiche_part(std::ostream&) const;		//affiche seulement les informations sur les particules du faisceau
+
+    //setter
 		virtual void set_support(SupportADessin*) override;		//initialise le support a dessin de chaque particule du faisceau
 
 		//GETTERS
 		Collection_P particules() const;
+    unsigned int nombre_particules() const;	//renvoie le nombre de macro-particules
+		unsigned int nombre_particules_simulees() const; //renvoie le nombre de particules hypothétique
 
+    //Les methodes suivantes donnent les parametres du faisceau et serve a calculer les ellipses de phases
 		double E_moyenne() const;	//renvoie énergie moyenne
-
 		double emittance_r() const;
 		double emittance_z() const;
 
@@ -49,9 +50,6 @@ class Faisceau : public Dessinable {
 		double A_22_z() const;
 
     double moyenne_ellipse(ELLIPSE) const; //méthodes utilisées dans les autres méthodes pour determiner les coefficients elliptiques
-
-		unsigned int nombre_particules() const;	//renvoie le nombre de macro-particules
-		unsigned int nombre_particules_simulees() const; //renvoie le nombre de particules hypothétique
 
 		//Modifier la collection de particules
 		void supprimer_par(size_t i);		//supprime i-eme particules du faisceau

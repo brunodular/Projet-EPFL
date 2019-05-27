@@ -36,7 +36,6 @@ int main() {
     CERN.initialiser_particules();
 
     CERN.dessine();
-    //CERN.affiche_part(cout);
 
     for (double i(0); i<2; i += 0.05) {
       cout << i << " : " << CERN.abs_en_pos(i) << endl;

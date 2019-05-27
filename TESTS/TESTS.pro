@@ -1,5 +1,10 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-  exerciceP13 \
-  test
+  #testPolygone \
+  exerciceP10 \
+  #exerciceP11 \
+  #testVecteur3D \
+  #testParticule \
+  #testFaisceau \
+  #testAbscisse
